@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J Webb Inc | Fire Alarm Design, Installation &amp; Service — Lawrence, KS</title>
+<meta name="description" content="J Webb Inc (dba Life Safety Systems) provides fire alarm design, installation, and service in Lawrence, Kansas and the surrounding region.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#003049;
+    --maroon:#780000;
+    --amber:#f3a22f;
+    --gray:#cecece;
+    --white:#ffffff;
+
+    --navy-deep:color-mix(in srgb, var(--navy) 78%, black);
+    --navy-light:color-mix(in srgb, var(--navy) 70%, white);
+    --amber-deep:color-mix(in srgb, var(--amber) 80%, black);
+    --maroon-deep:color-mix(in srgb, var(--maroon) 78%, black);
+    --bg-soft:color-mix(in srgb, var(--gray) 28%, white);
+    --line:color-mix(in srgb, var(--navy) 16%, white);
+    --text-muted:color-mix(in srgb, var(--navy) 48%, #6b7280);
+    --transition:0.3s cubic-bezier(.4,0,.2,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Inter','Segoe UI',sans-serif;
+    color:var(--navy);
+    line-height:1.65;
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.logo-word,.footer-word,.stat-num{
+    font-family:'Oswald','Segoe UI',sans-serif;
+    text-transform:uppercase;
+  }
+
+  img,svg{display:block;max-width:100%;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  .container{max-width:1220px;margin:0 auto;padding:0 24px;}
+  section{scroll-margin-top:84px;}
+  ::selection{background:var(--amber);color:var(--navy);}
+
+  /* ---------- fade-in ---------- */
+  .fade-in{
+    opacity:0;
+    transform:translateY(36px);
+    transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .fade-in.is-visible{opacity:1;transform:translateY(0);}
+  .fade-in.delay-1{transition-delay:.08s;}
+  .fade-in.delay-2{transition-delay:.16s;}
+  .fade-in.delay-3{transition-delay:.24s;}
+
+  /* ---------- Nav ---------- */
+  .navbar{
+    position:fixed;
+    top:0;left:0;right:0;z-index:1000;
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+  .navbar.scrolled{
+    background:rgba(0,48,73,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom-color:rgba(243,162,47,0.2);
+    box-shadow:0 4px 24px rgba(0,16,28,0.25);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:84px;}
+
+  .logo-word{
+    font-size:1.4rem;
+    font-weight:700;
+    color:var(--white);
+    letter-spacing:1.5px;
+    line-height:1;
+    position:relative;
+    display:inline-block;
+    padding-bottom:8px;
+  }
+  .logo-word::after{
+    content:"";
+    position:absolute;
+    bottom:0;left:0;
+    width:46px;height:3px;
+    background:var(--amber);
+  }
+  .logo-sub{
+    display:block;
+    font-family:'Inter',sans-serif;
+    text-transform:uppercase;
+    font-size:0.58rem;
+    letter-spacing:3px;
+    color:var(--amber);
+    margin-top:9px;
+    font-weight:500;
+  }
+
+  .nav-links{display:flex;align-items:center;gap:38px;}
+  .nav-links a{
+    color:rgba(255,255,255,0.82);
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    font-size:0.85rem;
+    letter-spacing:1.6px;
+    font-weight:500;
+    position:relative;
+    padding:8px 2px;
+    transition:color var(--transition);
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute;bottom:2px;left:0;
+    width:0;height:2px;
+    background:var(--amber);
+    transition:width var(--transition);
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{width:100%;}
+
+  .nav-cta{display:flex;align-items:center;gap:22px;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 32px;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    font-weight:600;
+    font-size:0.88rem;
+    letter-spacing:1.6px;
+    border-radius:2px;
+    transition:background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    white-space:nowrap;
+    position:relative;
+  }
+
+  /* Bid = amber, the headline action in this variation */
+  .btn-bid{
+    background:var(--amber);
+    color:var(--navy);
+    box-shadow:0 8px 24px rgba(243,162,47,0.3);
+  }
+  .btn-bid:hover{
+    background:var(--amber-deep);
+    transform:translateY(-2px);
+    box-shadow:0 14px 32px rgba(243,162,47,0.42);
+  }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--white);
+    border:1.5px solid rgba(255,255,255,0.5);
+  }
+  .btn-ghost:hover{
+    border-color:var(--amber);
+    color:var(--amber);
+    transform:translateY(-2px);
+  }
+
+  .btn-maroon{
+    background:var(--maroon);
+    color:var(--white);
+    box-shadow:0 8px 24px rgba(120,0,0,0.3);
+  }
+  .btn-maroon:hover{
+    background:var(--maroon-deep);
+    transform:translateY(-2px);
+    box-shadow:0 14px 32px rgba(120,0,0,0.42);
+  }
+
+  .btn-nav-bid{padding:12px 26px;font-size:0.8rem;}
+
+  .hamburger{
+    display:none;flex-direction:column;gap:5px;
+    background:transparent;padding:8px;
+  }
+  .hamburger span{
+    display:block;width:26px;height:2.5px;
+    background:var(--white);border-radius:2px;
+    transition:transform var(--transition), opacity var(--transition);
+  }
+  .hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+  /* ---------- Hero (with animated crane) ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    background:linear-gradient(125deg, #001b2c 0%, var(--navy) 55%, #022b42 100%);
+    color:var(--white);
+    overflow:hidden;
+    padding:130px 0 110px;
+  }
+  .hero-grid-overlay{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.05) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,0.9), transparent 75%);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,0.9), transparent 75%);
+  }
+  .crane-scene{
+    position:absolute;
+    right:-6%;
+    bottom:0;
+    width:64%;
+    max-width:760px;
+    min-width:480px;
+    opacity:0.9;
+    pointer-events:none;
+  }
+  .crane-scene svg{width:100%;height:auto;display:block;}
+  .hero-scrim{
+    position:absolute;inset:0;
+    background:linear-gradient(100deg, rgba(0,27,44,0.92) 28%, rgba(0,27,44,0.5) 56%, transparent 78%);
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    align-items:center;
+    gap:40px;
+  }
+  .hero-content{max-width:620px;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    text-transform:uppercase;letter-spacing:4px;
+    font-size:0.78rem;color:var(--amber);font-weight:600;
+    margin-bottom:24px;
+    font-family:'Oswald',sans-serif;
+  }
+  .hero-eyebrow .dash{display:block;width:38px;height:2px;background:var(--amber);}
+  .hero h1{
+    font-size:clamp(2.5rem, 5.4vw, 4.1rem);
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:0.5px;
+    margin-bottom:24px;
+  }
+  .hero h1 span{color:var(--amber);}
+  .hero p.lead{
+    font-family:'Inter',sans-serif;
+    text-transform:none;
+    font-size:clamp(1.05rem, 2vw, 1.28rem);
+    color:rgba(255,255,255,0.7);
+    margin-bottom:46px;
+    max-width:480px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+  .hero-ctas .btn{padding:18px 38px;font-size:0.92rem;}
+
+  .hero-bottom-edge{
+    position:absolute;left:0;right:0;bottom:0;height:64px;
+    background:var(--white);
+    clip-path:polygon(0 100%, 100% 100%, 100% 30%, 0 100%);
+  }
+  .hero-bottom-edge::before{
+    content:"";
+    position:absolute;left:0;right:0;bottom:62px;height:3px;
+    background:linear-gradient(90deg, var(--amber), var(--maroon));
+    transform:skewY(-1.4deg);
+    transform-origin:left bottom;
+  }
+
+  /* ---------- Trust bar ---------- */
+  .trust-bar{
+    background:var(--white);
+    padding:0 0 88px;
+  }
+  .trust-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .stat-block{
+    padding:34px 28px;
+    border-left:1px solid var(--line);
+    text-align:left;
+    transition:background var(--transition);
+  }
+  .stat-block:first-child{border-left:none;}
+  .stat-block:hover{background:var(--bg-soft);}
+  .stat-num{
+    font-size:2.4rem;
+    font-weight:700;
+    color:var(--navy);
+    line-height:1;
+    margin-bottom:10px;
+    display:flex;
+    align-items:baseline;
+    gap:6px;
+  }
+  .stat-num small{
+    font-size:1.1rem;
+    color:var(--amber);
+    font-weight:600;
+  }
+  .stat-label{
+    font-size:0.92rem;
+    color:var(--text-muted);
+    font-weight:500;
+    letter-spacing:0.2px;
+  }
+  .stat-icon{
+    width:38px;height:38px;
+    margin-bottom:18px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:8px;
+    background:var(--navy);
+  }
+  .stat-icon svg{width:19px;height:19px;stroke:var(--amber);}
+
+  /* ---------- shared section heads ---------- */
+  .section-head{max-width:680px;margin:0 0 60px;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    text-transform:uppercase;letter-spacing:3.4px;
+    font-size:0.78rem;color:var(--maroon);font-weight:600;
+    margin-bottom:18px;
+    font-family:'Oswald',sans-serif;
+  }
+  .section-eyebrow .dash{display:block;width:30px;height:2px;background:var(--amber);}
+  .section-head.center .section-eyebrow{justify-content:center;}
+  .section-head h2{
+    font-size:clamp(2rem,3.8vw,2.7rem);
+    font-weight:700;
+    color:var(--navy);
+    letter-spacing:0.4px;
+    margin-bottom:16px;
+  }
+  .section-head p{color:var(--text-muted);font-size:1.05rem;}
+
+  /* ---------- Services ---------- */
+  .services{padding:50px 0 110px;background:var(--white);}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .service-card{
+    position:relative;
+    background:var(--white);
+    border:1px solid var(--line);
+    padding:40px 30px 34px;
+    transition:transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+  .service-card::before,
+  .service-card::after{
+    content:"";
+    position:absolute;width:22px;height:22px;
+    border:2px solid transparent;
+    transition:border-color var(--transition);
+  }
+  .service-card::before{top:-1px;left:-1px;border-top-color:var(--amber);border-left-color:var(--amber);}
+  .service-card::after{bottom:-1px;right:-1px;border-bottom-color:var(--amber);border-right-color:var(--amber);}
+  .service-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 22px 50px rgba(0,48,73,0.14);
+    border-color:transparent;
+  }
+  .service-icon{
+    width:54px;height:54px;
+    border:1.5px solid var(--amber);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:26px;
+  }
+  .service-icon svg{width:24px;height:24px;stroke:var(--navy);}
+  .service-card h3{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    font-size:1.18rem;font-weight:600;
+    margin-bottom:14px;color:var(--navy);
+  }
+  .service-card p{color:var(--text-muted);font-size:0.96rem;}
+
+  /* ---------- Projects ---------- */
+  .projects{padding:100px 0;background:var(--navy);color:var(--white);position:relative;overflow:hidden;}
+  .projects::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .projects .container{position:relative;z-index:1;}
+  .projects .section-head h2{color:var(--white);}
+  .projects .section-head p{color:rgba(255,255,255,0.6);}
+
+  .filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:54px;}
+  .filter-btn{
+    background:transparent;
+    color:rgba(255,255,255,0.7);
+    border:1.5px solid rgba(255,255,255,0.22);
+    padding:10px 26px;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    font-size:0.8rem;font-weight:500;
+    transition:all var(--transition);
+  }
+  .filter-btn:hover{border-color:var(--amber);color:var(--amber);}
+  .filter-btn.active{background:var(--amber);border-color:var(--amber);color:var(--navy);}
+
+  .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  .project-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.1);
+    overflow:hidden;
+    transition:opacity .4s ease, transform .4s cubic-bezier(.4,0,.2,1), border-color var(--transition), background var(--transition);
+  }
+  .project-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(243,162,47,0.4);
+    background:rgba(255,255,255,0.06);
+  }
+  .project-card.hidden{display:none;}
+  .project-img{
+    height:190px;position:relative;
+    background:linear-gradient(135deg, rgba(243,162,47,0.1), transparent 60%), color-mix(in srgb, var(--navy) 60%, black);
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .project-img svg{width:54px;height:54px;stroke:rgba(243,162,47,0.5);}
+  .project-body{padding:24px;}
+  .project-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    color:var(--amber);
+    font-size:0.72rem;font-weight:600;letter-spacing:1.6px;
+    margin-bottom:13px;
+  }
+  .project-badge::before{content:"[";color:var(--maroon);}
+  .project-badge::after{content:"]";color:var(--maroon);}
+  .project-body h3{
+    font-family:'Oswald',sans-serif;
+    text-transform:none;
+    font-size:1.08rem;font-weight:600;
+    margin-bottom:7px;color:var(--white);
+    letter-spacing:0.2px;
+  }
+  .project-city{color:rgba(255,255,255,0.55);font-size:0.9rem;}
+
+  /* ---------- Contact ---------- */
+  .contact{padding:110px 0;background:var(--white);}
+  .contact-grid{display:grid;grid-template-columns:0.92fr 1.08fr;gap:0;}
+  .contact-info{
+    background:var(--navy);
+    color:var(--white);
+    padding:56px 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .contact-info::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.05) 1px, transparent 1px);
+    background-size:48px 48px;
+    -webkit-mask-image:radial-gradient(circle at 30% 30%, black, transparent 70%);
+    mask-image:radial-gradient(circle at 30% 30%, black, transparent 70%);
+  }
+  .contact-info > *{position:relative;z-index:1;}
+  .contact-info .section-eyebrow{color:var(--amber);}
+  .contact-info .section-eyebrow .dash{background:var(--maroon);}
+  .contact-info h2{color:var(--white);font-size:clamp(1.9rem,3.4vw,2.4rem);font-weight:700;margin-bottom:14px;letter-spacing:0.4px;}
+  .contact-info p.lead{font-family:'Inter',sans-serif;text-transform:none;color:rgba(255,255,255,0.65);font-size:1.05rem;margin-bottom:40px;}
+  .contact-detail{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px;}
+  .contact-detail .icon{
+    flex-shrink:0;width:42px;height:42px;
+    border:1.5px solid var(--amber);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .contact-detail .icon svg{width:18px;height:18px;stroke:var(--amber);}
+  .contact-detail strong{
+    display:block;color:var(--white);
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1px;
+    font-size:0.84rem;margin-bottom:4px;
+  }
+  .contact-detail span{color:rgba(255,255,255,0.62);font-size:0.94rem;}
+  .contact-detail span a:hover{color:var(--amber);}
+
+  .contact-form{
+    background:var(--bg-soft);
+    padding:56px 48px;
+    border:1px solid var(--line);
+    border-left:none;
+  }
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .form-group{margin-bottom:20px;}
+  .form-group label{
+    display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.4px;
+    font-size:0.78rem;font-weight:500;color:var(--navy);margin-bottom:9px;
+  }
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:13px 15px;
+    border:none;
+    border-bottom:2px solid var(--line);
+    border-radius:0;
+    font-size:0.95rem;font-family:'Inter',sans-serif;
+    background:var(--white);color:var(--navy);
+    transition:border-color var(--transition), box-shadow var(--transition);
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+    outline:none;border-bottom-color:var(--amber);
+    box-shadow:0 1px 0 0 var(--amber);
+  }
+  .form-group textarea{resize:vertical;min-height:118px;}
+  .form-group.error input,.form-group.error select,.form-group.error textarea{
+    border-bottom-color:var(--maroon);
+  }
+  .error-msg{display:none;color:var(--maroon);font-size:0.8rem;margin-top:7px;font-weight:600;}
+  .form-group.error .error-msg{display:block;}
+  .submit-btn{width:100%;padding:17px;font-size:0.92rem;}
+  .form-note{margin-top:22px;font-size:0.88rem;color:var(--text-muted);text-align:center;}
+  .form-note a{color:var(--maroon);font-weight:600;}
+  .form-note a:hover{color:var(--amber-deep);}
+  .form-success{
+    display:none;align-items:center;gap:10px;
+    background:color-mix(in srgb, var(--amber) 16%, white);
+    color:var(--maroon);
+    border-left:3px solid var(--amber);
+    padding:15px 18px;font-size:0.92rem;font-weight:600;margin-bottom:22px;
+  }
+  .form-success.visible{display:flex;}
+
+  /* ---------- Footer ---------- */
+  .footer{background:var(--navy-deep);color:var(--white);padding:54px 0 26px;position:relative;}
+  .footer::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));
+  }
+  .footer-top{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:30px;
+    padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .footer-word{font-size:1.3rem;font-weight:700;letter-spacing:1.5px;color:var(--white);position:relative;display:inline-block;padding-bottom:8px;}
+  .footer-word::after{content:"";position:absolute;bottom:0;left:0;width:42px;height:3px;background:var(--amber);}
+  .footer-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.56rem;letter-spacing:2.6px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .footer-links{display:flex;gap:30px;flex-wrap:wrap;}
+  .footer-links a{
+    color:rgba(255,255,255,0.6);font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.8rem;letter-spacing:1.4px;font-weight:500;transition:color var(--transition);
+  }
+  .footer-links a:hover{color:var(--amber);}
+  .social-icons{display:flex;gap:14px;}
+  .social-icons a{
+    width:42px;height:42px;border:1.5px solid rgba(255,255,255,0.18);
+    display:flex;align-items:center;justify-content:center;
+    transition:all var(--transition);
+  }
+  .social-icons a:hover{border-color:var(--amber);background:var(--amber);}
+  .social-icons a:hover svg{stroke:var(--navy);}
+  .social-icons svg{width:17px;height:17px;stroke:var(--white);fill:none;transition:stroke var(--transition);}
+  .footer-bottom{
+    text-align:center;padding-top:26px;color:rgba(255,255,255,0.45);
+    font-size:0.84rem;letter-spacing:0.6px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1080px){
+    .hero-inner{grid-template-columns:1fr;}
+    .crane-scene{position:relative;right:auto;width:100%;max-width:560px;margin:48px auto 0;opacity:0.55;}
+    .hero-scrim{display:none;}
+    .hero-content{max-width:none;}
+    .contact-grid{grid-template-columns:1fr;}
+    .contact-form{border-left:1px solid var(--line);border-top:none;}
+  }
+  @media (max-width: 980px){
+    .trust-grid{grid-template-columns:repeat(2,1fr);}
+    .stat-block:nth-child(3){border-left:none;}
+    .services-grid{grid-template-columns:1fr 1fr;}
+    .project-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 760px){
+    .hamburger{display:flex;}
+    .nav-links{
+      position:absolute;top:84px;left:0;right:0;
+      background:var(--navy);
+      flex-direction:column;align-items:flex-start;gap:0;
+      max-height:0;overflow:hidden;
+      transition:max-height 0.4s cubic-bezier(.4,0,.2,1);
+      box-shadow:0 16px 32px rgba(0,16,28,0.35);
+    }
+    .nav-links.open{max-height:480px;}
+    .nav-links a{width:100%;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-links a::after{display:none;}
+    .trust-grid{grid-template-columns:1fr;}
+    .stat-block{border-left:none;border-top:1px solid var(--line);}
+    .stat-block:first-child{border-top:none;}
+    .services-grid{grid-template-columns:1fr;}
+    .project-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{flex-direction:column;align-items:flex-start;}
+    .contact-info,.contact-form{padding:40px 26px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#hero" class="nav-link">Home</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="nav-cta">
+      <button class="btn btn-bid btn-nav-bid" id="navBidBtn">Request a Bid</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="hero">
+  <div class="hero-grid-overlay" aria-hidden="true"></div>
+
+  <div class="crane-scene" aria-hidden="true">
+    <svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
+      <!-- distant skyline -->
+      <g opacity="0.16" stroke="#f3a22f" stroke-width="1.5" fill="none">
+        <rect x="430" y="452" width="64" height="68"></rect>
+        <line x1="430" y1="468" x2="494" y2="468"></line>
+        <line x1="430" y1="486" x2="494" y2="486"></line>
+        <line x1="430" y1="504" x2="494" y2="504"></line>
+        <line x1="452" y1="452" x2="452" y2="520"></line>
+        <line x1="474" y1="452" x2="474" y2="520"></line>
+        <rect x="540" y="392" width="46" height="128"></rect>
+        <rect x="600" y="430" width="36" height="90"></rect>
+      </g>
+
+      <!-- ground -->
+      <line x1="380" y1="520" x2="1000" y2="520" stroke="#f3a22f" stroke-width="1" opacity="0.22"></line>
+
+      <!-- crane base -->
+      <rect x="686" y="518" width="28" height="14" fill="#f3a22f" opacity="0.5"></rect>
+
+      <!-- mast -->
+      <g stroke="#f3a22f" stroke-width="2" opacity="0.55">
+        <line x1="700" y1="518" x2="700" y2="172"></line>
+        <line x1="688" y1="500" x2="712" y2="500"></line>
+        <line x1="688" y1="455" x2="712" y2="455"></line>
+        <line x1="688" y1="410" x2="712" y2="410"></line>
+        <line x1="688" y1="365" x2="712" y2="365"></line>
+        <line x1="688" y1="320" x2="712" y2="320"></line>
+        <line x1="688" y1="275" x2="712" y2="275"></line>
+        <line x1="688" y1="230" x2="712" y2="230"></line>
+        <line x1="688" y1="500" x2="712" y2="455"></line>
+        <line x1="712" y1="500" x2="688" y2="455"></line>
+        <line x1="688" y1="410" x2="712" y2="365"></line>
+        <line x1="712" y1="410" x2="688" y2="365"></line>
+        <line x1="688" y1="320" x2="712" y2="275"></line>
+        <line x1="712" y1="320" x2="688" y2="275"></line>
+      </g>
+
+      <!-- rotating crane head: cab, jib, counter-jib, trolley, hook, light -->
+      <g id="craneRotator" stroke="#f3a22f" stroke-width="2" fill="none" opacity="0.7">
+        <animateTransform attributeName="transform" type="rotate"
+          values="-5 700 172; 5 700 172; -5 700 172"
+          dur="26s" repeatCount="indefinite"></animateTransform>
+
+        <!-- tie cables -->
+        <line x1="700" y1="138" x2="600" y2="172"></line>
+        <line x1="700" y1="138" x2="950" y2="172"></line>
+        <line x1="700" y1="138" x2="700" y2="160"></line>
+
+        <!-- counter-jib + counterweight -->
+        <line x1="700" y1="172" x2="600" y2="172"></line>
+        <rect x="582" y="168" width="26" height="20" fill="#f3a22f" fill-opacity="0.35" stroke="none"></rect>
+
+        <!-- cab -->
+        <rect x="684" y="160" width="32" height="24" fill="#003049" fill-opacity="0.4"></rect>
+
+        <!-- jib -->
+        <line x1="700" y1="172" x2="950" y2="172"></line>
+
+        <!-- warning light -->
+        <circle cx="700" cy="136" r="4" fill="#f3a22f" stroke="none">
+          <animate attributeName="opacity" values="1;0.15;1" dur="1.7s" repeatCount="indefinite"></animate>
+        </circle>
+
+        <!-- trolley assembly -->
+        <g id="trolleyGroup">
+          <animateTransform attributeName="transform" type="translate"
+            values="0 0; 175 0; 0 0"
+            dur="17s" repeatCount="indefinite"></animateTransform>
+          <rect x="752" y="166" width="22" height="12" fill="#f3a22f" fill-opacity="0.45" stroke="none"></rect>
+          <line x1="763" y1="178" x2="763" y2="248"></line>
+          <g id="hookGroup">
+            <animateTransform attributeName="transform" type="translate"
+              values="0 0; 0 12; 0 0"
+              dur="3.2s" repeatCount="indefinite"></animateTransform>
+            <path d="M 763 248 q 0 14 12 14" stroke="#f3a22f" stroke-width="2" fill="none"></path>
+          </g>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow"><span class="dash"></span>Lawrence, Kansas — Fire Protection Specialists</p>
+      <h1>Leaders in <span>Fire Alarm</span> Design, Installation, and Service.</h1>
+      <p class="lead">Serving Lawrence, Kansas and the surrounding region — from the first line on the blueprint to the final inspection sign-off.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-bid" id="heroBidBtn">Request a Bid</button>
+        <button class="btn btn-ghost" id="seeWorkBtn">See Our Work</button>
+      </div>
+    </div>
+    <div></div>
+  </div>
+
+  <div class="hero-bottom-edge" aria-hidden="true"></div>
+</section>
+
+<!-- ===================== TRUST BAR ===================== -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="stat-block fade-in">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></div>
+        <div class="stat-num">20<small>+</small></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-block fade-in delay-1">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"></path><path d="M9 12l2 2 4-4"></path></svg></div>
+        <div class="stat-num">100<small>%</small></div>
+        <div class="stat-label">Licensed &amp; Insured</div>
+      </div>
+      <div class="stat-block fade-in delay-2">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-7-4-7 4V3z"></path></svg></div>
+        <div class="stat-num">UL<small>·listed</small></div>
+        <div class="stat-label">UUJS &amp; UUFX Installations</div>
+      </div>
+      <div class="stat-block fade-in delay-3">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></div>
+        <div class="stat-num">KS<small>based</small></div>
+        <div class="stat-label">Lawrence, Kansas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head center fade-in">
+      <p class="section-eyebrow"><span class="dash"></span>What We Do<span class="dash"></span></p>
+      <h2>Comprehensive Fire Alarm Services</h2>
+      <p>From first blueprint to final inspection, we deliver code-compliant fire protection systems built to last.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-4 4 4 4-7 4 4"></path><path d="M3 21h18"></path></svg></div>
+        <h3>Preconstruction Planning &amp; Design</h3>
+        <p>We work with architects and engineers from day one, producing code-compliant fire alarm designs under IBC, IFC, and NFPA standards before a single wire is run.</p>
+      </div>
+      <div class="service-card fade-in delay-1">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"></path></svg></div>
+        <h3>Fire Alarm Installation</h3>
+        <p>Our UL-listed installations (UL-UUJS, UL-UUFX) and NICET-certified technicians ensure your system meets the highest national safety standards.</p>
+      </div>
+      <div class="service-card fade-in delay-2">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></div>
+        <h3>Inspection, Testing &amp; Compliance</h3>
+        <p>We handle all post-installation inspection, testing, city submittals, and compliance documentation so you never have to chase paperwork.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-head center fade-in">
+      <p class="section-eyebrow"><span class="dash"></span>Our Work<span class="dash"></span></p>
+      <h2>Featured Projects</h2>
+      <p>A sample of the fire alarm systems we've designed, installed, and serviced across Lawrence and the surrounding region.</p>
+    </div>
+
+    <div class="filter-bar fade-in">
+      <button class="filter-btn active" data-filter="All">All</button>
+      <button class="filter-btn" data-filter="Commercial">Commercial</button>
+      <button class="filter-btn" data-filter="Government">Government</button>
+      <button class="filter-btn" data-filter="Residential">Residential</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+      <div class="project-card fade-in" data-category="Hospital">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">Hospital</span>
+          <h3>Lawrence Memorial Hospital — Fire Alarm Retrofit</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-1" data-category="School">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">School</span>
+          <h3>USD 497 Elementary School — New Construction</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-2" data-category="Government">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">Government</span>
+          <h3>Douglas County Courthouse — System Upgrade</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in" data-category="Commercial">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">Commercial</span>
+          <h3>Commercial Office Park — Multi-Building Install</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-1" data-category="Industrial">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">Industrial</span>
+          <h3>Industrial Warehouse — Design &amp; Install</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-2" data-category="Residential">
+        <div class="project-img"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"></path><path d="M9 21v-6h6v6"></path><path d="M9 12h.01M15 12h.01M9 9h.01M15 9h.01"></path></svg></div>
+        <div class="project-body">
+          <span class="project-badge">Residential</span>
+          <h3>Senior Living Facility — Full System Replacement</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="contact">
+  <div class="container" style="padding:0;max-width:1220px;">
+    <div class="contact-grid fade-in">
+
+      <div class="contact-info">
+        <p class="section-eyebrow"><span class="dash"></span>Get In Touch</p>
+        <h2>Ready to Start a Project?</h2>
+        <p class="lead">We typically respond within one business day.</p>
+
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.56 2.81.69A2 2 0 0 1 22 16.92z"></path></svg></div>
+          <div>
+            <strong>Call Us</strong>
+            <span><a href="tel:7858563473">785-856-3473</a></span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+          <div>
+            <strong>Mailing Address</strong>
+            <span>PO Box 952, Lawrence, KS 66044</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"></path><path d="M22 6l-10 7L2 6"></path></svg></div>
+          <div>
+            <strong>Email</strong>
+            <span><a href="mailto:accounting@jwebb-kc.com">accounting@jwebb-kc.com</a><br><a href="mailto:planroom@jwebb-kc.com">planroom@jwebb-kc.com</a></span>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-success" id="formSuccess">Thanks — your message has been sent. We'll be in touch within one business day.</div>
+
+        <div class="form-row">
+          <div class="form-group" data-field="firstName">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" autocomplete="given-name">
+            <span class="error-msg">Please enter your first name.</span>
+          </div>
+          <div class="form-group" data-field="lastName">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" autocomplete="family-name">
+            <span class="error-msg">Please enter your last name.</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" data-field="company">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" autocomplete="organization">
+            <span class="error-msg">Please enter your company name.</span>
+          </div>
+          <div class="form-group" data-field="phone">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel">
+            <span class="error-msg">Please enter a valid phone number.</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" data-field="email">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email">
+            <span class="error-msg">Please enter a valid email address.</span>
+          </div>
+          <div class="form-group" data-field="projectType">
+            <label for="projectType">Project Type</label>
+            <select id="projectType" name="projectType">
+              <option value="">Select an option</option>
+              <option value="New Construction">New Construction</option>
+              <option value="Retrofit/Upgrade">Retrofit/Upgrade</option>
+              <option value="Inspection & Testing">Inspection &amp; Testing</option>
+              <option value="Other">Other</option>
+            </select>
+            <span class="error-msg">Please select a project type.</span>
+          </div>
+        </div>
+
+        <div class="form-group" data-field="message">
+          <label for="message">Message</label>
+          <textarea id="message" name="message"></textarea>
+          <span class="error-msg">Please enter a brief message.</span>
+        </div>
+
+        <button type="submit" class="btn btn-bid submit-btn">Send Message</button>
+
+        <p class="form-note">Looking to join the team? Send your resume to <a href="mailto:planroom@jwebb-kc.com">planroom@jwebb-kc.com</a></p>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-word">J WEBB INC<span class="footer-sub">Life Safety Systems</span></div>
+
+      <nav class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="social-icons">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2025 J Webb Inc &middot; dba Life Safety Systems &middot; Lawrence, Kansas
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  function scrollToSection(id){
+    var el = document.querySelector(id);
+    if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  function scrollToContactAndFocus(){
+    scrollToSection('#contact');
+    window.setTimeout(function(){
+      var first = document.getElementById('firstName');
+      if(first){ first.focus(); }
+    }, 550);
+  }
+
+  /* nav links + footer links smooth scroll */
+  var navLinks = document.querySelectorAll('.nav-link, .footer-links a');
+  navLinks.forEach(function(link){
+    link.addEventListener('click', function(e){
+      var href = link.getAttribute('href');
+      if(href && href.charAt(0) === '#'){
+        e.preventDefault();
+        scrollToSection(href);
+        closeMenu();
+      }
+    });
+  });
+
+  /* hamburger */
+  var hamburger = document.getElementById('hamburger');
+  var navLinksContainer = document.getElementById('navLinks');
+  function closeMenu(){
+    hamburger.classList.remove('active');
+    navLinksContainer.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  hamburger.addEventListener('click', function(){
+    var isOpen = navLinksContainer.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  /* navbar background on scroll */
+  var navbar = document.getElementById('navbar');
+  function updateNavbar(){
+    if(window.scrollY > 60){ navbar.classList.add('scrolled'); }
+    else{ navbar.classList.remove('scrolled'); }
+  }
+  window.addEventListener('scroll', updateNavbar, { passive:true });
+  updateNavbar();
+
+  /* CTA buttons */
+  document.getElementById('navBidBtn').addEventListener('click', scrollToContactAndFocus);
+  document.getElementById('heroBidBtn').addEventListener('click', scrollToContactAndFocus);
+  document.getElementById('seeWorkBtn').addEventListener('click', function(){
+    scrollToSection('#projects');
+  });
+
+  /* project filter */
+  var filterBtns = document.querySelectorAll('.filter-btn');
+  var projectCards = document.querySelectorAll('.project-card');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      var filter = btn.getAttribute('data-filter');
+      projectCards.forEach(function(card){
+        var category = card.getAttribute('data-category');
+        var matches = (filter === 'All' || category === filter);
+        if(matches){
+          card.classList.remove('hidden');
+          card.style.opacity = '0';
+          requestAnimationFrame(function(){ card.style.opacity = '1'; });
+        } else {
+          card.style.opacity = '0';
+          window.setTimeout(function(){ card.classList.add('hidden'); }, 300);
+        }
+      });
+    });
+  });
+
+  /* fade-in on scroll */
+  var fadeEls = document.querySelectorAll('.fade-in');
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    fadeEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* form validation */
+  var form = document.getElementById('contactForm');
+  var formSuccess = document.getElementById('formSuccess');
+  var validators = {
+    firstName: function(v){ return v.trim().length > 0; },
+    lastName: function(v){ return v.trim().length > 0; },
+    company: function(v){ return v.trim().length > 0; },
+    phone: function(v){ return /^[\d\s\-\(\)\+\.]{7,}$/.test(v.trim()); },
+    email: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+    projectType: function(v){ return v.trim().length > 0; },
+    message: function(v){ return v.trim().length > 0; }
+  };
+  function validateField(name){
+    var field = form.querySelector('[name="' + name + '"]');
+    var group = form.querySelector('.form-group[data-field="' + name + '"]');
+    if(!field || !group){ return true; }
+    var valid = validators[name](field.value);
+    group.classList.toggle('error', !valid);
+    return valid;
+  }
+  Object.keys(validators).forEach(function(name){
+    var field = form.querySelector('[name="' + name + '"]');
+    if(field){
+      field.addEventListener('blur', function(){ validateField(name); });
+      field.addEventListener('input', function(){
+        var group = form.querySelector('.form-group[data-field="' + name + '"]');
+        if(group.classList.contains('error')){ validateField(name); }
+      });
+    }
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var allValid = true;
+    Object.keys(validators).forEach(function(name){
+      if(!validateField(name)){ allValid = false; }
+    });
+    if(!allValid){
+      var firstError = form.querySelector('.form-group.error input, .form-group.error select, .form-group.error textarea');
+      if(firstError){ firstError.focus(); }
+      formSuccess.classList.remove('visible');
+      return;
+    }
+    formSuccess.classList.add('visible');
+    form.reset();
+    formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+    window.setTimeout(function(){ formSuccess.classList.remove('visible'); }, 6000);
+  });
+
+})();
+</script>
+
+</body>
+</html>
