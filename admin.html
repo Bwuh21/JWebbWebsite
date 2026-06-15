@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin · J Webb Inc</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#003049;--maroon:#780000;--amber:#f3a22f;--gray:#cecece;--white:#fff;
+    --navy-deep:#00263a;--amber-deep:#d9871a;
+    --bg-soft:#eef1f3;--line:#d6dde2;--text-muted:#5a6b78;
+    --transition:.25s cubic-bezier(.4,0,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter','Segoe UI',sans-serif;color:var(--navy);background:var(--bg-soft);line-height:1.6;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.logo-word{font-family:'Oswald','Segoe UI',sans-serif;text-transform:uppercase;}
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  input,select,textarea{font-family:inherit;font-size:.95rem;width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:4px;background:#fff;color:var(--navy);transition:border var(--transition);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--amber);}
+  label{display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.72rem;letter-spacing:1.2px;color:var(--text-muted);margin:0 0 6px;font-weight:600;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;font-size:.82rem;letter-spacing:1.3px;border-radius:3px;transition:all var(--transition);}
+  .btn-amber{background:var(--amber);color:var(--navy);box-shadow:0 6px 18px rgba(243,162,47,.32);}
+  .btn-amber:hover{background:var(--amber-deep);transform:translateY(-1px);}
+  .btn-ghost{background:transparent;color:var(--text-muted);border:1.5px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--navy);color:var(--navy);}
+  .btn-sm{padding:8px 14px;font-size:.72rem;}
+
+  /* ---- Login ---- */
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--navy);position:relative;overflow:hidden;}
+  .login-wrap::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(243,162,47,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(243,162,47,.05) 1px,transparent 1px);background-size:54px 54px;}
+  .login-card{position:relative;background:#fff;padding:44px 40px;border-radius:6px;width:100%;max-width:400px;box-shadow:0 30px 70px rgba(0,16,28,.4);border-top:4px solid var(--amber);}
+  .login-card .logo-word{font-size:1.5rem;font-weight:700;letter-spacing:1.5px;color:var(--navy);}
+  .login-card .logo-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:.58rem;letter-spacing:3px;color:var(--amber);margin-top:6px;font-weight:600;}
+  .login-card h2{font-size:1.05rem;margin:22px 0 4px;letter-spacing:.5px;}
+  .login-card p.sub{color:var(--text-muted);font-size:.88rem;margin-bottom:24px;}
+  .login-card .btn{width:100%;margin-top:8px;}
+  .hint{margin-top:18px;font-size:.78rem;color:var(--text-muted);background:var(--bg-soft);padding:10px 12px;border-radius:4px;border-left:3px solid var(--amber);}
+  .err{color:var(--maroon);font-size:.85rem;margin-top:10px;min-height:1em;font-weight:500;}
+
+  /* ---- App shell ---- */
+  .hidden{display:none !important;}
+  .topbar{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10;border-bottom:1px solid rgba(243,162,47,.25);}
+  .topbar-inner{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .topbar .logo-word{font-size:1.2rem;color:#fff;letter-spacing:1.4px;}
+  .topbar .logo-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:.52rem;letter-spacing:2.6px;color:var(--amber);margin-top:4px;font-weight:600;}
+  .topbar-actions{display:flex;gap:10px;align-items:center;}
+  .topbar-actions a,.topbar-actions button{color:rgba(255,255,255,.8);font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.76rem;letter-spacing:1.2px;font-weight:600;padding:8px 14px;border-radius:3px;background:transparent;transition:all var(--transition);}
+  .topbar-actions a:hover,.topbar-actions button:hover{color:#fff;background:rgba(255,255,255,.08);}
+
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px;}
+  .grid2{display:grid;grid-template-columns:380px 1fr;gap:28px;align-items:start;}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:6px;padding:24px;}
+  .panel h2{font-size:1rem;letter-spacing:.6px;margin-bottom:4px;}
+  .panel .panel-sub{color:var(--text-muted);font-size:.85rem;margin-bottom:20px;}
+  .field{margin-bottom:16px;}
+  .form-actions{display:flex;gap:10px;margin-top:6px;}
+
+  /* photo input + preview */
+  .photo-drop{border:1.5px dashed var(--line);border-radius:5px;padding:16px;text-align:center;color:var(--text-muted);font-size:.85rem;cursor:pointer;transition:all var(--transition);}
+  .photo-drop:hover{border-color:var(--amber);color:var(--navy);}
+  .photo-preview{margin-top:12px;position:relative;display:none;}
+  .photo-preview img{width:100%;height:160px;object-fit:cover;border-radius:5px;}
+  .photo-preview button{position:absolute;top:8px;right:8px;background:rgba(120,0,0,.92);color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;line-height:1;}
+
+  /* counter */
+  .feat-counter{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.78rem;letter-spacing:1px;font-weight:600;color:var(--text-muted);background:var(--bg-soft);padding:7px 14px;border-radius:20px;}
+  .feat-counter b{color:var(--amber);}
+
+  .list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+
+  .proj-row{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:5px;margin-bottom:12px;transition:border var(--transition);}
+  .proj-row.is-featured{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 7%,#fff);}
+  .proj-thumb{width:64px;height:48px;border-radius:4px;flex:0 0 auto;overflow:hidden;background:var(--navy);display:flex;align-items:center;justify-content:center;}
+  .proj-thumb svg{width:22px;height:22px;stroke:rgba(243,162,47,.6);fill:none;}
+  .proj-thumb img{width:100%;height:100%;object-fit:cover;}
+  .proj-meta{flex:1;min-width:0;}
+  .proj-meta h3{font-family:'Oswald',sans-serif;text-transform:none;font-size:.98rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .proj-meta .tags{font-size:.78rem;color:var(--text-muted);margin-top:2px;}
+  .proj-actions{display:flex;gap:6px;flex:0 0 auto;}
+  .icon-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:4px;border:1.5px solid var(--line);background:#fff;transition:all var(--transition);}
+  .icon-btn svg{width:17px;height:17px;stroke:var(--text-muted);fill:none;stroke-width:2;}
+  .icon-btn:hover{border-color:var(--navy);}
+  .icon-btn:hover svg{stroke:var(--navy);}
+  .icon-btn.star.on{background:var(--amber);border-color:var(--amber);}
+  .icon-btn.star.on svg{stroke:var(--navy);fill:var(--navy);}
+  .icon-btn.del:hover{border-color:var(--maroon);}
+  .icon-btn.del:hover svg{stroke:var(--maroon);}
+  .empty{text-align:center;color:var(--text-muted);padding:40px 0;}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:13px 22px;border-radius:5px;font-size:.88rem;box-shadow:0 12px 30px rgba(0,16,28,.4);opacity:0;pointer-events:none;transition:all .3s;z-index:50;border-left:3px solid var(--amber);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+  .toast.error{border-left-color:var(--maroon);}
+
+  @media(max-width:820px){.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- ===================== LOGIN ===================== -->
+<div class="login-wrap" id="loginView">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <span class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></span>
+    <h2>Admin Sign-In</h2>
+    <p class="sub">Enter your passcode to manage projects.</p>
+    <label for="pass">Passcode</label>
+    <input type="password" id="pass" autocomplete="current-password" placeholder="••••••••">
+    <div class="err" id="loginErr"></div>
+    <button class="btn btn-amber" type="submit">Sign In</button>
+    <div class="hint"><b>Demo:</b> passcode is <code>jwebb2025</code>. (This is a front-end demo gate — real, secure login gets added when we move to a live backend.)</div>
+  </form>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="appView" class="hidden">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="logo-word">J WEBB INC<span class="logo-sub">Project Admin</span></span>
+      <div class="topbar-actions">
+        <a href="index-variation-2.html" target="_blank" rel="noopener">View Site ↗</a>
+        <button id="logoutBtn" type="button">Log Out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="grid2">
+
+      <!-- Form -->
+      <div class="panel">
+        <h2 id="formTitle">Add a Project</h2>
+        <p class="panel-sub" id="formSub">Fill this in after finishing a job for a client.</p>
+        <form id="projForm" autocomplete="off">
+          <input type="hidden" id="editId" value="">
+          <div class="field">
+            <label for="title">Project Title *</label>
+            <input type="text" id="title" required placeholder="e.g. Acme Warehouse — Fire Alarm Install">
+          </div>
+          <div class="field">
+            <label for="category">Category *</label>
+            <select id="category"></select>
+          </div>
+          <div class="field">
+            <label for="city">City / Location</label>
+            <input type="text" id="city" placeholder="Lawrence, KS">
+          </div>
+          <div class="field">
+            <label for="description">Short Description</label>
+            <textarea id="description" rows="3" placeholder="A sentence about the work (optional)."></textarea>
+          </div>
+          <div class="field">
+            <label>Project Photo</label>
+            <div class="photo-drop" id="photoDrop">Click to upload a photo (optional)</div>
+            <input type="file" id="photo" accept="image/*" class="hidden">
+            <div class="photo-preview" id="photoPreview">
+              <img id="photoImg" alt="preview">
+              <button type="button" id="photoClear" title="Remove photo">&times;</button>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-amber" id="saveBtn">Add Project</button>
+            <button type="button" class="btn btn-ghost hidden" id="cancelBtn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- List -->
+      <div class="panel">
+        <div class="list-head">
+          <div>
+            <h2>Your Projects</h2>
+            <p class="panel-sub" style="margin:0;">Star up to 3 to feature on the home page.</p>
+          </div>
+          <span class="feat-counter"><span id="featCount">0</span><b id="featMax">/3</b>&nbsp;featured</span>
+        </div>
+        <div id="projList"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="assets/store.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ----- DEMO auth (front-end only) ----- */
+  var ADMIN_PASSCODE = 'jwebb2025';
+  var SESSION_KEY = 'jwebb.admin.session';
+
+  var loginView = document.getElementById('loginView');
+  var appView   = document.getElementById('appView');
+
+  function isAuthed() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
+  function showApp() { loginView.classList.add('hidden'); appView.classList.remove('hidden'); render(); }
+
+  document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var val = document.getElementById('pass').value;
+    if (val === ADMIN_PASSCODE) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.getElementById('loginErr').textContent = '';
+      showApp();
+    } else {
+      document.getElementById('loginErr').textContent = 'Incorrect passcode.';
+    }
+  });
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    sessionStorage.removeItem(SESSION_KEY);
+    appView.classList.add('hidden');
+    loginView.classList.remove('hidden');
+    document.getElementById('pass').value = '';
+  });
+
+  /* ----- toast ----- */
+  var toastEl = document.getElementById('toast'), toastT;
+  function toast(msg, isErr) {
+    toastEl.textContent = msg;
+    toastEl.classList.toggle('error', !!isErr);
+    toastEl.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
+  }
+
+  /* ----- category dropdown ----- */
+  var catSel = document.getElementById('category');
+  ProjectStore.CATEGORIES.forEach(function (c) {
+    var o = document.createElement('option'); o.value = c; o.textContent = c; catSel.appendChild(o);
+  });
+  document.getElementById('featMax').textContent = '/' + ProjectStore.MAX_FEATURED;
+
+  /* ----- photo handling (downscale to keep storage small) ----- */
+  var photoData = null;
+  var photoInput = document.getElementById('photo');
+  var photoPreview = document.getElementById('photoPreview');
+  var photoImg = document.getElementById('photoImg');
+
+  document.getElementById('photoDrop').addEventListener('click', function () { photoInput.click(); });
+  document.getElementById('photoClear').addEventListener('click', function () { setPhoto(null); });
+  photoInput.addEventListener('change', function () {
+    var file = photoInput.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function (ev) { downscale(ev.target.result, 1200, 0.82, setPhoto); };
+    reader.readAsDataURL(file);
+    photoInput.value = '';
+  });
+  function setPhoto(dataUrl) {
+    photoData = dataUrl;
+    if (dataUrl) { photoImg.src = dataUrl; photoPreview.style.display = 'block'; }
+    else { photoPreview.style.display = 'none'; photoImg.src = ''; }
+  }
+  function downscale(src, maxW, quality, cb) {
+    var img = new Image();
+    img.onload = function () {
+      var scale = Math.min(1, maxW / img.width);
+      var w = Math.round(img.width * scale), h = Math.round(img.height * scale);
+      var canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.onerror = function () { cb(src); };
+    img.src = src;
+  }
+
+  /* ----- form submit (add / update) ----- */
+  var form = document.getElementById('projForm');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {
+      title: document.getElementById('title').value,
+      category: catSel.value,
+      city: document.getElementById('city').value,
+      description: document.getElementById('description').value,
+      photo: photoData
+    };
+    if (!data.title.trim()) { toast('Give the project a title.', true); return; }
+
+    var editId = document.getElementById('editId').value;
+    if (editId) { ProjectStore.update(editId, data); toast('Project updated.'); }
+    else { ProjectStore.add(data); toast('Project added.'); }
+    resetForm();
+    render();
+  });
+
+  document.getElementById('cancelBtn').addEventListener('click', resetForm);
+
+  function resetForm() {
+    form.reset();
+    document.getElementById('editId').value = '';
+    setPhoto(null);
+    document.getElementById('formTitle').textContent = 'Add a Project';
+    document.getElementById('formSub').textContent = 'Fill this in after finishing a job for a client.';
+    document.getElementById('saveBtn').textContent = 'Add Project';
+    document.getElementById('cancelBtn').classList.add('hidden');
+  }
+
+  function startEdit(id) {
+    var p = ProjectStore.get(id);
+    if (!p) return;
+    document.getElementById('editId').value = p.id;
+    document.getElementById('title').value = p.title;
+    catSel.value = p.category;
+    document.getElementById('city').value = p.city;
+    document.getElementById('description').value = p.description || '';
+    setPhoto(p.photo || null);
+    document.getElementById('formTitle').textContent = 'Edit Project';
+    document.getElementById('formSub').textContent = 'Update the details, then save.';
+    document.getElementById('saveBtn').textContent = 'Save Changes';
+    document.getElementById('cancelBtn').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ----- icons ----- */
+  var STAR = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg>';
+  var EDIT = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>';
+  var TRASH = '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+
+  /* ----- render list ----- */
+  var listEl = document.getElementById('projList');
+  function render() {
+    var items = ProjectStore.all();
+    document.getElementById('featCount').textContent = ProjectStore.featuredCount();
+
+    if (!items.length) {
+      listEl.innerHTML = '<div class="empty">No projects yet. Add your first one on the left.</div>';
+      return;
+    }
+    listEl.innerHTML = '';
+    items.forEach(function (p) {
+      var row = document.createElement('div');
+      row.className = 'proj-row' + (p.featured ? ' is-featured' : '');
+      var thumb = p.photo
+        ? '<img src="' + p.photo + '" alt="">'
+        : '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + ProjectStore.iconFor(p.category) + '</svg>';
+      row.innerHTML =
+        '<div class="proj-thumb">' + thumb + '</div>' +
+        '<div class="proj-meta"><h3></h3><div class="tags"></div></div>' +
+        '<div class="proj-actions">' +
+          '<button class="icon-btn star' + (p.featured ? ' on' : '') + '" title="Feature on home page">' + STAR + '</button>' +
+          '<button class="icon-btn edit" title="Edit">' + EDIT + '</button>' +
+          '<button class="icon-btn del" title="Delete">' + TRASH + '</button>' +
+        '</div>';
+      // safe text
+      row.querySelector('h3').textContent = p.title;
+      row.querySelector('.tags').textContent = p.category + (p.city ? ' · ' + p.city : '') + (p.featured ? ' · Featured' : '');
+
+      row.querySelector('.star').addEventListener('click', function () {
+        var res = ProjectStore.toggleFeatured(p.id);
+        if (!res.ok) { toast(res.error, true); return; }
+        toast(res.featured ? 'Featured on home page.' : 'Removed from featured.');
+        render();
+      });
+      row.querySelector('.edit').addEventListener('click', function () { startEdit(p.id); });
+      row.querySelector('.del').addEventListener('click', function () {
+        if (confirm('Delete "' + p.title + '"? This cannot be undone.')) {
+          ProjectStore.remove(p.id); toast('Project deleted.'); resetForm(); render();
+        }
+      });
+      listEl.appendChild(row);
+    });
+  }
+
+  /* ----- boot ----- */
+  if (isAuthed()) showApp();
+})();
+</script>
+</body>
+</html>
