@@ -158,14 +158,23 @@
   .hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
 
   /* ========== HERO ========== */
+  .hero-track{position:relative;height:280vh;background:#010f18;}
   .hero{
-    position:relative;min-height:100vh;
+    position:sticky;top:0;height:100vh;
     display:flex;align-items:center;
     background:#010f18;color:var(--white);
     overflow:hidden;padding:130px 0 100px;
   }
+  .hero-video{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;z-index:0;
+  }
+  #heroProgress{
+    position:absolute;left:0;bottom:0;height:3px;width:0;
+    background:var(--amber);z-index:6;box-shadow:0 0 12px var(--amber);
+  }
   .hero-blueprint{
-    position:absolute;inset:0;
+    position:absolute;inset:0;z-index:1;
     background-image:
       linear-gradient(rgba(243,162,47,0.06) 1px, transparent 1px),
       linear-gradient(90deg, rgba(243,162,47,0.06) 1px, transparent 1px);
@@ -175,7 +184,7 @@
   @keyframes blueprintDrift{0%{background-position:0 0;}100%{background-position:60px 60px;}}
 
   .hero-glow{
-    position:absolute;top:-10%;right:-8%;width:75%;height:120%;
+    position:absolute;top:-10%;right:-8%;width:75%;height:120%;z-index:1;
     background:radial-gradient(ellipse at 60% 40%, rgba(120,0,0,0.28) 0%, rgba(243,162,47,0.12) 35%, transparent 68%);
     pointer-events:none;
   }
@@ -185,8 +194,8 @@
   }
   .hero-schematic svg{width:100%;height:100%;}
   .hero-scrim{
-    position:absolute;inset:0;
-    background:linear-gradient(100deg, rgba(1,15,24,0.98) 32%, rgba(1,15,24,0.7) 56%, rgba(1,15,24,0.1) 80%);
+    position:absolute;inset:0;z-index:2;
+    background:linear-gradient(100deg, rgba(1,15,24,0.92) 28%, rgba(1,15,24,0.6) 54%, rgba(1,15,24,0.15) 82%);
   }
   .hero-inner{
     position:relative;z-index:3;
@@ -665,11 +674,14 @@
 </header>
 
 <!-- ===================== HERO ===================== -->
+<div class="hero-track" id="heroTrack">
 <section class="hero" id="hero">
+  <video class="hero-video" id="heroVideo" src="assets/video/construction-hero-scrub.mp4" muted playsinline preload="auto" aria-hidden="true"></video>
+  <div id="heroProgress"></div>
   <div class="hero-blueprint" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
 
-  <div class="hero-schematic" aria-hidden="true">
+  <div class="hero-schematic" aria-hidden="true" style="display:none">
     <svg viewBox="0 0 800 700" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
       <g stroke="rgba(243,162,47,0.15)" stroke-width="1.5" fill="none">
         <rect x="80" y="80" width="640" height="540" rx="2"/>
@@ -717,21 +729,15 @@
 
   <div class="container hero-inner">
     <div class="hero-content">
-      <p class="hero-eyebrow"><span class="dash"></span>Lawrence, Kansas — Fire Protection Specialists</p>
+      <p class="hero-eyebrow"><span class="dash"></span>Lawrence, Kansas</p>
       <h1>
         <span class="line-accent">Protecting Lives.</span><br>
-        Engineered<br>
-        <span class="line-red">Right.</span>
+        Engineered <span class="line-red">Right.</span>
       </h1>
-      <p class="lead">J Webb Inc designs, installs, and services fire alarm systems across Lawrence, KS and the surrounding region — from the first line on the blueprint to the final inspection sign-off.</p>
+      <p class="lead">Fire alarm systems designed, installed, and serviced — from blueprint to final inspection.</p>
       <div class="hero-ctas">
         <button class="btn btn-bid" id="heroBidBtn">Request a Bid</button>
         <button class="btn btn-ghost" id="seeWorkBtn">See Our Work</button>
-      </div>
-      <div class="hero-badges">
-        <div class="hero-badge"><span class="dot"></span>NICET Certified Technicians</div>
-        <div class="hero-badge"><span class="dot"></span>UL-Listed Installations</div>
-        <div class="hero-badge"><span class="dot"></span>30+ Years Experience</div>
       </div>
     </div>
     <div></div>
@@ -742,6 +748,7 @@
     <span>Scroll</span>
   </div>
 </section>
+</div><!-- /.hero-track -->
 
 <!-- ===================== TRUST BAR ===================== -->
 <section class="trust-bar">
@@ -1165,6 +1172,56 @@
     window.setTimeout(function(){ formSuccess.classList.remove('visible'); }, 6000);
   });
 
+})();
+</script>
+
+<!-- ===================== HERO SCROLL-SCRUB ===================== -->
+<script>
+(function(){
+  var track = document.getElementById('heroTrack');
+  var video = document.getElementById('heroVideo');
+  var bar   = document.getElementById('heroProgress');
+  if(!track || !video) return;
+
+  var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+
+  var ready=false, target=0, current=0;
+  function markReady(){ if(ready) return; ready=true; onScroll(); }
+  // If the video is cached, metadata may already be present before this runs,
+  // so the 'loadedmetadata' event would never fire — check readyState directly.
+  if(video.readyState >= 1){ markReady(); }
+  else { video.addEventListener('loadedmetadata', markReady); }
+  // Safari/Chrome sometimes need a nudge to decode the first frame
+  video.addEventListener('loadeddata', function(){ try{ video.currentTime=0.001; }catch(e){} });
+
+  function progress(){
+    var r = track.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    return total>0 ? clamp(-r.top, 0, total)/total : 0;
+  }
+  function onScroll(){
+    var p = progress();
+    if(ready) target = p * (video.duration || 0);
+    if(bar) bar.style.width = (p*100)+'%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+
+  // frame-rate-independent damping for a smooth, weighty follow
+  var last = performance.now();
+  (function tick(now){
+    var dt = Math.min((now-last)/1000, 0.05); last = now;
+    if(ready){
+      // smoothing: higher = snappier. ~12 feels glassy without lag.
+      var k = 1 - Math.exp(-12*dt);
+      current += (target-current)*k;
+      if(Math.abs(current - video.currentTime) > 0.003){
+        try{ video.currentTime = current; }catch(e){}
+      }
+    }
+    requestAnimationFrame(tick);
+  })(last);
+  onScroll();
 })();
 </script>
 
