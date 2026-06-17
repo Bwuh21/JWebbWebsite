@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>J Webb Inc | Fire Alarm Design, Installation &amp; Service — Lawrence, KS</title>
+<meta name="description" content="J Webb Inc (dba Life Safety Systems) provides fire alarm design, installation, and service in Lawrence, Kansas and the surrounding region.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* Anti-flash guard: only hide pre-animation elements when JS is on AND
+     the visitor hasn't asked for reduced motion. Runs before first paint. */
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduce){ document.documentElement.className += ' anim-ready'; }
+  })();
+</script>
+<style>
+  :root{
+    --navy:#003049;
+    --maroon:#780000;
+    --amber:#f3a22f;
+    --gray:#cecece;
+    --white:#ffffff;
+    --navy-deep:color-mix(in srgb, var(--navy) 78%, black);
+    --navy-light:color-mix(in srgb, var(--navy) 70%, white);
+    --amber-deep:color-mix(in srgb, var(--amber) 80%, black);
+    --maroon-deep:color-mix(in srgb, var(--maroon) 78%, black);
+    --bg-soft:color-mix(in srgb, var(--gray) 28%, white);
+    --line:color-mix(in srgb, var(--navy) 16%, white);
+    --text-muted:color-mix(in srgb, var(--navy) 48%, #6b7280);
+    --transition:0.3s cubic-bezier(.4,0,.2,1);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Inter','Segoe UI',sans-serif;
+    color:var(--navy);line-height:1.65;
+    background:var(--white);-webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.logo-word,.footer-word,.stat-num{
+    font-family:'Oswald','Segoe UI',sans-serif;text-transform:uppercase;
+  }
+
+  img,svg{display:block;max-width:100%;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+
+  .container{max-width:1220px;margin:0 auto;padding:0 24px;}
+  section{scroll-margin-top:84px;}
+  ::selection{background:var(--amber);color:var(--navy);}
+
+  /* ---------- animations ---------- */
+  .fade-in{
+    opacity:0;transform:translateY(40px);
+    transition:opacity 0.85s cubic-bezier(.16,1,.3,1), transform 0.85s cubic-bezier(.16,1,.3,1);
+  }
+  .fade-in.is-visible{opacity:1;transform:translateY(0);}
+  .fade-in.delay-1{transition-delay:.1s;}
+  .fade-in.delay-2{transition-delay:.2s;}
+  .fade-in.delay-3{transition-delay:.3s;}
+  .fade-in.delay-4{transition-delay:.4s;}
+  .slide-left{
+    opacity:0;transform:translateX(-48px);
+    transition:opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  }
+  .slide-right{
+    opacity:0;transform:translateX(48px);
+    transition:opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+  }
+  .slide-left.is-visible,.slide-right.is-visible{opacity:1;transform:translateX(0);}
+
+  /* ========== NAV ========== */
+  .navbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background var(--transition), border-color var(--transition), box-shadow var(--transition);
+  }
+  .navbar.scrolled{
+    background:rgba(0,30,46,0.97);
+    backdrop-filter:blur(12px);
+    border-bottom-color:rgba(243,162,47,0.25);
+    box-shadow:0 4px 28px rgba(0,16,28,0.3);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:84px;}
+
+  .logo-word{
+    font-size:1.4rem;font-weight:700;color:var(--white);
+    letter-spacing:1.5px;line-height:1;
+    position:relative;display:inline-block;padding-bottom:8px;
+  }
+  .logo-word::after{
+    content:"";position:absolute;bottom:0;left:0;
+    width:46px;height:3px;background:var(--amber);
+  }
+  .logo-sub{
+    display:block;font-family:'Inter',sans-serif;text-transform:uppercase;
+    font-size:0.58rem;letter-spacing:3px;color:var(--amber);
+    margin-top:9px;font-weight:500;
+  }
+
+  .nav-links{display:flex;align-items:center;gap:38px;}
+  .nav-links a{
+    color:rgba(255,255,255,0.75);font-family:'Oswald',sans-serif;
+    text-transform:uppercase;font-size:0.85rem;letter-spacing:1.6px;font-weight:500;
+    position:relative;padding:8px 2px;
+    transition:color var(--transition);
+  }
+  /* the sliding underline */
+  .nav-links a::after{
+    content:"";position:absolute;bottom:2px;left:0;
+    width:0;height:2px;background:var(--amber);
+    transition:width 0.28s cubic-bezier(.4,0,.2,1);
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{width:100%;}
+  /* active state — full underline + full brightness */
+  .nav-links a.nav-active{
+    color:var(--white);
+  }
+  .nav-links a.nav-active::after{
+    width:100%;
+  }
+
+  .nav-cta{display:flex;align-items:center;gap:22px;}
+
+  /* ========== BUTTONS ========== */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px 32px;font-family:'Oswald',sans-serif;
+    text-transform:uppercase;font-weight:600;font-size:0.88rem;letter-spacing:1.6px;
+    border-radius:2px;
+    transition:background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    white-space:nowrap;position:relative;overflow:hidden;
+  }
+  .btn::before{
+    content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;
+    background:rgba(255,255,255,0.08);transition:left 0.4s ease;
+  }
+  .btn:hover::before{left:100%;}
+
+  .btn-bid{background:var(--amber);color:var(--navy);box-shadow:0 8px 24px rgba(243,162,47,0.35);}
+  .btn-bid:hover{background:var(--amber-deep);transform:translateY(-2px);box-shadow:0 16px 36px rgba(243,162,47,0.48);}
+
+  .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.5);}
+  .btn-ghost:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px);}
+
+  .btn-outline-navy{background:transparent;color:var(--navy);border:2px solid var(--navy);}
+  .btn-outline-navy:hover{background:var(--navy);color:var(--white);transform:translateY(-2px);}
+
+  .btn-outline-amber{background:transparent;color:var(--amber);border:2px solid var(--amber);}
+  .btn-outline-amber:hover{background:var(--amber);color:var(--navy);transform:translateY(-2px);}
+
+  .btn-nav-bid{padding:12px 26px;font-size:0.8rem;}
+
+  .hamburger{display:none;flex-direction:column;gap:5px;background:transparent;padding:8px;}
+  .hamburger span{display:block;width:26px;height:2.5px;background:var(--white);border-radius:2px;transition:transform var(--transition), opacity var(--transition);}
+  .hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+  /* ========== HERO · CINEMATIC PHOTO ========== */
+  .hero-track{position:relative;height:175vh;background:#00121c;}
+  .hero{
+    position:sticky;top:0;height:100vh;
+    display:flex;align-items:flex-end;
+    background:#00121c;color:var(--white);
+    overflow:hidden;padding:0 0 11vh;
+  }
+  .hero-media{position:absolute;inset:0;z-index:0;overflow:hidden;}
+  .hero-photo{
+    width:100%;height:100%;object-fit:cover;object-position:center 42%;
+    transform:scale(1.1);
+    animation:kenBurns 26s ease-in-out infinite alternate;
+    will-change:transform;
+  }
+  @keyframes kenBurns{
+    0%{transform:scale(1.08) translate3d(0,0,0);}
+    100%{transform:scale(1.2) translate3d(-2.5%,-3%,0);}
+  }
+  #heroProgress{
+    position:absolute;left:0;bottom:0;height:3px;width:0;
+    background:var(--amber);z-index:7;box-shadow:0 0 12px var(--amber);
+  }
+  /* cinematic darkening so big type stays readable over the photo */
+  .hero-scrim{
+    position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(95deg, rgba(0,13,21,0.95) 0%, rgba(0,13,21,0.74) 40%, rgba(0,13,21,0.28) 74%, rgba(0,13,21,0.08) 100%),
+      linear-gradient(0deg, rgba(0,13,21,0.96) 0%, rgba(0,13,21,0.30) 34%, transparent 62%);
+  }
+  .hero-vignette{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:radial-gradient(125% 105% at 48% 40%, transparent 50%, rgba(0,7,12,0.6) 100%);
+  }
+  .hero-grain{
+    position:absolute;inset:0;z-index:3;pointer-events:none;opacity:0.045;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;
+  }
+  .hero-glow{
+    position:absolute;bottom:-20%;left:-10%;width:70%;height:90%;z-index:1;
+    background:radial-gradient(ellipse at 30% 70%, rgba(243,162,47,0.16) 0%, rgba(120,0,0,0.12) 38%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:4;width:100%;}
+  .hero-content{max-width:820px;}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:14px;
+    text-transform:uppercase;letter-spacing:4.5px;font-size:0.78rem;
+    color:var(--amber);font-weight:600;margin-bottom:24px;font-family:'Oswald',sans-serif;
+    text-shadow:0 2px 18px rgba(0,0,0,0.6);
+  }
+  .hero-eyebrow .dash{display:block;width:42px;height:2px;background:var(--amber);box-shadow:0 0 10px rgba(243,162,47,0.7);}
+  .hero h1{
+    font-size:clamp(3rem, 7vw, 5.8rem);font-weight:700;
+    line-height:0.98;letter-spacing:0.5px;margin-bottom:26px;
+    text-shadow:0 4px 48px rgba(0,0,0,0.55);
+  }
+  .hero h1 .line-accent{color:var(--amber);}
+  .hero h1 .line-red{color:#ff6b5e;}
+  .hero p.lead{
+    font-family:'Inter',sans-serif;text-transform:none;
+    font-size:clamp(1.05rem, 1.7vw, 1.3rem);
+    color:rgba(255,255,255,0.82);margin-bottom:42px;max-width:580px;line-height:1.75;
+    text-shadow:0 2px 22px rgba(0,0,0,0.55);
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
+  .hero-ctas .btn{padding:18px 40px;font-size:0.9rem;}
+  /* cinematic credential strip under the CTAs */
+  .hero-badges{display:flex;gap:30px;margin-top:48px;flex-wrap:wrap;align-items:center;}
+  .hero-badge{
+    display:flex;align-items:center;gap:11px;font-family:'Oswald',sans-serif;
+    text-transform:uppercase;font-size:0.74rem;letter-spacing:2px;color:rgba(255,255,255,0.72);
+  }
+  .hero-badge .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0;
+    box-shadow:0 0 10px rgba(243,162,47,0.85);animation:badgePulse 2s ease-in-out infinite;
+  }
+  .hero-badge:nth-child(2) .dot{animation-delay:.35s;}
+  .hero-badge:nth-child(3) .dot{animation-delay:.7s;}
+  .hero-badge:nth-child(4) .dot{animation-delay:1.05s;}
+  @keyframes badgePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.7);}}
+
+  .hero-scroll{
+    position:absolute;bottom:38px;left:50%;transform:translateX(-50%);z-index:4;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.65rem;letter-spacing:2.5px;color:rgba(255,255,255,0.35);
+  }
+  .hero-scroll-line{
+    width:1px;height:40px;background:linear-gradient(to bottom, rgba(243,162,47,0.7), transparent);
+    animation:scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine{
+    0%{transform:scaleY(0);transform-origin:top;}
+    50%{transform:scaleY(1);transform-origin:top;}
+    51%{transform:scaleY(1);transform-origin:bottom;}
+    100%{transform:scaleY(0);transform-origin:bottom;}
+  }
+
+  /* ========== TRUST BAR ========== */
+  .trust-bar{background:var(--white);border-bottom:1px solid var(--line);padding:0 0 80px;}
+  .trust-grid{display:grid;grid-template-columns:repeat(4,1fr);}
+  .stat-block{
+    padding:36px 28px;border-left:1px solid var(--line);
+    text-align:left;transition:background var(--transition);
+    position:relative;overflow:hidden;
+  }
+  .stat-block::before{
+    content:"";position:absolute;bottom:0;left:0;
+    width:0;height:3px;background:var(--amber);transition:width 0.5s ease;
+  }
+  .stat-block:hover::before{width:100%;}
+  .stat-block:first-child{border-left:none;}
+  .stat-block:hover{background:var(--bg-soft);}
+  .stat-num{
+    font-size:2.6rem;font-weight:700;color:var(--navy);
+    line-height:1;margin-bottom:10px;display:flex;align-items:baseline;gap:6px;
+  }
+  .stat-num small{font-size:1.1rem;color:var(--amber);font-weight:600;}
+  .stat-label{font-size:0.92rem;color:var(--text-muted);font-weight:500;letter-spacing:0.2px;}
+  .stat-icon{
+    width:42px;height:42px;margin-bottom:20px;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:8px;background:var(--navy);
+  }
+  .stat-icon svg{width:20px;height:20px;stroke:var(--amber);}
+
+  /* ========== SHARED SECTION HEADS ========== */
+  .section-head{max-width:680px;margin:0 0 64px;}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .section-eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    text-transform:uppercase;letter-spacing:3.4px;
+    font-size:0.75rem;color:var(--maroon);font-weight:600;
+    margin-bottom:18px;font-family:'Oswald',sans-serif;
+  }
+  .section-eyebrow .dash{display:block;width:30px;height:2px;background:var(--amber);}
+  .section-head.center .section-eyebrow{justify-content:center;}
+  .section-head h2{
+    font-size:clamp(2rem,3.8vw,2.8rem);font-weight:700;
+    color:var(--navy);letter-spacing:0.4px;margin-bottom:16px;
+  }
+  .section-head p{color:var(--text-muted);font-size:1.05rem;}
+
+  /* ========== PROJECTS ========== */
+  .projects{padding:110px 0;background:var(--navy);color:var(--white);position:relative;overflow:hidden;}
+  .projects::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .projects .container{position:relative;z-index:1;}
+  .projects .section-head h2{color:var(--white);}
+  .projects .section-head p{color:rgba(255,255,255,0.6);}
+
+  .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .project-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);overflow:hidden;
+    transition:transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .project-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 28px 56px rgba(0,0,0,0.3);
+    border-color:rgba(243,162,47,0.5);
+    background:rgba(255,255,255,0.07);
+  }
+  .project-img{
+    height:200px;position:relative;overflow:hidden;
+    background:linear-gradient(135deg, color-mix(in srgb, var(--navy) 85%, black), var(--navy));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .project-img::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(243,162,47,0.08), transparent 60%);
+    transition:opacity var(--transition);
+  }
+  .project-card:hover .project-img::before{opacity:2;}
+  .project-img-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+  .project-img svg{width:52px;height:52px;stroke:rgba(243,162,47,0.45);transition:stroke var(--transition), transform var(--transition);}
+  .project-card:hover .project-img svg{stroke:rgba(243,162,47,0.75);transform:scale(1.08);}
+  .project-body{padding:26px;}
+  .project-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    color:var(--amber);font-size:0.72rem;font-weight:600;letter-spacing:1.6px;margin-bottom:12px;
+  }
+  .project-badge::before{content:"[";color:var(--maroon);}
+  .project-badge::after{content:"]";color:var(--maroon);}
+  .project-body h3{
+    font-family:'Oswald',sans-serif;text-transform:none;
+    font-size:1.08rem;font-weight:600;margin-bottom:6px;color:var(--white);
+  }
+  .project-city{color:rgba(255,255,255,0.5);font-size:0.88rem;}
+
+  .projects-cta{
+    text-align:center;margin-top:56px;
+  }
+  .projects-cta .btn{padding:18px 48px;font-size:0.9rem;}
+
+  /* ========== SERVICES ========== */
+  .services{padding:110px 0;background:var(--white);}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+  .service-card{
+    position:relative;background:var(--white);border:1px solid var(--line);
+    padding:42px 32px 36px;
+    transition:transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+    overflow:hidden;
+  }
+  .service-card-bg{
+    position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(243,162,47,0.06), transparent 60%);
+    opacity:0;transition:opacity var(--transition);
+  }
+  .service-card:hover .service-card-bg{opacity:1;}
+  .service-card::before,.service-card::after{
+    content:"";position:absolute;width:24px;height:24px;
+    border:2px solid transparent;transition:border-color var(--transition);
+  }
+  .service-card::before{top:-1px;left:-1px;border-top-color:var(--amber);border-left-color:var(--amber);}
+  .service-card::after{bottom:-1px;right:-1px;border-bottom-color:var(--amber);border-right-color:var(--amber);}
+  .service-card:hover{transform:translateY(-8px);box-shadow:0 28px 56px rgba(0,48,73,0.14);border-color:transparent;}
+  .service-num{
+    font-family:'Oswald',sans-serif;font-size:3.5rem;font-weight:700;
+    color:rgba(0,48,73,0.05);line-height:1;
+    position:absolute;top:18px;right:24px;letter-spacing:-2px;
+  }
+  .service-icon{
+    width:58px;height:58px;border:1.5px solid var(--amber);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;margin-bottom:28px;
+    position:relative;z-index:1;transition:background var(--transition);
+  }
+  .service-card:hover .service-icon{background:var(--amber);}
+  .service-card:hover .service-icon svg{stroke:var(--navy);}
+  .service-icon svg{width:24px;height:24px;stroke:var(--navy);transition:stroke var(--transition);}
+  .service-card h3{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.4px;
+    font-size:1.2rem;font-weight:600;margin-bottom:14px;color:var(--navy);
+    position:relative;z-index:1;
+  }
+  .service-card p{color:var(--text-muted);font-size:0.96rem;position:relative;z-index:1;}
+  .service-card-link{
+    display:inline-flex;align-items:center;gap:8px;margin-top:22px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.78rem;letter-spacing:1.6px;color:var(--navy);font-weight:600;
+    transition:color var(--transition);position:relative;z-index:1;
+  }
+  .service-card:hover .service-card-link{color:var(--amber);}
+  .service-card-link svg{width:14px;height:14px;stroke:currentColor;transition:transform var(--transition);}
+  .service-card:hover .service-card-link svg{transform:translateX(4px);}
+
+  /* ========== ABOUT ========== */
+  .about{
+    padding:120px 0;background:var(--bg-soft);
+    position:relative;overflow:hidden;
+  }
+  .about::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));
+  }
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+
+  .about-visual{position:relative;}
+  .about-img-wrap{
+    position:relative;background:var(--navy);padding:48px;overflow:hidden;
+  }
+  .about-img-wrap::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.07) 1px, transparent 1px);
+    background-size:36px 36px;
+  }
+  .about-img-inner{position:relative;z-index:1;}
+  .about-flame-icon{
+    width:90px;height:90px;background:rgba(243,162,47,0.12);
+    border:2px solid rgba(243,162,47,0.35);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin-bottom:32px;position:relative;
+  }
+  .about-flame-icon::after{
+    content:"";position:absolute;inset:-8px;border-radius:50%;
+    border:1px solid rgba(243,162,47,0.18);
+    animation:ringPulse 3s ease-in-out infinite;
+  }
+  @keyframes ringPulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.12);opacity:0.4;}}
+  .about-flame-icon svg{width:40px;height:40px;stroke:var(--amber);}
+  .about-tagline{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:1.6rem;font-weight:700;color:var(--white);
+    letter-spacing:1px;line-height:1.2;margin-bottom:20px;
+  }
+  .about-tagline span{color:var(--amber);}
+  .about-since{font-family:'Inter',sans-serif;font-size:0.9rem;color:rgba(255,255,255,0.5);}
+  .about-accent-bar{
+    position:absolute;bottom:-18px;right:-18px;
+    width:140px;height:140px;border:3px solid rgba(243,162,47,0.25);pointer-events:none;
+  }
+  .about-accent-bar::before{
+    content:"";position:absolute;bottom:-12px;right:-12px;
+    width:70px;height:70px;background:var(--amber);opacity:0.12;
+  }
+
+  .about-mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px;}
+  .about-mini-stat{
+    background:var(--white);border:1px solid var(--line);
+    padding:22px 20px;border-left:3px solid var(--amber);
+    transition:transform var(--transition), box-shadow var(--transition);
+  }
+  .about-mini-stat:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,48,73,0.1);}
+  .about-mini-stat .num{
+    font-family:'Oswald',sans-serif;font-size:1.9rem;font-weight:700;
+    color:var(--navy);line-height:1;margin-bottom:6px;
+  }
+  .about-mini-stat .num small{font-size:1rem;color:var(--amber);}
+  .about-mini-stat .label{font-size:0.82rem;color:var(--text-muted);font-weight:500;}
+
+  .about-content .section-eyebrow{margin-bottom:14px;}
+  .about-content h2{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:clamp(2rem,3.5vw,2.7rem);font-weight:700;
+    color:var(--navy);letter-spacing:0.4px;margin-bottom:22px;line-height:1.1;
+  }
+  .about-content h2 span{color:var(--maroon);}
+  .about-content p{color:var(--text-muted);font-size:1.03rem;line-height:1.8;margin-bottom:20px;}
+
+  .about-values{display:flex;flex-direction:column;gap:16px;margin:36px 0 42px;}
+  .about-value{
+    display:flex;align-items:flex-start;gap:18px;padding:18px 22px;
+    background:var(--white);border:1px solid var(--line);border-left:3px solid var(--maroon);
+    transition:border-left-color var(--transition), transform var(--transition);
+  }
+  .about-value:hover{border-left-color:var(--amber);transform:translateX(6px);}
+  .about-value-icon{
+    flex-shrink:0;width:40px;height:40px;background:var(--navy);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .about-value-icon svg{width:18px;height:18px;stroke:var(--amber);}
+  .about-value-body strong{
+    display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.88rem;letter-spacing:1px;color:var(--navy);margin-bottom:4px;
+  }
+  .about-value-body span{font-size:0.9rem;color:var(--text-muted);}
+
+  /* ========== CONTACT ========== */
+  .contact{padding:120px 0;background:var(--white);}
+  .contact-grid{display:grid;grid-template-columns:0.92fr 1.08fr;gap:0;}
+  .contact-info{
+    background:var(--navy);color:var(--white);
+    padding:60px 50px;position:relative;overflow:hidden;
+  }
+  .contact-info::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.05) 1px, transparent 1px);
+    background-size:48px 48px;
+    -webkit-mask-image:radial-gradient(circle at 30% 30%, black, transparent 70%);
+    mask-image:radial-gradient(circle at 30% 30%, black, transparent 70%);
+  }
+  .contact-info > *{position:relative;z-index:1;}
+  .contact-info .section-eyebrow{color:var(--amber);}
+  .contact-info .section-eyebrow .dash{background:var(--maroon);}
+  .contact-info h2{color:var(--white);font-size:clamp(1.9rem,3.4vw,2.4rem);font-weight:700;margin-bottom:14px;}
+  .contact-info p.lead{font-family:'Inter',sans-serif;text-transform:none;color:rgba(255,255,255,0.65);font-size:1.05rem;margin-bottom:40px;}
+  .contact-detail{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px;}
+  .contact-detail .icon{
+    flex-shrink:0;width:44px;height:44px;border:1.5px solid var(--amber);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;transition:background var(--transition);
+  }
+  .contact-detail:hover .icon{background:rgba(243,162,47,0.12);}
+  .contact-detail .icon svg{width:18px;height:18px;stroke:var(--amber);}
+  .contact-detail strong{
+    display:block;color:var(--white);font-family:'Oswald',sans-serif;
+    text-transform:uppercase;letter-spacing:1px;font-size:0.84rem;margin-bottom:4px;
+  }
+  .contact-detail span{color:rgba(255,255,255,0.62);font-size:0.94rem;}
+  .contact-detail span a:hover{color:var(--amber);}
+
+  .contact-form{
+    background:var(--bg-soft);padding:60px 50px;
+    border:1px solid var(--line);border-left:none;
+  }
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .form-group{margin-bottom:20px;}
+  .form-group label{
+    display:block;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    letter-spacing:1.4px;font-size:0.78rem;font-weight:500;color:var(--navy);margin-bottom:9px;
+  }
+  .form-group input,.form-group select,.form-group textarea{
+    width:100%;padding:13px 15px;border:none;
+    border-bottom:2px solid var(--line);border-radius:0;
+    font-size:0.95rem;font-family:'Inter',sans-serif;
+    background:var(--white);color:var(--navy);
+    transition:border-color var(--transition), box-shadow var(--transition);
+  }
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+    outline:none;border-bottom-color:var(--amber);box-shadow:0 1px 0 0 var(--amber);
+  }
+  .form-group textarea{resize:vertical;min-height:118px;}
+  .form-group.error input,.form-group.error select,.form-group.error textarea{border-bottom-color:var(--maroon);}
+  .error-msg{display:none;color:var(--maroon);font-size:0.8rem;margin-top:7px;font-weight:600;}
+  .form-group.error .error-msg{display:block;}
+  .submit-btn{width:100%;padding:18px;font-size:0.92rem;}
+  .form-note{margin-top:22px;font-size:0.88rem;color:var(--text-muted);text-align:center;}
+  .form-note a{color:var(--maroon);font-weight:600;}
+  .form-note a:hover{color:var(--amber-deep);}
+  .form-success{
+    display:none;align-items:center;gap:10px;
+    background:color-mix(in srgb, var(--amber) 16%, white);
+    color:var(--maroon);border-left:3px solid var(--amber);
+    padding:15px 18px;font-size:0.92rem;font-weight:600;margin-bottom:22px;
+  }
+  .form-success.visible{display:flex;}
+
+  /* ========== FOOTER ========== */
+  .footer{background:var(--navy-deep);color:var(--white);padding:56px 0 28px;position:relative;}
+  .footer::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));
+  }
+  .footer-top{
+    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:30px;
+    padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,0.1);
+  }
+  .footer-word{font-size:1.3rem;font-weight:700;letter-spacing:1.5px;color:var(--white);position:relative;display:inline-block;padding-bottom:8px;}
+  .footer-word::after{content:"";position:absolute;bottom:0;left:0;width:42px;height:3px;background:var(--amber);}
+  .footer-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.56rem;letter-spacing:2.6px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .footer-links{display:flex;gap:30px;flex-wrap:wrap;}
+  .footer-links a{
+    color:rgba(255,255,255,0.6);font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.8rem;letter-spacing:1.4px;font-weight:500;transition:color var(--transition);
+  }
+  .footer-links a:hover{color:var(--amber);}
+  .social-icons{display:flex;gap:14px;}
+  .social-icons a{
+    width:42px;height:42px;border:1.5px solid rgba(255,255,255,0.18);
+    display:flex;align-items:center;justify-content:center;transition:all var(--transition);
+  }
+  .social-icons a:hover{border-color:var(--amber);background:var(--amber);}
+  .social-icons a:hover svg{stroke:var(--navy);}
+  .social-icons svg{width:17px;height:17px;stroke:var(--white);fill:none;transition:stroke var(--transition);}
+  .footer-bottom{
+    text-align:center;padding-top:26px;color:rgba(255,255,255,0.4);
+    font-size:0.84rem;letter-spacing:0.6px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;
+  }
+
+  /* ========== FX LAYER · 3D + PARALLAX (experiments) ========== */
+  .fx-canvas{
+    position:absolute;inset:0;width:100%;height:100%;
+    z-index:0;pointer-events:none;opacity:0;transition:opacity 1.4s ease;
+  }
+  .fx-canvas.fx-on{opacity:1;}
+
+  /* 3D mouse-tilt cards + light glare */
+  .project-card,.service-card{position:relative;transform-style:preserve-3d;}
+  .project-card{
+    transition:transform 0.55s cubic-bezier(.16,1,.3,1), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+  }
+  .project-card.tilting,.service-card.tilting{transition:box-shadow var(--transition), border-color var(--transition), background var(--transition);}
+  .card-glare{
+    position:absolute;inset:0;z-index:6;pointer-events:none;border-radius:inherit;
+    background:radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(243,162,47,0.28), transparent 50%);
+    opacity:0;transition:opacity .4s ease;mix-blend-mode:screen;
+  }
+  .tilting .card-glare{opacity:1;}
+
+  .hero-content{will-change:transform,opacity;}
+  .parallax{will-change:transform;}
+
+  @media (prefers-reduced-motion: reduce){
+    .project-card,.service-card{transform:none !important;}
+    .fx-canvas{display:none;}
+  }
+
+  /* ========== FX LAYER 2 · ANIME.JS REVEALS + PREMIUM POLISH ========== */
+  /* global scroll progress bar */
+  #scrollProgress{
+    position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;
+    background:linear-gradient(90deg, var(--amber), var(--maroon));
+    box-shadow:0 0 12px rgba(243,162,47,0.6);
+    transition:width 0.08s linear;pointer-events:none;
+  }
+
+  /* real-photo treatment on project cards */
+  .project-img img{transition:transform 0.8s cubic-bezier(.16,1,.3,1);}
+  .project-card:hover .project-img img{transform:scale(1.07);}
+  .project-img::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,30,46,0.62), rgba(0,30,46,0.05) 55%, transparent 80%);
+  }
+  .project-card .project-img-grid{z-index:0;}
+
+  /* hero on-load reveal (only hidden when JS on + motion allowed) */
+  .anim-ready .hero-reveal{opacity:0;will-change:transform,opacity;}
+  .hero h1 .word{display:inline-block;will-change:transform,opacity;}
+
+  /* animated amber underline that wipes in under each section heading */
+  .section-head h2{position:relative;display:inline-block;}
+  .section-head h2::after{
+    content:"";position:absolute;left:0;bottom:-12px;height:3px;width:var(--uw,0);
+    background:linear-gradient(90deg, var(--amber), rgba(243,162,47,0));
+  }
+  .section-head.center h2::after{left:50%;transform:translateX(-50%);
+    background:linear-gradient(90deg, rgba(243,162,47,0), var(--amber), rgba(243,162,47,0));}
+
+  /* magnetic buttons follow the cursor a touch */
+  .btn-bid, .btn-ghost{will-change:transform;}
+
+  @media (prefers-reduced-motion: reduce){
+    .anim-ready .hero-reveal{opacity:1 !important;}
+    #scrollProgress{display:none;}
+    .hero-photo{animation:none;transform:scale(1.04);}
+  }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1100px){
+    .hero-inner{grid-template-columns:1fr;}
+    .hero-schematic{display:none;}
+    .hero-scrim{background:linear-gradient(180deg,rgba(1,15,24,0.92) 0%,rgba(1,15,24,0.75) 100%);}
+    .about-grid{grid-template-columns:1fr;gap:48px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .contact-form{border-left:1px solid var(--line);border-top:none;}
+  }
+  @media (max-width: 980px){
+    .trust-grid{grid-template-columns:repeat(2,1fr);}
+    .stat-block:nth-child(3){border-left:none;}
+    .services-grid{grid-template-columns:1fr 1fr;}
+    .project-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width: 760px){
+    .hamburger{display:flex;}
+    .nav-links{
+      position:absolute;top:84px;left:0;right:0;
+      background:var(--navy);flex-direction:column;align-items:flex-start;gap:0;
+      max-height:0;overflow:hidden;
+      transition:max-height 0.4s cubic-bezier(.4,0,.2,1);
+      box-shadow:0 16px 32px rgba(0,16,28,0.35);
+    }
+    .nav-links.open{max-height:540px;}
+    .nav-links a{width:100%;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-links a::after{display:none;}
+    /* mobile active: left border instead of underline */
+    .nav-links a.nav-active{border-left:3px solid var(--amber);padding-left:21px;}
+    .trust-grid{grid-template-columns:1fr;}
+    .stat-block{border-left:none;border-top:1px solid var(--line);}
+    .stat-block:first-child{border-top:none;}
+    .services-grid{grid-template-columns:1fr;}
+    .project-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{flex-direction:column;align-items:flex-start;}
+    .contact-info,.contact-form{padding:40px 26px;}
+    .about-mini-stats{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ===================== NAV ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></a>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#hero"     class="nav-link" data-section="hero">Home</a>
+      <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+      <a href="#services" class="nav-link" data-section="services">Services</a>
+      <a href="#about"    class="nav-link" data-section="about">About</a>
+      <a href="#contact"  class="nav-link" data-section="contact">Contact</a>
+    </nav>
+
+    <div class="nav-cta">
+      <button class="btn btn-bid btn-nav-bid" id="navBidBtn">Request a Bid</button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== HERO ===================== -->
+<div class="hero-track" id="heroTrack">
+<section class="hero" id="hero">
+  <div class="hero-media" aria-hidden="true">
+    <img class="hero-photo" id="heroPhoto" src="assets/img/hero-building.jpg" alt="" decoding="async" fetchpriority="high">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-vignette" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <div id="heroProgress"></div>
+
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <p class="hero-eyebrow hero-reveal"><span class="dash"></span>Lawrence, Kansas · Life Safety Systems</p>
+      <h1>
+        <span class="word hero-reveal">Protecting</span> <span class="line-accent"><span class="word hero-reveal">Lives.</span></span><br>
+        <span class="word hero-reveal">Engineered</span> <span class="line-red"><span class="word hero-reveal">Right.</span></span>
+      </h1>
+      <p class="lead hero-reveal">Fire alarm systems designed, installed, and serviced — from the first blueprint to final inspection. One company, no handoffs.</p>
+      <div class="hero-ctas hero-reveal">
+        <button class="btn btn-bid" id="heroBidBtn">Request a Bid</button>
+        <button class="btn btn-ghost" id="seeWorkBtn">See Our Work</button>
+      </div>
+      <div class="hero-badges hero-reveal">
+        <span class="hero-badge"><span class="dot"></span>30+ Years</span>
+        <span class="hero-badge"><span class="dot"></span>NICET Certified</span>
+        <span class="hero-badge"><span class="dot"></span>UL-Listed</span>
+        <span class="hero-badge"><span class="dot"></span>Licensed &amp; Insured</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+</div><!-- /.hero-track -->
+
+<!-- ===================== TRUST BAR ===================== -->
+<section class="trust-bar">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="stat-block fade-in">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div class="stat-num">30<small>+</small></div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-block fade-in delay-1">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <div class="stat-num">100<small>%</small></div>
+        <div class="stat-label">Licensed &amp; Insured</div>
+      </div>
+      <div class="stat-block fade-in delay-2">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14v18l-7-4-7 4V3z"/></svg></div>
+        <div class="stat-num">UL<small>·listed</small></div>
+        <div class="stat-label">UUJS &amp; UUFX Installations</div>
+      </div>
+      <div class="stat-block fade-in delay-3">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <div class="stat-num">KS<small>based</small></div>
+        <div class="stat-label">Lawrence, Kansas</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section class="projects" id="projects">
+  <canvas class="fx-canvas" id="emberField" aria-hidden="true"></canvas>
+  <div class="container">
+    <div class="section-head center fade-in">
+      <p class="section-eyebrow"><span class="dash"></span>Our Work<span class="dash"></span></p>
+      <h2>Featured Projects</h2>
+      <p>A sample of the fire alarm systems we've designed, installed, and serviced across Lawrence and the surrounding region.</p>
+    </div>
+
+    <div class="project-grid" id="projectGrid">
+      <div class="project-card fade-in">
+        <div class="project-img">
+          <div class="project-img-grid"></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="project-body">
+          <span class="project-badge">Hospital</span>
+          <h3>Lawrence Memorial Hospital — Fire Alarm Retrofit</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-1">
+        <div class="project-img">
+          <div class="project-img-grid"></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg>
+        </div>
+        <div class="project-body">
+          <span class="project-badge">School</span>
+          <h3>USD 497 Elementary School — New Construction</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+      <div class="project-card fade-in delay-2">
+        <div class="project-img">
+          <div class="project-img-grid"></div>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+        </div>
+        <div class="project-body">
+          <span class="project-badge">Government</span>
+          <h3>Douglas County Courthouse — System Upgrade</h3>
+          <p class="project-city">Lawrence, KS</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-cta fade-in">
+      <a href="projects.html" class="btn btn-outline-amber">
+        View All Projects
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;stroke:currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SERVICES ===================== -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head center fade-in">
+      <p class="section-eyebrow"><span class="dash"></span>What We Do<span class="dash"></span></p>
+      <h2>Comprehensive Fire Alarm Services</h2>
+      <p>From first blueprint to final inspection, we deliver code-compliant fire protection systems built to last.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-card-bg"></div>
+        <div class="service-num">01</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-4 4 4 4-7 4 4"/><path d="M3 21h18"/></svg>
+        </div>
+        <h3>Preconstruction Planning &amp; Design</h3>
+        <p>We work with architects and engineers from day one, producing code-compliant fire alarm designs under IBC, IFC, and NFPA standards before a single wire is run.</p>
+        <a href="#contact" class="service-card-link nav-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="service-card fade-in delay-1">
+        <div class="service-card-bg"></div>
+        <div class="service-num">02</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+        </div>
+        <h3>Fire Alarm Installation</h3>
+        <p>Our UL-listed installations (UL-UUJS, UL-UUFX) and NICET-certified technicians ensure your system meets the highest national safety standards.</p>
+        <a href="#contact" class="service-card-link nav-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="service-card fade-in delay-2">
+        <div class="service-card-bg"></div>
+        <div class="service-num">03</div>
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>Inspection, Testing &amp; Compliance</h3>
+        <p>We handle all post-installation inspection, testing, city submittals, and compliance documentation so you never have to chase paperwork.</p>
+        <a href="#contact" class="service-card-link nav-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual slide-left">
+        <div class="about-img-wrap">
+          <div class="about-img-inner">
+            <div class="about-flame-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2c0 0-4 4-4 8a4 4 0 0 0 8 0c0-1.5-.5-3-1.5-4C14 7 13 4 12 2z"/>
+                <path d="M12 14c0 0-2 2-2 4a2 2 0 0 0 4 0c0-1-.5-2-2-4z" fill="rgba(243,162,47,0.3)"/>
+              </svg>
+            </div>
+            <div class="about-tagline">Built on <span>Life Safety.</span><br>Driven by Craft.</div>
+            <div class="about-since">J Webb Inc — dba Life Safety Systems — serving Lawrence, KS</div>
+          </div>
+          <div class="about-accent-bar"></div>
+        </div>
+        <div class="about-mini-stats">
+          <div class="about-mini-stat fade-in delay-1">
+            <div class="num">30<small>+</small></div>
+            <div class="label">Years in the Field</div>
+          </div>
+          <div class="about-mini-stat fade-in delay-2">
+            <div class="num">100<small>+</small></div>
+            <div class="label">Projects Completed</div>
+          </div>
+          <div class="about-mini-stat fade-in delay-3">
+            <div class="num">NICET</div>
+            <div class="label">Certified Technicians</div>
+          </div>
+          <div class="about-mini-stat fade-in delay-4">
+            <div class="num">UL</div>
+            <div class="label">Listed Contractor</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-content slide-right">
+        <p class="section-eyebrow"><span class="dash"></span>About J Webb Inc</p>
+        <h2>Lawrence's <span>Trusted</span> Life Safety Experts</h2>
+        <p>J Webb Inc — operating as Life Safety Systems — has been protecting buildings and the people inside them for over 30 years. Based in Lawrence, Kansas, we specialize exclusively in fire alarm systems: from preconstruction design through installation and long-term service.</p>
+        <p>We aren't a general contractor who does fire alarms on the side. This is all we do — and that singular focus means our work is held to a higher standard. Every system we deliver is code-compliant, UL-listed, and built to protect lives for years to come.</p>
+        <div class="about-values">
+          <div class="about-value">
+            <div class="about-value-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <div class="about-value-body">
+              <strong>Code-First Design</strong>
+              <span>Every plan is built to IBC, IFC, and NFPA standards from day one — no retrofits, no surprises at inspection.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="about-value-body">
+              <strong>Local Expertise, Long-Term Relationships</strong>
+              <span>We've worked alongside Lawrence architects, GCs, and building owners for decades — we know the projects, the people, and the expectations.</span>
+            </div>
+          </div>
+          <div class="about-value">
+            <div class="about-value-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-4 4 4 4-7 4 4"/><path d="M3 21h18"/></svg></div>
+            <div class="about-value-body">
+              <strong>Full-Cycle Service</strong>
+              <span>Design through installation through annual inspection — one company handles it all, with no handoffs and no gaps in accountability.</span>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-outline-navy" id="aboutBidBtn">Work With Us</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact" id="contact">
+  <div class="container" style="padding:0;max-width:1220px;">
+    <div class="contact-grid fade-in">
+      <div class="contact-info">
+        <p class="section-eyebrow"><span class="dash"></span>Get In Touch</p>
+        <h2>Ready to Start a Project?</h2>
+        <p class="lead">We typically respond within one business day.</p>
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.69 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.33 1.85.56 2.81.69A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><strong>Call Us</strong><span><a href="tel:7858563473">785-856-3473</a></span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div><strong>Mailing Address</strong><span>PO Box 952, Lawrence, KS 66044</span></div>
+        </div>
+        <div class="contact-detail">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></div>
+          <div><strong>Email</strong><span><a href="mailto:accounting@jwebb-kc.com">accounting@jwebb-kc.com</a><br><a href="mailto:planroom@jwebb-kc.com">planroom@jwebb-kc.com</a></span></div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="form-success" id="formSuccess">Thanks — your message has been sent. We'll be in touch within one business day.</div>
+        <div class="form-row">
+          <div class="form-group" data-field="firstName"><label for="firstName">First Name</label><input type="text" id="firstName" name="firstName" autocomplete="given-name"><span class="error-msg">Please enter your first name.</span></div>
+          <div class="form-group" data-field="lastName"><label for="lastName">Last Name</label><input type="text" id="lastName" name="lastName" autocomplete="family-name"><span class="error-msg">Please enter your last name.</span></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" data-field="company"><label for="company">Company</label><input type="text" id="company" name="company" autocomplete="organization"><span class="error-msg">Please enter your company name.</span></div>
+          <div class="form-group" data-field="phone"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" autocomplete="tel"><span class="error-msg">Please enter a valid phone number.</span></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group" data-field="email"><label for="email">Email</label><input type="email" id="email" name="email" autocomplete="email"><span class="error-msg">Please enter a valid email address.</span></div>
+          <div class="form-group" data-field="projectType">
+            <label for="projectType">Project Type</label>
+            <select id="projectType" name="projectType">
+              <option value="">Select an option</option>
+              <option value="New Construction">New Construction</option>
+              <option value="Retrofit/Upgrade">Retrofit/Upgrade</option>
+              <option value="Inspection & Testing">Inspection &amp; Testing</option>
+              <option value="Other">Other</option>
+            </select>
+            <span class="error-msg">Please select a project type.</span>
+          </div>
+        </div>
+        <div class="form-group" data-field="message"><label for="message">Message</label><textarea id="message" name="message"></textarea><span class="error-msg">Please enter a brief message.</span></div>
+        <button type="submit" class="btn btn-bid submit-btn">Send Message</button>
+        <p class="form-note">Looking to join the team? Send your resume to <a href="mailto:planroom@jwebb-kc.com">planroom@jwebb-kc.com</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-word">J WEBB INC<span class="footer-sub">Life Safety Systems</span></div>
+      <nav class="footer-links">
+        <a href="#hero">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="admin.html">Staff Login</a>
+      </nav>
+      <div class="social-icons">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 J Webb Inc &middot; dba Life Safety Systems &middot; Lawrence, Kansas</div>
+  </div>
+</footer>
+
+<script src="assets/store.js"></script>
+<script src="assets/cards.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  /* ---- featured projects from the store (max 3) ---- */
+  if(window.ProjectStore && window.ProjectCards){
+    var featured = ProjectStore.featured();
+    if(featured.length){
+      ProjectCards.renderGrid(document.getElementById('projectGrid'), featured);
+    }
+  }
+
+  /* ---- smooth scroll ---- */
+  function scrollToSection(id){
+    var el = document.querySelector(id);
+    if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); }
+  }
+  function scrollToContactAndFocus(){
+    scrollToSection('#contact');
+    window.setTimeout(function(){
+      var first = document.getElementById('firstName');
+      if(first){ first.focus(); }
+    }, 600);
+  }
+
+  document.querySelectorAll('.nav-link, .footer-links a').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var href = link.getAttribute('href');
+      if(href && href.charAt(0) === '#'){
+        e.preventDefault();
+        scrollToSection(href);
+        closeMenu();
+      }
+    });
+  });
+
+  /* ---- hamburger ---- */
+  var hamburger = document.getElementById('hamburger');
+  var navLinksContainer = document.getElementById('navLinks');
+  function closeMenu(){
+    hamburger.classList.remove('active');
+    navLinksContainer.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  hamburger.addEventListener('click', function(){
+    var isOpen = navLinksContainer.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  /* ---- navbar bg on scroll ---- */
+  var navbar = document.getElementById('navbar');
+  function updateNavbar(){
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', updateNavbar, {passive:true});
+  updateNavbar();
+
+  /* ---- active nav section tracking ---- */
+  var sectionIds = ['hero','projects','services','about','contact'];
+  var navLinkEls = document.querySelectorAll('.nav-links .nav-link');
+
+  function updateActiveNav(){
+    var scrollY = window.scrollY + 120;
+    var current = 'hero';
+    sectionIds.forEach(function(id){
+      var el = document.getElementById(id);
+      if(el && el.offsetTop <= scrollY){ current = id; }
+    });
+    navLinkEls.forEach(function(link){
+      var section = link.getAttribute('data-section');
+      link.classList.toggle('nav-active', section === current);
+    });
+  }
+  window.addEventListener('scroll', updateActiveNav, {passive:true});
+  updateActiveNav();
+
+  /* ---- CTA buttons ---- */
+  document.getElementById('navBidBtn').addEventListener('click', scrollToContactAndFocus);
+  document.getElementById('heroBidBtn').addEventListener('click', scrollToContactAndFocus);
+  document.getElementById('aboutBidBtn').addEventListener('click', scrollToContactAndFocus);
+  document.getElementById('seeWorkBtn').addEventListener('click', function(){ scrollToSection('#projects'); });
+
+  /* ---- intersection observer: fade/slide ---- */
+  var animEls = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
+  if('IntersectionObserver' in window){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12});
+    animEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    animEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---- form validation ---- */
+  var form = document.getElementById('contactForm');
+  var formSuccess = document.getElementById('formSuccess');
+  var validators = {
+    firstName: function(v){ return v.trim().length > 0; },
+    lastName:  function(v){ return v.trim().length > 0; },
+    company:   function(v){ return v.trim().length > 0; },
+    phone:     function(v){ return /^[\d\s\-\(\)\+\.]{7,}$/.test(v.trim()); },
+    email:     function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+    projectType: function(v){ return v.trim().length > 0; },
+    message:   function(v){ return v.trim().length > 0; }
+  };
+  function validateField(name){
+    var field = form.querySelector('[name="' + name + '"]');
+    var group = form.querySelector('.form-group[data-field="' + name + '"]');
+    if(!field || !group){ return true; }
+    var valid = validators[name](field.value);
+    group.classList.toggle('error', !valid);
+    return valid;
+  }
+  Object.keys(validators).forEach(function(name){
+    var field = form.querySelector('[name="' + name + '"]');
+    if(field){
+      field.addEventListener('blur', function(){ validateField(name); });
+      field.addEventListener('input', function(){
+        if(form.querySelector('.form-group[data-field="' + name + '"]').classList.contains('error')){
+          validateField(name);
+        }
+      });
+    }
+  });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var allValid = true;
+    Object.keys(validators).forEach(function(name){ if(!validateField(name)){ allValid = false; } });
+    if(!allValid){
+      var firstError = form.querySelector('.form-group.error input, .form-group.error select, .form-group.error textarea');
+      if(firstError){ firstError.focus(); }
+      formSuccess.classList.remove('visible');
+      return;
+    }
+    formSuccess.classList.add('visible');
+    form.reset();
+    formSuccess.scrollIntoView({behavior:'smooth', block:'center'});
+    window.setTimeout(function(){ formSuccess.classList.remove('visible'); }, 6000);
+  });
+
+})();
+</script>
+
+<!-- ===================== HERO SCROLL-SCRUB ===================== -->
+<script>
+(function(){
+  var track = document.getElementById('heroTrack');
+  var video = document.getElementById('heroVideo');
+  var bar   = document.getElementById('heroProgress');
+  if(!track || !video) return;
+
+  var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+
+  var ready=false, target=0, current=0;
+  function markReady(){ if(ready) return; ready=true; onScroll(); }
+  // If the video is cached, metadata may already be present before this runs,
+  // so the 'loadedmetadata' event would never fire — check readyState directly.
+  if(video.readyState >= 1){ markReady(); }
+  else { video.addEventListener('loadedmetadata', markReady); }
+  // Safari/Chrome sometimes need a nudge to decode the first frame
+  video.addEventListener('loadeddata', function(){ try{ video.currentTime=0.001; }catch(e){} });
+
+  function progress(){
+    var r = track.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    return total>0 ? clamp(-r.top, 0, total)/total : 0;
+  }
+  function onScroll(){
+    var p = progress();
+    if(ready) target = p * (video.duration || 0);
+    if(bar) bar.style.width = (p*100)+'%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+
+  // frame-rate-independent damping for a smooth, weighty follow
+  var last = performance.now();
+  (function tick(now){
+    var dt = Math.min((now-last)/1000, 0.05); last = now;
+    if(ready){
+      // smoothing: higher = snappier. ~12 feels glassy without lag.
+      var k = 1 - Math.exp(-12*dt);
+      current += (target-current)*k;
+      if(Math.abs(current - video.currentTime) > 0.003){
+        try{ video.currentTime = current; }catch(e){}
+      }
+    }
+    requestAnimationFrame(tick);
+  })(last);
+  onScroll();
+})();
+</script>
+
+<!-- ===================== FX: 3D TILT · PARALLAX · COUNT-UP · PARTICLE FIELD ===================== -->
+<script>
+(function(){
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 3D mouse-tilt cards with light glare ---------- */
+  if(!reduce){
+    document.querySelectorAll('.project-card, .service-card').forEach(function(card){
+      var glare = document.createElement('div');
+      glare.className = 'card-glare';
+      card.appendChild(glare);
+
+      var MAX = 9; // max tilt in degrees
+      card.addEventListener('pointermove', function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width;   // 0..1
+        var py = (e.clientY - r.top) / r.height;   // 0..1
+        var rx = (0.5 - py) * MAX * 2;
+        var ry = (px - 0.5) * MAX * 2;
+        card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-8px) translateZ(12px)';
+        glare.style.setProperty('--gx', (px*100).toFixed(1) + '%');
+        glare.style.setProperty('--gy', (py*100).toFixed(1) + '%');
+      });
+      card.addEventListener('pointerenter', function(){ card.classList.add('tilting'); });
+      card.addEventListener('pointerleave', function(){
+        card.classList.remove('tilting');
+        card.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- scroll parallax: hero text rise/fade + depth layers ---------- */
+  var heroTrack = document.getElementById('heroTrack');
+  var heroContent = document.querySelector('.hero-content');
+  var heroGlow = document.querySelector('.hero-glow');
+  function clamp(v,a,b){ return Math.max(a, Math.min(b, v)); }
+  function parallax(){
+    if(!heroTrack) return;
+    var r = heroTrack.getBoundingClientRect();
+    var total = r.height - window.innerHeight;
+    var p = total > 0 ? clamp(-r.top, 0, total) / total : 0;
+    if(heroContent){
+      heroContent.style.transform = 'translateY(' + (-p*110).toFixed(1) + 'px)';
+      heroContent.style.opacity = (1 - p*1.15).toFixed(3);
+    }
+    if(heroGlow){ heroGlow.style.transform = 'translateY(' + (p*70).toFixed(1) + 'px) scale(' + (1 + p*0.15).toFixed(3) + ')'; }
+  }
+  if(!reduce){
+    window.addEventListener('scroll', parallax, {passive:true});
+    window.addEventListener('resize', parallax);
+    parallax();
+  }
+
+  /* ---------- count-up stats on scroll into view ---------- */
+  function prepCount(el){
+    var node = el.firstChild;
+    if(!node || node.nodeType !== 3) return false;
+    var target = parseInt(node.textContent, 10);
+    if(isNaN(target)) return false;
+    el.__t = target; el.__node = node; node.textContent = '0';
+    return true;
+  }
+  function runCount(el){
+    var target = el.__t, node = el.__node, start = performance.now(), dur = 1500;
+    (function step(now){
+      var t = clamp((now-start)/dur, 0, 1);
+      var e = 1 - Math.pow(1-t, 3);
+      node.textContent = Math.round(target*e);
+      if(t < 1) requestAnimationFrame(step);
+    })(start);
+  }
+  var counters = [];
+  document.querySelectorAll('.stat-num, .about-mini-stat .num').forEach(function(el){
+    if(prepCount(el)) counters.push(el);
+  });
+  if('IntersectionObserver' in window){
+    var cObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ runCount(en.target); cObs.unobserve(en.target); }
+      });
+    }, {threshold:0.6});
+    counters.forEach(function(el){ cObs.observe(el); });
+  } else {
+    counters.forEach(function(el){ el.__node.textContent = el.__t; });
+  }
+
+  /* ---------- dependency-free 3D particle / ember field ---------- */
+  var canvas = document.getElementById('emberField');
+  if(canvas && !reduce){
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0;
+    function resize(){
+      var r = canvas.getBoundingClientRect();
+      W = r.width; H = r.height;
+      canvas.width = W*dpr; canvas.height = H*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    var N = 80;
+    var pts = [];
+    for(var i=0;i<N;i++){
+      var roll = Math.random();
+      pts.push({
+        x: Math.random()*2-1, y: Math.random()*2-1, z: Math.random()*2-1,
+        r: Math.random()*1.5 + 0.7,
+        c: roll < 0.16 ? '224,82,82' : (roll < 0.6 ? '243,162,47' : '255,255,255')
+      });
+    }
+
+    var ry = 0, mx = 0, my = 0, tmx = 0, tmy = 0, running = false;
+    var section = document.getElementById('projects');
+    section.addEventListener('pointermove', function(e){
+      var r = section.getBoundingClientRect();
+      tmx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      tmy = ((e.clientY - r.top) / r.height) * 2 - 1;
+    });
+    section.addEventListener('pointerleave', function(){ tmx = 0; tmy = 0; });
+
+    function frame(){
+      if(!running) return;
+      ry += 0.0016;
+      mx += (tmx - mx) * 0.04;
+      my += (tmy - my) * 0.04;
+      var ay = ry + mx*0.5, ax = my*0.32;
+      var cosy = Math.cos(ay), siny = Math.sin(ay);
+      var cosx = Math.cos(ax), sinx = Math.sin(ax);
+      var cx = W/2, cy = H/2, scale = Math.min(W,H)*0.46, focal = 2.6;
+      ctx.clearRect(0,0,W,H);
+
+      var proj = [];
+      for(var i=0;i<N;i++){
+        var p = pts[i];
+        var x = p.x*cosy - p.z*siny;
+        var z = p.x*siny + p.z*cosy;
+        var y2 = p.y*cosx - z*sinx;
+        var z2 = p.y*sinx + z*cosx;
+        var d = focal / (focal + z2);
+        proj.push({ sx: cx + x*scale*d, sy: cy + y2*scale*d, d: d, c: p.c, r: p.r });
+      }
+
+      var link = scale*0.46;
+      for(var a=0;a<N;a++){
+        for(var b=a+1;b<N;b++){
+          var dx = proj[a].sx - proj[b].sx, dy = proj[a].sy - proj[b].sy;
+          var dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < link){
+            var alpha = (1 - dist/link) * 0.18 * proj[a].d * proj[b].d;
+            ctx.strokeStyle = 'rgba(243,162,47,' + alpha.toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(proj[a].sx, proj[a].sy);
+            ctx.lineTo(proj[b].sx, proj[b].sy);
+            ctx.stroke();
+          }
+        }
+      }
+      for(var k=0;k<N;k++){
+        var pr = proj[k];
+        var rad = pr.r * pr.d * 1.7;
+        var op = clamp((pr.d-0.55)*1.3, 0.12, 0.95);
+        ctx.fillStyle = 'rgba(' + pr.c + ',' + op.toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(pr.sx, pr.sy, rad, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function start(){ if(!running){ running = true; requestAnimationFrame(frame); } }
+    function stop(){ running = false; }
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){ canvas.classList.add('fx-on'); start(); }
+          else { stop(); }
+        });
+      }, {threshold:0.05}).observe(section);
+    } else {
+      canvas.classList.add('fx-on'); start();
+    }
+  }
+})();
+</script>
+
+<!-- ===================== ANIME.JS · HERO TIMELINE · SCROLL REVEALS · MAGNETIC ===================== -->
+<script src="assets/vendor/anime.iife.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  /* global scroll progress bar (works even if anime failed to load) */
+  var bar = document.getElementById('scrollProgress');
+  if(bar){
+    var setProgress = function(){
+      var d = document.documentElement;
+      var max = d.scrollHeight - d.clientHeight;
+      var p = max > 0 ? (window.scrollY || d.scrollTop) / max : 0;
+      bar.style.width = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + '%';
+    };
+    window.addEventListener('scroll', setProgress, {passive:true});
+    window.addEventListener('resize', setProgress);
+    setProgress();
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If anime is missing or motion is reduced, make sure nothing stays hidden.
+  function forceReveal(){
+    document.querySelectorAll('.hero-reveal').forEach(function(el){
+      el.style.opacity = '1'; el.style.transform = 'none';
+    });
+    document.documentElement.classList.remove('anim-ready');
+  }
+  if(!window.anime || reduce){ forceReveal(); return; }
+
+  var animate = anime.animate, stagger = anime.stagger,
+      onScroll = anime.onScroll, createTimeline = anime.createTimeline;
+
+  // Safety net: guarantee the hero is visible even if a timeline misfires.
+  var safety = window.setTimeout(forceReveal, 2800);
+
+  try {
+    /* ---------- hero entrance timeline ---------- */
+    createTimeline({ defaults: { ease: 'outExpo', duration: 850 } })
+      .add('.hero-eyebrow', { opacity: [0, 1], translateY: [16, 0] })
+      .add('.hero h1 .word', { opacity: [0, 1], translateY: [46, 0], rotate: [3, 0], duration: 900, delay: stagger(75) }, '-=650')
+      .add('.hero .lead',  { opacity: [0, 1], translateY: [22, 0] }, '-=560')
+      .add('.hero-ctas',   { opacity: [0, 1], translateY: [22, 0] }, '-=620')
+      .add('.hero-badges', { opacity: [0, 1], translateY: [18, 0] }, '-=640');
+
+    /* ---------- amber underline wipes in under each section heading ---------- */
+    document.querySelectorAll('.section-head h2').forEach(function(h2){
+      animate(h2, {
+        '--uw': ['0px', '74px'],
+        duration: 760, ease: 'outExpo',
+        autoplay: onScroll({ target: h2, enter: 'bottom-=60 top' })
+      });
+    });
+
+    /* ---------- gentle scroll-linked drift on the about visual ---------- */
+    var aboutWrap = document.querySelector('.about-img-wrap');
+    if(aboutWrap){
+      animate(aboutWrap, {
+        translateY: [40, -40],
+        ease: 'linear',
+        autoplay: onScroll({ target: '.about', enter: 'bottom top', leave: 'top bottom', sync: true })
+      });
+    }
+  } catch(e){
+    forceReveal();
+  }
+
+  /* ---------- magnetic primary buttons ---------- */
+  document.querySelectorAll('.btn-bid, .btn-ghost').forEach(function(btn){
+    btn.addEventListener('pointermove', function(e){
+      var r = btn.getBoundingClientRect();
+      var mx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      var my = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+      btn.style.transform = 'translate(' + (mx * 6).toFixed(1) + 'px,' + (my * 5 - 2).toFixed(1) + 'px)';
+    });
+    btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+  });
+})();
+</script>
+
+</body>
+</html>
