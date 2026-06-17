@@ -1058,84 +1058,112 @@
         <div class="anatomy-copy">
           <p class="section-eyebrow"><span class="dash"></span>Down to the Component</p>
           <h2>We Know These Systems <span>Inside &amp; Out.</span></h2>
-          <p>Scroll to take a detector apart. Every layer below is something we design around, install, and test &mdash; so the whole system performs when it matters most.</p>
+          <p>Scroll to take a fire bell apart. Every layer below is something we design around, install, and test &mdash; so the alarm sounds the moment it has to.</p>
           <ul class="anatomy-legend">
-            <li data-part="0"><span class="idx">1</span><span class="lbl">Cover &amp; Grille<small>Impact-resistant housing</small></span></li>
-            <li data-part="1"><span class="idx">2</span><span class="lbl">Photoelectric Sensor<small>Smoke-detection chamber</small></span></li>
-            <li data-part="2"><span class="idx">3</span><span class="lbl">Circuit Board<small>Addressable electronics</small></span></li>
-            <li data-part="3"><span class="idx">4</span><span class="lbl">Sounder &amp; Strobe<small>Audible + visual alarm</small></span></li>
-            <li data-part="4"><span class="idx">5</span><span class="lbl">Mounting Base<small>Wiring &amp; terminals</small></span></li>
+            <li data-part="0"><span class="idx">1</span><span class="lbl">Bell Gong<small>Resonating alarm cup</small></span></li>
+            <li data-part="1"><span class="idx">2</span><span class="lbl">Striker &amp; Clapper<small>Strikes the gong</small></span></li>
+            <li data-part="2"><span class="idx">3</span><span class="lbl">Electromagnet Coil<small>Vibrating drive motor</small></span></li>
+            <li data-part="3"><span class="idx">4</span><span class="lbl">Interrupter Contacts<small>Make-and-break circuit</small></span></li>
+            <li data-part="4"><span class="idx">5</span><span class="lbl">Mounting Backplate<small>Wiring, conduit &amp; terminals</small></span></li>
           </ul>
         </div>
 
         <div class="anatomy-viz" aria-hidden="true">
+          <!-- shared gradients for the bell components -->
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+            <defs>
+              <radialGradient id="bellRed" cx="38%" cy="30%" r="78%">
+                <stop offset="0%"  stop-color="#ff7d66"/>
+                <stop offset="36%" stop-color="#e23b2c"/>
+                <stop offset="78%" stop-color="#aa1e15"/>
+                <stop offset="100%" stop-color="#6d0f0a"/>
+              </radialGradient>
+              <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#eef3f7"/>
+                <stop offset="46%" stop-color="#aeb9c5"/>
+                <stop offset="100%" stop-color="#5c6976"/>
+              </linearGradient>
+              <linearGradient id="copper" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%"  stop-color="#f7c08a"/>
+                <stop offset="50%" stop-color="#c87a37"/>
+                <stop offset="100%" stop-color="#7d4012"/>
+              </linearGradient>
+              <radialGradient id="plate" cx="42%" cy="36%" r="72%">
+                <stop offset="0%"  stop-color="#0a2438"/>
+                <stop offset="100%" stop-color="#02101b"/>
+              </radialGradient>
+            </defs>
+          </svg>
+
           <div class="exploded" id="exploded">
-            <!-- 0 · COVER & GRILLE -->
+            <!-- 0 · BELL GONG (the red dome) -->
             <div class="part" data-i="0">
               <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="rgba(1,15,24,0.72)" stroke="rgba(243,162,47,0.85)" stroke-width="2.5"/>
-                <circle cx="180" cy="180" r="128" fill="none" stroke="rgba(243,162,47,0.32)" stroke-width="18" stroke-dasharray="5 12"/>
-                <circle cx="180" cy="180" r="98"  fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="18" stroke-dasharray="5 12"/>
-                <circle cx="180" cy="180" r="40"  fill="rgba(1,15,24,0.9)" stroke="rgba(243,162,47,0.9)" stroke-width="2.5"/>
-                <circle cx="180" cy="180" r="24"  fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-                <text x="180" y="184" font-family="monospace" font-size="11" fill="rgba(243,162,47,0.85)" text-anchor="middle">TEST</text>
+                <circle cx="180" cy="184" r="153" fill="#6d0f0a"/>
+                <circle cx="180" cy="180" r="150" fill="url(#bellRed)"/>
+                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(0,0,0,0.16)" stroke-width="2"/>
+                <circle cx="180" cy="180" r="88"  fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="2"/>
+                <circle cx="180" cy="180" r="56"  fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+                <ellipse cx="140" cy="128" rx="48" ry="30" fill="rgba(255,255,255,0.26)"/>
+                <text x="180" y="270" font-family="'Oswald',sans-serif" font-size="24" letter-spacing="5" font-weight="600" fill="rgba(255,234,224,0.92)" text-anchor="middle">FIRE</text>
+                <circle cx="180" cy="180" r="22" fill="url(#steel)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+                <circle cx="180" cy="180" r="9"  fill="#39454f"/>
               </svg>
             </div>
-            <!-- 1 · PHOTOELECTRIC SENSOR -->
+            <!-- 1 · STRIKER & CLAPPER -->
             <div class="part" data-i="1">
               <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="rgba(1,15,24,0.66)" stroke="rgba(243,162,47,0.7)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="104" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="26" stroke-dasharray="9 20"/>
-                <g stroke="rgba(243,162,47,0.55)" stroke-width="2" fill="none">
-                  <line x1="180" y1="180" x2="180" y2="58"/><line x1="180" y1="180" x2="286" y2="241"/>
-                  <line x1="180" y1="180" x2="74"  y2="241"/>
-                </g>
-                <circle cx="180" cy="180" r="26" fill="rgba(1,15,24,0.95)" stroke="rgba(243,162,47,0.85)" stroke-width="2"/>
-                <circle cx="206" cy="150" r="6" fill="rgba(224,82,82,0.9)"/>
-                <circle cx="154" cy="150" r="6" fill="rgba(243,162,47,0.9)"/>
+                <rect x="172" y="86" width="16" height="128" rx="7" fill="url(#steel)" stroke="rgba(0,0,0,0.22)" stroke-width="1" transform="rotate(-15 180 200)"/>
+                <path d="M208,150 q15,-7 0,-13 q-15,-7 0,-13 q15,-7 0,-13" fill="none" stroke="#9aa6b2" stroke-width="3.5"/>
+                <circle cx="180" cy="200" r="20" fill="url(#steel)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+                <circle cx="180" cy="200" r="7"  fill="#39454f"/>
+                <circle cx="146" cy="92" r="27" fill="url(#steel)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/>
+                <ellipse cx="138" cy="84" rx="9" ry="6" fill="rgba(255,255,255,0.5)"/>
               </svg>
             </div>
-            <!-- 2 · CIRCUIT BOARD -->
+            <!-- 2 · ELECTROMAGNET COIL -->
             <div class="part" data-i="2">
               <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="rgba(0,24,38,0.82)" stroke="rgba(243,162,47,0.6)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="132" fill="none" stroke="rgba(243,162,47,0.25)" stroke-width="6" stroke-dasharray="2 14"/>
-                <g stroke="rgba(243,162,47,0.5)" stroke-width="1.6" fill="none">
-                  <polyline points="80,120 140,120 140,150"/>
-                  <polyline points="280,140 220,140 220,180"/>
-                  <polyline points="100,240 150,240 150,205"/>
-                  <polyline points="262,236 214,236 214,206"/>
+                <rect x="104" y="172" width="152" height="16" rx="4" fill="url(#steel)"/>
+                <rect x="118" y="118" width="14" height="124" rx="4" fill="url(#steel)"/>
+                <rect x="228" y="118" width="14" height="124" rx="4" fill="url(#steel)"/>
+                <rect x="132" y="126" width="96" height="108" rx="9" fill="url(#copper)" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
+                <g stroke="rgba(0,0,0,0.22)" stroke-width="2">
+                  <line x1="132" y1="138" x2="228" y2="138"/><line x1="132" y1="150" x2="228" y2="150"/>
+                  <line x1="132" y1="162" x2="228" y2="162"/><line x1="132" y1="174" x2="228" y2="174"/>
+                  <line x1="132" y1="186" x2="228" y2="186"/><line x1="132" y1="198" x2="228" y2="198"/>
+                  <line x1="132" y1="210" x2="228" y2="210"/><line x1="132" y1="222" x2="228" y2="222"/>
                 </g>
-                <rect x="150" y="150" width="60" height="60" rx="3" fill="rgba(1,15,24,0.9)" stroke="rgba(243,162,47,0.85)" stroke-width="2"/>
-                <g stroke="rgba(243,162,47,0.7)" stroke-width="2"><line x1="150" y1="165" x2="140" y2="165"/><line x1="150" y1="195" x2="140" y2="195"/><line x1="210" y1="165" x2="220" y2="165"/><line x1="210" y1="195" x2="220" y2="195"/></g>
-                <rect x="96" y="150" width="26" height="16" rx="2" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.6"/>
-                <rect x="238" y="196" width="26" height="16" rx="2" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.6"/>
-                <circle cx="180" cy="92" r="5" fill="rgba(243,162,47,0.8)"/>
+                <path d="M152,234 q-14,30 -36,42" fill="none" stroke="#e05252" stroke-width="3.5"/>
+                <path d="M208,234 q14,30 36,42" fill="none" stroke="rgba(40,46,52,0.9)" stroke-width="3.5"/>
               </svg>
             </div>
-            <!-- 3 · SOUNDER & STROBE -->
+            <!-- 3 · INTERRUPTER CONTACTS -->
             <div class="part" data-i="3">
               <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="rgba(1,15,24,0.66)" stroke="rgba(243,162,47,0.7)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="112" fill="none" stroke="rgba(243,162,47,0.3)" stroke-width="34" stroke-dasharray="3 10"/>
-                <circle cx="180" cy="180" r="46" fill="rgba(1,15,24,0.92)" stroke="rgba(243,162,47,0.85)" stroke-width="2.5"/>
-                <circle class="strobe-lens" cx="180" cy="180" r="30" fill="rgba(243,162,47,0.55)"/>
-                <circle cx="180" cy="180" r="15" fill="rgba(255,236,200,0.95)"/>
+                <circle cx="180" cy="180" r="150" fill="url(#plate)" stroke="rgba(243,162,47,0.55)" stroke-width="2"/>
+                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(243,162,47,0.18)" stroke-width="2" stroke-dasharray="4 8"/>
+                <path d="M118,148 L118,212 L172,212" fill="none" stroke="url(#steel)" stroke-width="6" stroke-linecap="round"/>
+                <rect x="196" y="170" width="46" height="20" rx="3" fill="url(#steel)"/>
+                <circle cx="186" cy="180" r="7" fill="#f3a22f"/>
+                <circle cx="118" cy="148" r="9" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <circle cx="242" cy="180" r="9" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+                <circle class="strobe-lens" cx="180" cy="252" r="10" fill="rgba(243,162,47,0.7)"/>
               </svg>
             </div>
-            <!-- 4 · MOUNTING BASE -->
+            <!-- 4 · MOUNTING BACKPLATE -->
             <div class="part" data-i="4">
               <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="rgba(0,20,32,0.9)" stroke="rgba(243,162,47,0.7)" stroke-width="2.5"/>
-                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="2" stroke-dasharray="4 8"/>
+                <circle cx="180" cy="180" r="150" fill="url(#plate)" stroke="rgba(243,162,47,0.7)" stroke-width="2.5"/>
+                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-dasharray="4 8"/>
                 <g fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
                   <circle cx="112" cy="112" r="11"/><circle cx="248" cy="112" r="11"/>
                   <circle cx="112" cy="248" r="11"/><circle cx="248" cy="248" r="11"/>
                 </g>
                 <rect x="146" y="158" width="68" height="44" rx="3" fill="rgba(1,15,24,0.92)" stroke="rgba(243,162,47,0.85)" stroke-width="2"/>
                 <g stroke="rgba(243,162,47,0.7)" stroke-width="2"><line x1="160" y1="158" x2="160" y2="202"/><line x1="180" y1="158" x2="180" y2="202"/><line x1="200" y1="158" x2="200" y2="202"/></g>
-                <path d="M168,202 L168,250 L150,300" fill="none" stroke="rgba(243,162,47,0.8)" stroke-width="2.5"/>
-                <path d="M192,202 L192,250 L210,300" fill="none" stroke="rgba(224,82,82,0.8)" stroke-width="2.5"/>
+                <path d="M168,202 L168,250 L150,300" fill="none" stroke="#e05252" stroke-width="2.5"/>
+                <path d="M192,202 L192,250 L210,300" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5"/>
               </svg>
             </div>
           </div>
@@ -1779,15 +1807,15 @@
   var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var SPREAD = 86;   // px the layers fan apart along the stack axis when fully exploded
-  var GAP    = 7;    // baseline separation so the assembled device still reads as solid
+  var SPREAD = 98;   // px the layers fan apart along the stack axis when fully exploded
+  var GAP    = 6;    // baseline separation so the assembled bell still reads as solid
 
   function render(p){
-    // device tilts back from near-flat to a 3/4 axonometric as it comes apart,
-    // and turns slowly so the separation is easy to read.
-    var tilt  = 10 + 50 * p;
-    var spin  = -24 * p;
-    var scale = 1 - 0.10 * p;
+    // bell starts nearly head-on (reads as a solid red dome), then tilts into a
+    // 3/4 axonometric so the layers fan apart like an exploded diagram you can read.
+    var tilt  = 8 + 44 * p;
+    var spin  = -18 * p;
+    var scale = 1 - 0.09 * p;
     exploded.style.transform =
       'rotateX(' + tilt.toFixed(2) + 'deg) rotateZ(' + spin.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
 
@@ -1805,7 +1833,7 @@
     if(hint) hint.style.opacity = (1 - p * 2.2).toFixed(2);
   }
 
-  if(reduce){ render(0.62); return; }   // static exploded view, no scroll hijack
+  if(reduce){ render(0.55); return; }   // static exploded view, no scroll hijack
 
   function progress(){
     var r = track.getBoundingClientRect();
