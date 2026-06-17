@@ -7,3 +7,8 @@ __pycache__/
 
 # Playwright MCP screenshots/snapshots
 .playwright-mcp/
+
+# local preview screenshots
+v5-*.jpeg
+bell-*.jpeg
+.playwright-mcp/
