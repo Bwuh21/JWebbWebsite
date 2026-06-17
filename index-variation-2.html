@@ -683,89 +683,6 @@
     #scrollProgress{display:none;}
   }
 
-  /* ========== ANATOMY · SCROLL-EXPLODED DEVICE ========== */
-  .anatomy{background:var(--navy);color:var(--white);}
-  .anatomy-track{position:relative;height:300vh;}
-  .anatomy-stage{
-    position:sticky;top:0;height:100vh;overflow:hidden;
-    display:flex;align-items:center;
-  }
-  .anatomy-stage::before{
-    content:"";position:absolute;inset:0;
-    background-image:
-      linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);
-    background-size:56px 56px;
-  }
-  .anatomy-glow{
-    position:absolute;top:50%;right:18%;width:46vw;height:46vw;max-width:680px;max-height:680px;
-    transform:translate(20%,-50%);pointer-events:none;
-    background:radial-gradient(circle, rgba(243,162,47,0.16) 0%, rgba(120,0,0,0.10) 40%, transparent 70%);
-  }
-  .anatomy-inner{
-    position:relative;z-index:2;width:100%;
-    display:grid;grid-template-columns:0.92fr 1.08fr;gap:40px;align-items:center;
-  }
-  .anatomy-copy{max-width:470px;}
-  .anatomy-copy h2{
-    font-size:clamp(2rem,3.8vw,2.8rem);font-weight:700;color:var(--white);
-    letter-spacing:0.4px;margin-bottom:16px;line-height:1.08;
-  }
-  .anatomy-copy h2 span{color:var(--amber);}
-  .anatomy-copy > p{color:rgba(255,255,255,0.6);font-size:1.05rem;margin-bottom:30px;}
-  .anatomy-legend{display:flex;flex-direction:column;gap:12px;}
-  .anatomy-legend li{
-    display:flex;align-items:center;gap:16px;
-    opacity:0.32;transform:translateX(-12px);
-    transition:opacity 0.45s cubic-bezier(.16,1,.3,1), transform 0.45s cubic-bezier(.16,1,.3,1);
-  }
-  .anatomy-legend li.lit{opacity:1;transform:none;}
-  .anatomy-legend .idx{
-    flex-shrink:0;width:30px;height:30px;border:1.5px solid rgba(243,162,47,0.4);
-    border-radius:50%;display:flex;align-items:center;justify-content:center;
-    font-family:'Oswald',sans-serif;font-size:0.82rem;font-weight:600;color:var(--amber);
-    transition:background 0.4s, color 0.4s;
-  }
-  .anatomy-legend li.lit .idx{background:var(--amber);color:var(--navy);}
-  .anatomy-legend .lbl{
-    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.4px;
-    font-size:0.92rem;font-weight:500;color:var(--white);
-  }
-  .anatomy-legend .lbl small{
-    display:block;font-family:'Inter',sans-serif;text-transform:none;letter-spacing:0;
-    font-size:0.78rem;color:rgba(255,255,255,0.45);font-weight:400;margin-top:1px;
-  }
-
-  .anatomy-viz{
-    position:relative;height:72vh;
-    perspective:1300px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .exploded{
-    position:relative;width:min(48vh,440px);height:min(48vh,440px);
-    transform-style:preserve-3d;will-change:transform;
-  }
-  .part{
-    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    transform-style:preserve-3d;will-change:transform;
-  }
-  .part svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 24px 34px rgba(0,0,0,0.45));}
-  .strobe-lens{animation:badgePulse 2.4s ease-in-out infinite;transform-origin:center;}
-  .anatomy-hint{
-    position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-    font-family:'Oswald',sans-serif;text-transform:uppercase;
-    font-size:0.62rem;letter-spacing:2.5px;color:rgba(255,255,255,0.4);
-    transition:opacity 0.4s;
-  }
-  .anatomy-hint .bar{width:1px;height:34px;background:linear-gradient(to bottom, rgba(243,162,47,0.7), transparent);animation:scrollLine 2s ease-in-out infinite;}
-
-  @media (prefers-reduced-motion: reduce){
-    .anatomy-track{height:auto;}
-    .anatomy-stage{position:relative;height:auto;padding:90px 0;}
-    .anatomy-hint{display:none;}
-  }
-
   /* ========== RESPONSIVE ========== */
   @media (max-width: 1100px){
     .hero-inner{grid-template-columns:1fr;}
@@ -774,13 +691,6 @@
     .about-grid{grid-template-columns:1fr;gap:48px;}
     .contact-grid{grid-template-columns:1fr;}
     .contact-form{border-left:1px solid var(--line);border-top:none;}
-    .anatomy-inner{grid-template-columns:1fr;gap:24px;}
-    .anatomy-viz{height:44vh;order:-1;}
-    .anatomy-copy{max-width:none;}
-    .anatomy-copy > p{margin-bottom:18px;}
-    .anatomy-legend{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;}
-    .exploded{width:min(40vh,360px);height:min(40vh,360px);}
-    .anatomy-glow{display:none;}
   }
   @media (max-width: 980px){
     .trust-grid{grid-template-columns:repeat(2,1fr);}
@@ -808,11 +718,6 @@
     .services-grid{grid-template-columns:1fr;}
     .project-grid{grid-template-columns:1fr;}
     .form-row{grid-template-columns:1fr;}
-    .anatomy-track{height:240vh;}
-    .anatomy-viz{height:40vh;}
-    .anatomy-legend{grid-template-columns:1fr;}
-    .anatomy-legend .lbl small{display:none;}
-    .anatomy-copy h2{font-size:1.7rem;}
     .footer-top{flex-direction:column;align-items:flex-start;}
     .contact-info,.contact-form{padding:40px 26px;}
     .about-mini-stats{grid-template-columns:1fr;}
@@ -1044,132 +949,6 @@
         <p>We handle all post-installation inspection, testing, city submittals, and compliance documentation so you never have to chase paperwork.</p>
         <a href="#contact" class="service-card-link nav-link">Get Started <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===================== ANATOMY · SCROLL-EXPLODED DEVICE ===================== -->
-<section class="anatomy" id="anatomy">
-  <div class="anatomy-track" id="anatomyTrack">
-    <div class="anatomy-stage">
-      <div class="anatomy-glow" aria-hidden="true"></div>
-      <div class="container anatomy-inner">
-
-        <div class="anatomy-copy">
-          <p class="section-eyebrow"><span class="dash"></span>Down to the Component</p>
-          <h2>We Know These Systems <span>Inside &amp; Out.</span></h2>
-          <p>Scroll to take a fire bell apart. Every layer below is something we design around, install, and test &mdash; so the alarm sounds the moment it has to.</p>
-          <ul class="anatomy-legend">
-            <li data-part="0"><span class="idx">1</span><span class="lbl">Bell Gong<small>Resonating alarm cup</small></span></li>
-            <li data-part="1"><span class="idx">2</span><span class="lbl">Striker &amp; Clapper<small>Strikes the gong</small></span></li>
-            <li data-part="2"><span class="idx">3</span><span class="lbl">Electromagnet Coil<small>Vibrating drive motor</small></span></li>
-            <li data-part="3"><span class="idx">4</span><span class="lbl">Interrupter Contacts<small>Make-and-break circuit</small></span></li>
-            <li data-part="4"><span class="idx">5</span><span class="lbl">Mounting Backplate<small>Wiring, conduit &amp; terminals</small></span></li>
-          </ul>
-        </div>
-
-        <div class="anatomy-viz" aria-hidden="true">
-          <!-- shared gradients for the bell components -->
-          <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-            <defs>
-              <radialGradient id="bellRed" cx="38%" cy="30%" r="78%">
-                <stop offset="0%"  stop-color="#ff7d66"/>
-                <stop offset="36%" stop-color="#e23b2c"/>
-                <stop offset="78%" stop-color="#aa1e15"/>
-                <stop offset="100%" stop-color="#6d0f0a"/>
-              </radialGradient>
-              <linearGradient id="steel" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"  stop-color="#eef3f7"/>
-                <stop offset="46%" stop-color="#aeb9c5"/>
-                <stop offset="100%" stop-color="#5c6976"/>
-              </linearGradient>
-              <linearGradient id="copper" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"  stop-color="#f7c08a"/>
-                <stop offset="50%" stop-color="#c87a37"/>
-                <stop offset="100%" stop-color="#7d4012"/>
-              </linearGradient>
-              <radialGradient id="plate" cx="42%" cy="36%" r="72%">
-                <stop offset="0%"  stop-color="#0a2438"/>
-                <stop offset="100%" stop-color="#02101b"/>
-              </radialGradient>
-            </defs>
-          </svg>
-
-          <div class="exploded" id="exploded">
-            <!-- 0 · BELL GONG (the red dome) -->
-            <div class="part" data-i="0">
-              <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="184" r="153" fill="#6d0f0a"/>
-                <circle cx="180" cy="180" r="150" fill="url(#bellRed)"/>
-                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(0,0,0,0.16)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="88"  fill="none" stroke="rgba(0,0,0,0.14)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="56"  fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-                <ellipse cx="140" cy="128" rx="48" ry="30" fill="rgba(255,255,255,0.26)"/>
-                <text x="180" y="270" font-family="'Oswald',sans-serif" font-size="24" letter-spacing="5" font-weight="600" fill="rgba(255,234,224,0.92)" text-anchor="middle">FIRE</text>
-                <circle cx="180" cy="180" r="22" fill="url(#steel)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
-                <circle cx="180" cy="180" r="9"  fill="#39454f"/>
-              </svg>
-            </div>
-            <!-- 1 · STRIKER & CLAPPER -->
-            <div class="part" data-i="1">
-              <svg viewBox="0 0 360 360">
-                <rect x="172" y="86" width="16" height="128" rx="7" fill="url(#steel)" stroke="rgba(0,0,0,0.22)" stroke-width="1" transform="rotate(-15 180 200)"/>
-                <path d="M208,150 q15,-7 0,-13 q-15,-7 0,-13 q15,-7 0,-13" fill="none" stroke="#9aa6b2" stroke-width="3.5"/>
-                <circle cx="180" cy="200" r="20" fill="url(#steel)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
-                <circle cx="180" cy="200" r="7"  fill="#39454f"/>
-                <circle cx="146" cy="92" r="27" fill="url(#steel)" stroke="rgba(0,0,0,0.25)" stroke-width="1.5"/>
-                <ellipse cx="138" cy="84" rx="9" ry="6" fill="rgba(255,255,255,0.5)"/>
-              </svg>
-            </div>
-            <!-- 2 · ELECTROMAGNET COIL -->
-            <div class="part" data-i="2">
-              <svg viewBox="0 0 360 360">
-                <rect x="104" y="172" width="152" height="16" rx="4" fill="url(#steel)"/>
-                <rect x="118" y="118" width="14" height="124" rx="4" fill="url(#steel)"/>
-                <rect x="228" y="118" width="14" height="124" rx="4" fill="url(#steel)"/>
-                <rect x="132" y="126" width="96" height="108" rx="9" fill="url(#copper)" stroke="rgba(0,0,0,0.3)" stroke-width="2"/>
-                <g stroke="rgba(0,0,0,0.22)" stroke-width="2">
-                  <line x1="132" y1="138" x2="228" y2="138"/><line x1="132" y1="150" x2="228" y2="150"/>
-                  <line x1="132" y1="162" x2="228" y2="162"/><line x1="132" y1="174" x2="228" y2="174"/>
-                  <line x1="132" y1="186" x2="228" y2="186"/><line x1="132" y1="198" x2="228" y2="198"/>
-                  <line x1="132" y1="210" x2="228" y2="210"/><line x1="132" y1="222" x2="228" y2="222"/>
-                </g>
-                <path d="M152,234 q-14,30 -36,42" fill="none" stroke="#e05252" stroke-width="3.5"/>
-                <path d="M208,234 q14,30 36,42" fill="none" stroke="rgba(40,46,52,0.9)" stroke-width="3.5"/>
-              </svg>
-            </div>
-            <!-- 3 · INTERRUPTER CONTACTS -->
-            <div class="part" data-i="3">
-              <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="url(#plate)" stroke="rgba(243,162,47,0.55)" stroke-width="2"/>
-                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(243,162,47,0.18)" stroke-width="2" stroke-dasharray="4 8"/>
-                <path d="M118,148 L118,212 L172,212" fill="none" stroke="url(#steel)" stroke-width="6" stroke-linecap="round"/>
-                <rect x="196" y="170" width="46" height="20" rx="3" fill="url(#steel)"/>
-                <circle cx="186" cy="180" r="7" fill="#f3a22f"/>
-                <circle cx="118" cy="148" r="9" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                <circle cx="242" cy="180" r="9" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
-                <circle class="strobe-lens" cx="180" cy="252" r="10" fill="rgba(243,162,47,0.7)"/>
-              </svg>
-            </div>
-            <!-- 4 · MOUNTING BACKPLATE -->
-            <div class="part" data-i="4">
-              <svg viewBox="0 0 360 360">
-                <circle cx="180" cy="180" r="150" fill="url(#plate)" stroke="rgba(243,162,47,0.7)" stroke-width="2.5"/>
-                <circle cx="180" cy="180" r="120" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2" stroke-dasharray="4 8"/>
-                <g fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2">
-                  <circle cx="112" cy="112" r="11"/><circle cx="248" cy="112" r="11"/>
-                  <circle cx="112" cy="248" r="11"/><circle cx="248" cy="248" r="11"/>
-                </g>
-                <rect x="146" y="158" width="68" height="44" rx="3" fill="rgba(1,15,24,0.92)" stroke="rgba(243,162,47,0.85)" stroke-width="2"/>
-                <g stroke="rgba(243,162,47,0.7)" stroke-width="2"><line x1="160" y1="158" x2="160" y2="202"/><line x1="180" y1="158" x2="180" y2="202"/><line x1="200" y1="158" x2="200" y2="202"/></g>
-                <path d="M168,202 L168,250 L150,300" fill="none" stroke="#e05252" stroke-width="2.5"/>
-                <path d="M192,202 L192,250 L210,300" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2.5"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="anatomy-hint" id="anatomyHint"><span class="bar"></span>Scroll to disassemble</div>
     </div>
   </div>
 </section>
@@ -1789,71 +1568,6 @@
     });
     btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
   });
-})();
-</script>
-
-<!-- ===================== ANATOMY · SCROLL-EXPLODED DEVICE DRIVER ===================== -->
-<script>
-(function(){
-  'use strict';
-  var track    = document.getElementById('anatomyTrack');
-  var exploded = document.getElementById('exploded');
-  var hint     = document.getElementById('anatomyHint');
-  if(!track || !exploded) return;
-
-  var parts  = [].slice.call(exploded.querySelectorAll('.part'));
-  var legend = [].slice.call(document.querySelectorAll('.anatomy-legend li'));
-  var n = parts.length;
-  var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var SPREAD = 98;   // px the layers fan apart along the stack axis when fully exploded
-  var GAP    = 6;    // baseline separation so the assembled bell still reads as solid
-
-  function render(p){
-    // bell starts nearly head-on (reads as a solid red dome), then tilts into a
-    // 3/4 axonometric so the layers fan apart like an exploded diagram you can read.
-    var tilt  = 8 + 44 * p;
-    var spin  = -18 * p;
-    var scale = 1 - 0.09 * p;
-    exploded.style.transform =
-      'rotateX(' + tilt.toFixed(2) + 'deg) rotateZ(' + spin.toFixed(2) + 'deg) scale(' + scale.toFixed(3) + ')';
-
-    var mid = (n - 1) / 2;
-    for(var i = 0; i < n; i++){
-      // cover (i=0) sits closest to the viewer (most +Z); base (i=n-1) farthest.
-      var z  = (mid - i) * (GAP + SPREAD * p);
-      var rz = (mid - i) * 5 * p;
-      parts[i].style.transform = 'translateZ(' + z.toFixed(1) + 'px) rotateZ(' + rz.toFixed(2) + 'deg)';
-    }
-    for(var j = 0; j < legend.length; j++){
-      // each component lights up as its layer begins to separate
-      legend[j].classList.toggle('lit', p > (j + 0.45) / n * 0.92);
-    }
-    if(hint) hint.style.opacity = (1 - p * 2.2).toFixed(2);
-  }
-
-  if(reduce){ render(0.55); return; }   // static exploded view, no scroll hijack
-
-  function progress(){
-    var r = track.getBoundingClientRect();
-    var total = r.height - window.innerHeight;
-    return total > 0 ? clamp(-r.top, 0, total) / total : 0;
-  }
-
-  var target = 0, current = 0, last = performance.now();
-  function onScroll(){ target = progress(); }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', onScroll);
-
-  (function tick(now){
-    var dt = Math.min((now - last) / 1000, 0.05); last = now;
-    var k = 1 - Math.exp(-11 * dt);           // weighty, glassy follow
-    current += (target - current) * k;
-    render(current);
-    requestAnimationFrame(tick);
-  })(last);
-  onScroll();
 })();
 </script>
 
