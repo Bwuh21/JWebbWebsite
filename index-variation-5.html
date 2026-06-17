@@ -438,16 +438,20 @@
 
   .about-visual{position:relative;}
   .about-img-wrap{
-    position:relative;background:var(--navy);padding:48px;overflow:hidden;
+    position:relative;background:var(--navy);overflow:hidden;
+    min-height:520px;display:flex;align-items:flex-end;
+    box-shadow:0 30px 70px rgba(0,30,46,0.28);
   }
+  .about-photo{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;
+    transition:transform 1.2s cubic-bezier(.16,1,.3,1);
+  }
+  .about-img-wrap:hover .about-photo{transform:scale(1.05);}
   .about-img-wrap::before{
-    content:"";position:absolute;inset:0;
-    background-image:
-      linear-gradient(rgba(243,162,47,0.07) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(243,162,47,0.07) 1px, transparent 1px);
-    background-size:36px 36px;
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(0deg, rgba(0,30,46,0.94) 0%, rgba(0,30,46,0.5) 44%, rgba(0,30,46,0.1) 100%);
   }
-  .about-img-inner{position:relative;z-index:1;}
+  .about-img-inner{position:relative;z-index:2;padding:42px;width:100%;}
   .about-flame-icon{
     width:90px;height:90px;background:rgba(243,162,47,0.12);
     border:2px solid rgba(243,162,47,0.35);border-radius:50%;
@@ -929,6 +933,7 @@
     <div class="about-grid">
       <div class="about-visual slide-left">
         <div class="about-img-wrap">
+          <img class="about-photo" src="assets/img/about-building.jpg" alt="A facility protected by a J Webb Inc fire alarm system" loading="lazy" decoding="async">
           <div class="about-img-inner">
             <div class="about-flame-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
