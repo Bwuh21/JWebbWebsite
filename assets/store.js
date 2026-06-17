@@ -14,7 +14,7 @@
 (function (global) {
   'use strict';
 
-  var STORAGE_KEY = 'jwebb.projects.v1';
+  var STORAGE_KEY = 'jwebb.projects.v2';
   var MAX_FEATURED = 3;
 
   // Categories must match the filter buttons on projects.html
@@ -39,15 +39,15 @@
   function seedData() {
     var now = Date.now();
     var seed = [
-      ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true],
-      ['USD 497 Elementary School — New Construction',     'School',      true],
-      ['Douglas County Courthouse — System Upgrade',       'Government',  true],
-      ['Commercial Office Park — Multi-Building Install',   'Commercial',  false],
-      ['Industrial Warehouse — Design & Install',          'Industrial',  false],
-      ['Senior Living Facility — Full System Replacement', 'Residential', false],
-      ['KU Research Facility — New System Design',          'School',      false],
-      ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false],
-      ['City of Lawrence Public Library — Inspection & Service', 'Government', false]
+      ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true,  'assets/img/project-hospital.jpg'],
+      ['USD 497 Elementary School — New Construction',     'School',      true,  'assets/img/project-school.jpg'],
+      ['Douglas County Courthouse — System Upgrade',       'Government',  true,  'assets/img/project-courthouse.jpg'],
+      ['Commercial Office Park — Multi-Building Install',   'Commercial',  false, null],
+      ['Industrial Warehouse — Design & Install',          'Industrial',  false, null],
+      ['Senior Living Facility — Full System Replacement', 'Residential', false, null],
+      ['KU Research Facility — New System Design',          'School',      false, null],
+      ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false, null],
+      ['City of Lawrence Public Library — Inspection & Service', 'Government', false, null]
     ];
     return seed.map(function (row, i) {
       return {
@@ -56,7 +56,7 @@
         category: row[1],
         city: 'Lawrence, KS',
         description: '',
-        photo: null,
+        photo: row[3] || null,
         featured: row[2],
         createdAt: now - (seed.length - i) * 1000 // keep original order
       };

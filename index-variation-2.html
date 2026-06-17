@@ -8,6 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* Anti-flash guard: only hide pre-animation elements when JS is on AND
+     the visitor hasn't asked for reduced motion. Runs before first paint. */
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(!reduce){ document.documentElement.className += ' anim-ready'; }
+  })();
+</script>
 <style>
   :root{
     --navy:#003049;
@@ -636,6 +644,45 @@
     .fx-canvas{display:none;}
   }
 
+  /* ========== FX LAYER 2 · ANIME.JS REVEALS + PREMIUM POLISH ========== */
+  /* global scroll progress bar */
+  #scrollProgress{
+    position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;
+    background:linear-gradient(90deg, var(--amber), var(--maroon));
+    box-shadow:0 0 12px rgba(243,162,47,0.6);
+    transition:width 0.08s linear;pointer-events:none;
+  }
+
+  /* real-photo treatment on project cards */
+  .project-img img{transition:transform 0.8s cubic-bezier(.16,1,.3,1);}
+  .project-card:hover .project-img img{transform:scale(1.07);}
+  .project-img::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to top, rgba(0,30,46,0.62), rgba(0,30,46,0.05) 55%, transparent 80%);
+  }
+  .project-card .project-img-grid{z-index:0;}
+
+  /* hero on-load reveal (only hidden when JS on + motion allowed) */
+  .anim-ready .hero-reveal{opacity:0;will-change:transform,opacity;}
+  .hero h1 .word{display:inline-block;will-change:transform,opacity;}
+
+  /* animated amber underline that wipes in under each section heading */
+  .section-head h2{position:relative;display:inline-block;}
+  .section-head h2::after{
+    content:"";position:absolute;left:0;bottom:-12px;height:3px;width:var(--uw,0);
+    background:linear-gradient(90deg, var(--amber), rgba(243,162,47,0));
+  }
+  .section-head.center h2::after{left:50%;transform:translateX(-50%);
+    background:linear-gradient(90deg, rgba(243,162,47,0), var(--amber), rgba(243,162,47,0));}
+
+  /* magnetic buttons follow the cursor a touch */
+  .btn-bid, .btn-ghost{will-change:transform;}
+
+  @media (prefers-reduced-motion: reduce){
+    .anim-ready .hero-reveal{opacity:1 !important;}
+    #scrollProgress{display:none;}
+  }
+
   /* ========== RESPONSIVE ========== */
   @media (max-width: 1100px){
     .hero-inner{grid-template-columns:1fr;}
@@ -678,6 +725,7 @@
 </style>
 </head>
 <body>
+<div id="scrollProgress" aria-hidden="true"></div>
 
 <!-- ===================== NAV ===================== -->
 <header class="navbar" id="navbar">
@@ -757,13 +805,13 @@
 
   <div class="container hero-inner">
     <div class="hero-content">
-      <p class="hero-eyebrow"><span class="dash"></span>Lawrence, Kansas</p>
+      <p class="hero-eyebrow hero-reveal"><span class="dash"></span>Lawrence, Kansas</p>
       <h1>
-        <span class="line-accent">Protecting Lives.</span><br>
-        Engineered <span class="line-red">Right.</span>
+        <span class="line-accent"><span class="word hero-reveal">Protecting</span> <span class="word hero-reveal">Lives.</span></span><br>
+        <span class="word hero-reveal">Engineered</span> <span class="line-red"><span class="word hero-reveal">Right.</span></span>
       </h1>
-      <p class="lead">Fire alarm systems designed, installed, and serviced — from blueprint to final inspection.</p>
-      <div class="hero-ctas">
+      <p class="lead hero-reveal">Fire alarm systems designed, installed, and serviced — from blueprint to final inspection.</p>
+      <div class="hero-ctas hero-reveal">
         <button class="btn btn-bid" id="heroBidBtn">Request a Bid</button>
         <button class="btn btn-ghost" id="seeWorkBtn">See Our Work</button>
       </div>
@@ -1440,6 +1488,86 @@
       canvas.classList.add('fx-on'); start();
     }
   }
+})();
+</script>
+
+<!-- ===================== ANIME.JS · HERO TIMELINE · SCROLL REVEALS · MAGNETIC ===================== -->
+<script src="assets/vendor/anime.iife.min.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  /* global scroll progress bar (works even if anime failed to load) */
+  var bar = document.getElementById('scrollProgress');
+  if(bar){
+    var setProgress = function(){
+      var d = document.documentElement;
+      var max = d.scrollHeight - d.clientHeight;
+      var p = max > 0 ? (window.scrollY || d.scrollTop) / max : 0;
+      bar.style.width = (Math.max(0, Math.min(1, p)) * 100).toFixed(2) + '%';
+    };
+    window.addEventListener('scroll', setProgress, {passive:true});
+    window.addEventListener('resize', setProgress);
+    setProgress();
+  }
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If anime is missing or motion is reduced, make sure nothing stays hidden.
+  function forceReveal(){
+    document.querySelectorAll('.hero-reveal').forEach(function(el){
+      el.style.opacity = '1'; el.style.transform = 'none';
+    });
+    document.documentElement.classList.remove('anim-ready');
+  }
+  if(!window.anime || reduce){ forceReveal(); return; }
+
+  var animate = anime.animate, stagger = anime.stagger,
+      onScroll = anime.onScroll, createTimeline = anime.createTimeline;
+
+  // Safety net: guarantee the hero is visible even if a timeline misfires.
+  var safety = window.setTimeout(forceReveal, 2800);
+
+  try {
+    /* ---------- hero entrance timeline ---------- */
+    createTimeline({ defaults: { ease: 'outExpo', duration: 850 } })
+      .add('.hero-eyebrow', { opacity: [0, 1], translateY: [16, 0] })
+      .add('.hero h1 .word', { opacity: [0, 1], translateY: [46, 0], rotate: [3, 0], duration: 900, delay: stagger(75) }, '-=650')
+      .add('.hero .lead',  { opacity: [0, 1], translateY: [22, 0] }, '-=560')
+      .add('.hero-ctas',   { opacity: [0, 1], translateY: [22, 0] }, '-=620');
+
+    /* ---------- amber underline wipes in under each section heading ---------- */
+    document.querySelectorAll('.section-head h2').forEach(function(h2){
+      animate(h2, {
+        '--uw': ['0px', '74px'],
+        duration: 760, ease: 'outExpo',
+        autoplay: onScroll({ target: h2, enter: 'bottom-=60 top' })
+      });
+    });
+
+    /* ---------- gentle scroll-linked drift on the about visual ---------- */
+    var aboutWrap = document.querySelector('.about-img-wrap');
+    if(aboutWrap){
+      animate(aboutWrap, {
+        translateY: [40, -40],
+        ease: 'linear',
+        autoplay: onScroll({ target: '.about', enter: 'bottom top', leave: 'top bottom', sync: true })
+      });
+    }
+  } catch(e){
+    forceReveal();
+  }
+
+  /* ---------- magnetic primary buttons ---------- */
+  document.querySelectorAll('.btn-bid, .btn-ghost').forEach(function(btn){
+    btn.addEventListener('pointermove', function(e){
+      var r = btn.getBoundingClientRect();
+      var mx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+      var my = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+      btn.style.transform = 'translate(' + (mx * 6).toFixed(1) + 'px,' + (my * 5 - 2).toFixed(1) + 'px)';
+    });
+    btn.addEventListener('pointerleave', function(){ btn.style.transform = ''; });
+  });
 })();
 </script>
 
