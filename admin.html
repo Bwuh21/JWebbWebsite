@@ -61,12 +61,55 @@
   .field{margin-bottom:16px;}
   .form-actions{display:flex;gap:10px;margin-top:6px;}
 
-  /* photo input + preview */
-  .photo-drop{border:1.5px dashed var(--line);border-radius:5px;padding:16px;text-align:center;color:var(--text-muted);font-size:.85rem;cursor:pointer;transition:all var(--transition);}
-  .photo-drop:hover{border-color:var(--amber);color:var(--navy);}
-  .photo-preview{margin-top:12px;position:relative;display:none;}
-  .photo-preview img{width:100%;height:160px;object-fit:cover;border-radius:5px;}
-  .photo-preview button{position:absolute;top:8px;right:8px;background:rgba(120,0,0,.92);color:#fff;width:28px;height:28px;border-radius:50%;font-size:1rem;line-height:1;}
+  /* photo uploader (multi-image) */
+  .drop-zone{
+    position:relative;border:2px dashed var(--line);border-radius:8px;
+    padding:26px 18px;text-align:center;cursor:pointer;
+    background:linear-gradient(180deg,#fff,var(--bg-soft));
+    transition:all var(--transition);
+  }
+  .drop-zone:hover{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 6%,#fff);}
+  .drop-zone.dragover{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,#fff);transform:scale(1.01);box-shadow:0 8px 24px rgba(243,162,47,.18);}
+  .drop-zone .dz-ico{width:42px;height:42px;margin:0 auto 10px;border-radius:50%;background:color-mix(in srgb,var(--amber) 16%,#fff);display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+  .drop-zone:hover .dz-ico,.drop-zone.dragover .dz-ico{background:var(--amber);}
+  .drop-zone .dz-ico svg{width:21px;height:21px;stroke:var(--amber-deep);fill:none;stroke-width:2;transition:stroke var(--transition);}
+  .drop-zone:hover .dz-ico svg,.drop-zone.dragover .dz-ico svg{stroke:var(--navy);}
+  .drop-zone .dz-main{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:.86rem;font-weight:600;color:var(--navy);}
+  .drop-zone .dz-sub{font-size:.78rem;color:var(--text-muted);margin-top:4px;}
+
+  .thumb-tray{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+  .thumb-tray:empty{display:none;}
+  .thumb{
+    position:relative;aspect-ratio:4/3;border-radius:6px;overflow:hidden;
+    border:1.5px solid var(--line);background:var(--navy);cursor:grab;
+    transition:border var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
+  }
+  .thumb:hover{border-color:var(--amber);box-shadow:0 8px 18px rgba(0,48,73,.16);}
+  .thumb img{width:100%;height:100%;object-fit:cover;pointer-events:none;}
+  .thumb.dragging{opacity:.4;}
+  .thumb.drag-over{border-color:var(--amber);transform:scale(1.04);}
+  .thumb .rm{
+    position:absolute;top:5px;right:5px;width:24px;height:24px;border-radius:50%;
+    background:rgba(120,0,0,.92);color:#fff;font-size:.95rem;line-height:1;
+    display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity var(--transition);
+  }
+  .thumb:hover .rm{opacity:1;}
+  .thumb .cover-badge{
+    position:absolute;bottom:0;left:0;right:0;padding:4px 8px;
+    background:linear-gradient(to top,rgba(0,30,46,.92),transparent);
+    font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.6rem;letter-spacing:1.2px;
+    color:var(--amber);font-weight:600;display:flex;align-items:center;gap:5px;
+  }
+  .thumb .cover-badge svg{width:11px;height:11px;stroke:var(--amber);fill:var(--amber);}
+  .thumb .set-cover{
+    position:absolute;bottom:5px;left:5px;padding:3px 8px;border-radius:12px;
+    background:rgba(0,30,46,.78);color:#fff;font-family:'Oswald',sans-serif;
+    font-size:.58rem;text-transform:uppercase;letter-spacing:.8px;opacity:0;transition:opacity var(--transition);
+  }
+  .thumb:hover .set-cover{opacity:1;}
+  .thumb.is-cover .set-cover{display:none;}
+  .tray-hint{font-size:.74rem;color:var(--text-muted);margin-top:9px;display:none;}
+  .tray-hint.show{display:block;}
 
   /* counter */
   .feat-counter{display:inline-flex;align-items:center;gap:8px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.78rem;letter-spacing:1px;font-weight:600;color:var(--text-muted);background:var(--bg-soft);padding:7px 14px;border-radius:20px;}
@@ -153,13 +196,17 @@
             <textarea id="description" rows="3" placeholder="A sentence about the work (optional)."></textarea>
           </div>
           <div class="field">
-            <label>Project Photo</label>
-            <div class="photo-drop" id="photoDrop">Click to upload a photo (optional)</div>
-            <input type="file" id="photo" accept="image/*" class="hidden">
-            <div class="photo-preview" id="photoPreview">
-              <img id="photoImg" alt="preview">
-              <button type="button" id="photoClear" title="Remove photo">&times;</button>
+            <label>Project Photos</label>
+            <div class="drop-zone" id="dropZone">
+              <div class="dz-ico">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="dz-main">Drag &amp; drop photos here</div>
+              <div class="dz-sub">or click to browse — add as many as you like</div>
             </div>
+            <input type="file" id="photo" accept="image/*" multiple class="hidden">
+            <div class="thumb-tray" id="thumbTray"></div>
+            <p class="tray-hint" id="trayHint">First photo is the cover. Drag thumbnails to reorder, or hover to set the cover.</p>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn btn-amber" id="saveBtn">Add Project</button>
@@ -236,27 +283,97 @@
   });
   document.getElementById('featMax').textContent = '/' + ProjectStore.MAX_FEATURED;
 
-  /* ----- photo handling (downscale to keep storage small) ----- */
-  var photoData = null;
+  /* ----- photo handling (multi-image, downscaled to keep storage small) ----- */
+  var photoList = [];                       // array of image sources (dataURLs or seed paths)
   var photoInput = document.getElementById('photo');
-  var photoPreview = document.getElementById('photoPreview');
-  var photoImg = document.getElementById('photoImg');
+  var dropZone = document.getElementById('dropZone');
+  var thumbTray = document.getElementById('thumbTray');
+  var trayHint = document.getElementById('trayHint');
+  var COVER_SVG = '<svg viewBox="0 0 24 24" stroke-width="1.5"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg>';
 
-  document.getElementById('photoDrop').addEventListener('click', function () { photoInput.click(); });
-  document.getElementById('photoClear').addEventListener('click', function () { setPhoto(null); });
-  photoInput.addEventListener('change', function () {
-    var file = photoInput.files[0];
-    if (!file) return;
-    var reader = new FileReader();
-    reader.onload = function (ev) { downscale(ev.target.result, 1200, 0.82, setPhoto); };
-    reader.readAsDataURL(file);
-    photoInput.value = '';
+  dropZone.addEventListener('click', function () { photoInput.click(); });
+  photoInput.addEventListener('change', function () { addFiles(photoInput.files); photoInput.value = ''; });
+
+  // drag & drop
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function (e) { e.preventDefault(); dropZone.classList.add('dragover'); });
   });
-  function setPhoto(dataUrl) {
-    photoData = dataUrl;
-    if (dataUrl) { photoImg.src = dataUrl; photoPreview.style.display = 'block'; }
-    else { photoPreview.style.display = 'none'; photoImg.src = ''; }
+  ['dragleave', 'dragend'].forEach(function (ev) {
+    dropZone.addEventListener(ev, function () { dropZone.classList.remove('dragover'); });
+  });
+  dropZone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+  });
+
+  function addFiles(fileList) {
+    var files = Array.prototype.slice.call(fileList).filter(function (f) { return /^image\//.test(f.type); });
+    if (!files.length) return;
+    files.forEach(function (file) {
+      var reader = new FileReader();
+      reader.onload = function (ev) {
+        downscale(ev.target.result, 1280, 0.82, function (dataUrl) {
+          photoList.push(dataUrl);
+          renderTray();
+        });
+      };
+      reader.readAsDataURL(file);
+    });
   }
+
+  function setPhotos(list) { photoList = Array.isArray(list) ? list.slice() : []; renderTray(); }
+
+  function renderTray() {
+    thumbTray.innerHTML = '';
+    trayHint.classList.toggle('show', photoList.length > 0);
+    photoList.forEach(function (src, i) {
+      var t = document.createElement('div');
+      t.className = 'thumb' + (i === 0 ? ' is-cover' : '');
+      t.setAttribute('draggable', 'true');
+      t.dataset.i = i;
+      t.innerHTML =
+        '<img src="' + src + '" alt="">' +
+        '<button type="button" class="rm" title="Remove">&times;</button>' +
+        (i === 0
+          ? '<span class="cover-badge">' + COVER_SVG + 'Cover</span>'
+          : '<button type="button" class="set-cover">Make cover</button>');
+      // remove
+      t.querySelector('.rm').addEventListener('click', function (e) {
+        e.stopPropagation();
+        photoList.splice(i, 1); renderTray();
+      });
+      // set cover (move to front)
+      var sc = t.querySelector('.set-cover');
+      if (sc) sc.addEventListener('click', function (e) {
+        e.stopPropagation();
+        photoList.unshift(photoList.splice(i, 1)[0]); renderTray();
+      });
+      // drag to reorder
+      t.addEventListener('dragstart', function (e) {
+        dragFrom = i; t.classList.add('dragging');
+        if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); }
+      });
+      t.addEventListener('dragend', function () { t.classList.remove('dragging'); clearDragOver(); });
+      t.addEventListener('dragover', function (e) { e.preventDefault(); t.classList.add('drag-over'); });
+      t.addEventListener('dragleave', function () { t.classList.remove('drag-over'); });
+      t.addEventListener('drop', function (e) {
+        e.preventDefault(); t.classList.remove('drag-over');
+        var to = i;
+        if (dragFrom === null || dragFrom === to) return;
+        var moved = photoList.splice(dragFrom, 1)[0];
+        photoList.splice(to, 0, moved);
+        dragFrom = null; renderTray();
+      });
+      thumbTray.appendChild(t);
+    });
+  }
+  var dragFrom = null;
+  function clearDragOver() {
+    var els = thumbTray.querySelectorAll('.drag-over');
+    for (var j = 0; j < els.length; j++) els[j].classList.remove('drag-over');
+  }
+
   function downscale(src, maxW, quality, cb) {
     var img = new Image();
     img.onload = function () {
@@ -280,7 +397,7 @@
       category: catSel.value,
       city: document.getElementById('city').value,
       description: document.getElementById('description').value,
-      photo: photoData
+      photos: photoList.slice()
     };
     if (!data.title.trim()) { toast('Give the project a title.', true); return; }
 
@@ -296,7 +413,7 @@
   function resetForm() {
     form.reset();
     document.getElementById('editId').value = '';
-    setPhoto(null);
+    setPhotos([]);
     document.getElementById('formTitle').textContent = 'Add a Project';
     document.getElementById('formSub').textContent = 'Fill this in after finishing a job for a client.';
     document.getElementById('saveBtn').textContent = 'Add Project';
@@ -311,7 +428,7 @@
     catSel.value = p.category;
     document.getElementById('city').value = p.city;
     document.getElementById('description').value = p.description || '';
-    setPhoto(p.photo || null);
+    setPhotos(ProjectStore.photosOf(p));
     document.getElementById('formTitle').textContent = 'Edit Project';
     document.getElementById('formSub').textContent = 'Update the details, then save.';
     document.getElementById('saveBtn').textContent = 'Save Changes';
@@ -338,8 +455,10 @@
     items.forEach(function (p) {
       var row = document.createElement('div');
       row.className = 'proj-row' + (p.featured ? ' is-featured' : '');
-      var thumb = p.photo
-        ? '<img src="' + p.photo + '" alt="">'
+      var cover = ProjectStore.coverOf(p);
+      var nPhotos = ProjectStore.photosOf(p).length;
+      var thumb = cover
+        ? '<img src="' + cover + '" alt="">'
         : '<svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + ProjectStore.iconFor(p.category) + '</svg>';
       row.innerHTML =
         '<div class="proj-thumb">' + thumb + '</div>' +
@@ -351,7 +470,9 @@
         '</div>';
       // safe text
       row.querySelector('h3').textContent = p.title;
-      row.querySelector('.tags').textContent = p.category + (p.city ? ' · ' + p.city : '') + (p.featured ? ' · Featured' : '');
+      row.querySelector('.tags').textContent = p.category + (p.city ? ' · ' + p.city : '') +
+        (nPhotos ? ' · ' + nPhotos + ' photo' + (nPhotos === 1 ? '' : 's') : '') +
+        (p.featured ? ' · Featured' : '');
 
       row.querySelector('.star').addEventListener('click', function () {
         var res = ProjectStore.toggleFeatured(p.id);

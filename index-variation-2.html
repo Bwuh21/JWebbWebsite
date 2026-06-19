@@ -319,6 +319,7 @@
 
   .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .project-card{
+    display:block;color:inherit;
     background:rgba(255,255,255,0.04);
     border:1px solid rgba(255,255,255,0.1);overflow:hidden;
     transition:transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow var(--transition), border-color var(--transition), background var(--transition);
@@ -329,6 +330,26 @@
     border-color:rgba(243,162,47,0.5);
     background:rgba(255,255,255,0.07);
   }
+  /* photo-count + view-project badges */
+  .project-count{
+    position:absolute;top:12px;right:12px;z-index:3;
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(0,30,46,0.82);backdrop-filter:blur(4px);color:#fff;
+    font-family:'Oswald',sans-serif;font-size:0.74rem;font-weight:600;letter-spacing:.5px;
+    padding:5px 10px;border-radius:20px;
+  }
+  .project-count svg{width:13px;height:13px;stroke:var(--amber);}
+  .project-view{
+    position:absolute;left:0;right:0;bottom:0;z-index:3;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    padding:14px;color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.78rem;letter-spacing:1.6px;font-weight:600;
+    background:linear-gradient(to top, rgba(0,30,46,0.92), transparent);
+    transform:translateY(100%);opacity:0;transition:transform var(--transition), opacity var(--transition);
+  }
+  .project-view svg{width:15px;height:15px;stroke:var(--amber);transition:transform var(--transition);}
+  .project-card:hover .project-view{transform:translateY(0);opacity:1;}
+  .project-card:hover .project-view svg{transform:translateX(4px);}
   .project-img{
     height:200px;position:relative;overflow:hidden;
     background:linear-gradient(135deg, color-mix(in srgb, var(--navy) 85%, black), var(--navy));

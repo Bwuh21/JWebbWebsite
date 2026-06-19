@@ -14,7 +14,7 @@
 (function (global) {
   'use strict';
 
-  var STORAGE_KEY = 'jwebb.projects.v2';
+  var STORAGE_KEY = 'jwebb.projects.v3';
   var MAX_FEATURED = 3;
 
   // Categories must match the filter buttons on projects.html
@@ -34,29 +34,52 @@
     return ICONS[category] || ICONS.Commercial;
   }
 
+  // The handful of real photos we ship with the demo. Galleries are built by
+  // reusing one "hero" shot many times — the public gallery crops each tile to
+  // a different region/zoom, so one source image reads as a varied photo set.
+  var IMG = {
+    hospital:   'assets/img/project-hospital.jpg',
+    school:     'assets/img/project-school.jpg',
+    courthouse: 'assets/img/project-courthouse.jpg',
+    building:   'assets/img/hero-building.jpg',
+    interior:   'assets/img/about-building.jpg'
+  };
+
+  // Build a demo gallery from a single hero image (repeated). The gallery
+  // renderer gives each tile its own crop + size, so it looks like many photos.
+  function gallery(src, count) {
+    var out = [];
+    for (var i = 0; i < (count || 6); i++) out.push(src);
+    return out;
+  }
+
   // Sample projects so the demo isn't empty on first load.
   // (Mirrors the originals that used to be hard-coded into the pages.)
   function seedData() {
     var now = Date.now();
     var seed = [
-      ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true,  'assets/img/project-hospital.jpg'],
-      ['USD 497 Elementary School — New Construction',     'School',      true,  'assets/img/project-school.jpg'],
-      ['Douglas County Courthouse — System Upgrade',       'Government',  true,  'assets/img/project-courthouse.jpg'],
-      ['Commercial Office Park — Multi-Building Install',   'Commercial',  false, null],
-      ['Industrial Warehouse — Design & Install',          'Industrial',  false, null],
-      ['Senior Living Facility — Full System Replacement', 'Residential', false, null],
-      ['KU Research Facility — New System Design',          'School',      false, null],
-      ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false, null],
-      ['City of Lawrence Public Library — Inspection & Service', 'Government', false, null]
+      ['Lawrence Memorial Hospital — Fire Alarm Retrofit',       'Hospital',    true,  IMG.hospital,   8],
+      ['USD 497 Elementary School — New Construction',           'School',      true,  IMG.school,     7],
+      ['Douglas County Courthouse — System Upgrade',             'Government',  true,  IMG.courthouse, 7],
+      ['Commercial Office Park — Multi-Building Install',        'Commercial',  false, IMG.building,   6],
+      ['Industrial Warehouse — Design & Install',               'Industrial',  false, IMG.building,   6],
+      ['Senior Living Facility — Full System Replacement',      'Residential', false, IMG.interior,   6],
+      ['KU Research Facility — New System Design',               'School',      false, IMG.school,     6],
+      ['Downtown Mixed-Use Building — Retrofit & Upgrade',      'Commercial',  false, IMG.building,   7],
+      ['City of Lawrence Public Library — Inspection & Service', 'Government',  false, IMG.courthouse, 6]
     ];
     return seed.map(function (row, i) {
+      var photos = row[3] ? gallery(row[3], row[4]) : [];
       return {
         id: 'seed-' + i,
         title: row[0],
         category: row[1],
         city: 'Lawrence, KS',
-        description: '',
-        photo: row[3] || null,
+        description: 'Complete fire alarm life-safety scope — design, device installation, ' +
+                     'panel programming, and final acceptance testing — delivered on schedule ' +
+                     'with minimal disruption to the occupied facility.',
+        photos: photos,
+        photo: row[3] || null,            // legacy cover field (kept in sync)
         featured: row[2],
         createdAt: now - (seed.length - i) * 1000 // keep original order
       };
@@ -83,8 +106,27 @@
     }
   };
 
-  function read() { return backend.load(); }
+  // Make sure every record has a photos[] array, even legacy single-photo ones.
+  function normalize(p) {
+    if (!Array.isArray(p.photos)) {
+      p.photos = p.photo ? [p.photo] : [];
+    }
+    if (!p.photo && p.photos.length) p.photo = p.photos[0];
+    return p;
+  }
+
+  function read() { return backend.load().map(normalize); }
   function write(list) { backend.save(list); }
+
+  // Cover image for a project: first gallery photo, else legacy field, else null.
+  function coverOf(p) {
+    if (p && p.photos && p.photos.length) return p.photos[0];
+    return (p && p.photo) || null;
+  }
+  function photosOf(p) {
+    if (p && p.photos && p.photos.length) return p.photos;
+    return p && p.photo ? [p.photo] : [];
+  }
 
   function newId() {
     return 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
@@ -94,6 +136,8 @@
     MAX_FEATURED: MAX_FEATURED,
     CATEGORIES: CATEGORIES,
     iconFor: iconFor,
+    coverOf: coverOf,
+    photosOf: photosOf,
 
     // All projects, newest first.
     all: function () {
@@ -115,13 +159,15 @@
 
     add: function (data) {
       var list = read();
+      var photos = Array.isArray(data.photos) ? data.photos.slice() : (data.photo ? [data.photo] : []);
       var project = {
         id: newId(),
         title: (data.title || '').trim(),
         category: data.category || CATEGORIES[0],
         city: (data.city || '').trim(),
         description: (data.description || '').trim(),
-        photo: data.photo || null,
+        photos: photos,
+        photo: photos[0] || null,    // keep legacy cover field in sync
         featured: false,
         createdAt: Date.now()
       };
@@ -137,6 +183,7 @@
           for (var k in patch) {
             if (k !== 'id' && k !== 'featured') list[i][k] = patch[k];
           }
+          if (Array.isArray(patch.photos)) list[i].photo = patch.photos[0] || null;
           write(list);
           return list[i];
         }

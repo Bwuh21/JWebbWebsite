@@ -11,4 +11,5 @@ __pycache__/
 # local preview screenshots
 v5-*.jpeg
 bell-*.jpeg
+verify-*.jpeg
 .playwright-mcp/

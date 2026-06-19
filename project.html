@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project | J Webb Inc — Fire Alarm Systems, Lawrence, KS</title>
+<meta name="description" content="Project detail and photo gallery — fire alarm design, installation, and service by J Webb Inc, Lawrence, Kansas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#003049;--maroon:#780000;--amber:#f3a22f;--gray:#cecece;--white:#ffffff;
+    --navy-deep:color-mix(in srgb, var(--navy) 78%, black);
+    --amber-deep:color-mix(in srgb, var(--amber) 80%, black);
+    --maroon-deep:color-mix(in srgb, var(--maroon) 78%, black);
+    --bg-soft:color-mix(in srgb, var(--gray) 28%, white);
+    --line:color-mix(in srgb, var(--navy) 16%, white);
+    --text-muted:color-mix(in srgb, var(--navy) 48%, #6b7280);
+    --transition:0.3s cubic-bezier(.4,0,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter','Segoe UI',sans-serif;color:var(--navy);line-height:1.65;background:var(--white);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.logo-word,.footer-word{font-family:'Oswald','Segoe UI',sans-serif;text-transform:uppercase;}
+  img,svg{display:block;max-width:100%;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;}
+  .container{max-width:1220px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--amber);color:var(--navy);}
+
+  .fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);}
+  .fade-in.is-visible{opacity:1;transform:translateY(0);}
+
+  /* ---- Nav ---- */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,30,46,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(243,162,47,0.2);box-shadow:0 4px 28px rgba(0,16,28,0.25);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:84px;}
+  .logo-word{font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:1.5px;line-height:1;position:relative;display:inline-block;padding-bottom:8px;}
+  .logo-word::after{content:"";position:absolute;bottom:0;left:0;width:46px;height:3px;background:var(--amber);}
+  .logo-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.58rem;letter-spacing:3px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .nav-links{display:flex;align-items:center;gap:38px;}
+  .nav-links a{color:rgba(255,255,255,0.75);font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.85rem;letter-spacing:1.6px;font-weight:500;position:relative;padding:8px 2px;transition:color var(--transition);}
+  .nav-links a::after{content:"";position:absolute;bottom:2px;left:0;width:0;height:2px;background:var(--amber);transition:width 0.28s cubic-bezier(.4,0,.2,1);}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a.nav-active{color:var(--white);}
+  .nav-links a.nav-active::after{width:100%;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;font-size:0.88rem;letter-spacing:1.6px;border-radius:2px;transition:background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);white-space:nowrap;position:relative;overflow:hidden;}
+  .btn-bid{background:var(--amber);color:var(--navy);box-shadow:0 8px 24px rgba(243,162,47,0.35);}
+  .btn-bid:hover{background:var(--amber-deep);transform:translateY(-2px);box-shadow:0 16px 36px rgba(243,162,47,0.48);}
+  .btn-nav-bid{padding:12px 26px;font-size:0.8rem;}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:transparent;padding:8px;}
+  .hamburger span{display:block;width:26px;height:2.5px;background:var(--white);border-radius:2px;transition:transform var(--transition), opacity var(--transition);}
+  .hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+  /* ---- Project hero ---- */
+  .proj-hero{position:relative;min-height:62vh;display:flex;align-items:flex-end;color:var(--white);overflow:hidden;background:var(--navy);}
+  .proj-hero-bg{position:absolute;inset:0;}
+  .proj-hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.05);}
+  .proj-hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(0,30,46,0.45) 0%, rgba(0,30,46,0.55) 40%, rgba(0,30,46,0.94) 100%);
+  }
+  .proj-hero-grid{
+    position:absolute;inset:0;z-index:1;opacity:.5;
+    background-image:
+      linear-gradient(rgba(243,162,47,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,162,47,0.05) 1px, transparent 1px);
+    background-size:56px 56px;
+  }
+  .proj-hero .container{position:relative;z-index:2;padding-top:140px;padding-bottom:54px;width:100%;}
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-bottom:26px;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.75rem;letter-spacing:1.8px;color:rgba(255,255,255,0.7);
+    transition:color var(--transition);
+  }
+  .back-link:hover{color:var(--amber);}
+  .back-link svg{width:14px;height:14px;stroke:currentColor;}
+  .proj-eyebrow{
+    display:inline-flex;align-items:center;gap:10px;margin-bottom:16px;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.8px;
+    font-size:0.72rem;font-weight:600;color:var(--amber);
+  }
+  .proj-eyebrow .chip{padding:6px 14px;border:1.5px solid rgba(243,162,47,0.55);border-radius:20px;}
+  .proj-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--amber);}
+  .proj-hero h1{font-size:clamp(2rem,4.6vw,3.4rem);font-weight:700;letter-spacing:0.5px;max-width:18ch;line-height:1.08;}
+  .proj-meta-row{display:flex;flex-wrap:wrap;gap:14px 28px;margin-top:22px;}
+  .proj-meta-item{display:inline-flex;align-items:center;gap:9px;color:rgba(255,255,255,0.82);font-size:0.95rem;}
+  .proj-meta-item svg{width:17px;height:17px;stroke:var(--amber);fill:none;stroke-width:2;}
+  .proj-desc{margin-top:24px;max-width:60ch;color:rgba(255,255,255,0.78);font-size:1.05rem;line-height:1.7;}
+
+  /* ---- Gallery ---- */
+  .gallery-section{padding:64px 0 110px;background:var(--bg-soft);}
+  .gallery-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:34px;}
+  .gallery-head .eyebrow{display:inline-flex;align-items:center;gap:12px;text-transform:uppercase;letter-spacing:4px;font-size:0.74rem;color:var(--maroon);font-weight:600;font-family:'Oswald',sans-serif;margin-bottom:10px;}
+  .gallery-head .eyebrow .dash{width:30px;height:2px;background:var(--maroon);}
+  .gallery-head h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;color:var(--navy);}
+  .gallery-head .count-pill{
+    display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;
+    font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:1px;font-weight:600;
+    padding:9px 16px;border-radius:24px;
+  }
+  .gallery-head .count-pill svg{width:15px;height:15px;stroke:var(--amber);fill:none;stroke-width:2;}
+
+  .gallery{column-count:3;column-gap:18px;}
+  .tile{
+    break-inside:avoid;margin:0 0 18px;display:block;position:relative;width:100%;
+    overflow:hidden;border-radius:7px;cursor:zoom-in;background:var(--navy);
+    border:1px solid var(--line);box-shadow:0 8px 22px rgba(0,48,73,0.07);
+    transition:transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  }
+  .tile:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(0,48,73,0.18);border-color:var(--amber);}
+  .tile img{width:100%;height:100%;object-fit:cover;transition:transform 0.7s cubic-bezier(.16,1,.3,1);}
+  .tile:hover img{transform:scale(1.07);}
+  .tile::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(135deg, rgba(243,162,47,0.12), transparent 55%);
+    opacity:0;transition:opacity var(--transition);
+  }
+  .tile:hover::after{opacity:1;}
+  .tile .zoom-ico{
+    position:absolute;bottom:12px;right:12px;width:36px;height:36px;border-radius:50%;
+    background:rgba(0,30,46,0.78);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;transform:scale(.7);transition:opacity var(--transition), transform var(--transition);
+  }
+  .tile .zoom-ico svg{width:16px;height:16px;stroke:var(--amber);fill:none;stroke-width:2;}
+  .tile:hover .zoom-ico{opacity:1;transform:scale(1);}
+  /* aspect-ratio variety so one source image reads as many different photos */
+  .r-portrait{aspect-ratio:3/4;}
+  .r-square{aspect-ratio:1/1;}
+  .r-land{aspect-ratio:4/3;}
+  .r-wide{aspect-ratio:16/10;}
+  .r-tall{aspect-ratio:2/3;}
+
+  /* ---- Empty / not-found ---- */
+  .notice{padding:160px 24px 120px;text-align:center;}
+  .notice h1{font-size:2rem;margin-bottom:12px;color:var(--navy);}
+  .notice p{color:var(--text-muted);margin-bottom:26px;}
+
+  /* ---- CTA strip ---- */
+  .cta-strip{padding:80px 0;background:var(--navy);color:var(--white);text-align:center;position:relative;overflow:hidden;}
+  .cta-strip::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);background-size:52px 52px;}
+  .cta-strip .container{position:relative;z-index:1;}
+  .cta-strip h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;margin-bottom:14px;color:var(--white);}
+  .cta-strip p{color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif;text-transform:none;font-size:1.05rem;margin-bottom:38px;max-width:480px;margin-left:auto;margin-right:auto;}
+
+  /* ---- Footer ---- */
+  .footer{background:var(--navy-deep);color:var(--white);padding:56px 0 28px;position:relative;}
+  .footer::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));}
+  .footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:30px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-word{font-size:1.3rem;font-weight:700;letter-spacing:1.5px;color:var(--white);position:relative;display:inline-block;padding-bottom:8px;}
+  .footer-word::after{content:"";position:absolute;bottom:0;left:0;width:42px;height:3px;background:var(--amber);}
+  .footer-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.56rem;letter-spacing:2.6px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .footer-links{display:flex;gap:30px;flex-wrap:wrap;}
+  .footer-links a{color:rgba(255,255,255,0.6);font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.8rem;letter-spacing:1.4px;font-weight:500;transition:color var(--transition);}
+  .footer-links a:hover{color:var(--amber);}
+  .footer-bottom{text-align:center;padding-top:26px;color:rgba(255,255,255,0.4);font-size:0.84rem;letter-spacing:0.6px;font-family:'Oswald',sans-serif;text-transform:uppercase;}
+
+  /* ---- Lightbox ---- */
+  .lightbox{
+    position:fixed;inset:0;z-index:2000;display:none;
+    align-items:center;justify-content:center;
+    background:rgba(0,16,28,0.94);backdrop-filter:blur(6px);
+    opacity:0;transition:opacity .28s ease;
+  }
+  .lightbox.open{display:flex;opacity:1;}
+  .lb-stage{position:relative;max-width:92vw;max-height:82vh;display:flex;align-items:center;justify-content:center;}
+  .lb-stage img{max-width:92vw;max-height:82vh;width:auto;height:auto;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,0.6);}
+  .lb-btn{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:54px;height:54px;border-radius:50%;
+    background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;transition:all var(--transition);z-index:2;
+  }
+  .lb-btn:hover{background:var(--amber);border-color:var(--amber);}
+  .lb-btn svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;}
+  .lb-btn:hover svg{stroke:var(--navy);}
+  .lb-prev{left:-78px;}
+  .lb-next{right:-78px;}
+  .lb-close{
+    position:absolute;top:22px;right:24px;width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,0.08);border:1.5px solid rgba(255,255,255,0.25);
+    display:flex;align-items:center;justify-content:center;transition:all var(--transition);z-index:3;
+  }
+  .lb-close:hover{background:var(--maroon);border-color:var(--maroon);}
+  .lb-close svg{width:22px;height:22px;stroke:#fff;stroke-width:2;}
+  .lb-counter{
+    position:absolute;bottom:-44px;left:50%;transform:translateX(-50%);
+    color:rgba(255,255,255,0.8);font-family:'Oswald',sans-serif;letter-spacing:2px;font-size:0.85rem;
+  }
+  .lb-counter b{color:var(--amber);}
+
+  @media (max-width:980px){.gallery{column-count:2;}.lb-prev{left:6px;}.lb-next{right:6px;}}
+  @media (max-width:760px){
+    .hamburger{display:flex;}
+    .nav-links{position:absolute;top:84px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;gap:0;max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(.4,0,.2,1);box-shadow:0 16px 32px rgba(0,16,28,0.35);}
+    .nav-links.open{max-height:540px;}
+    .nav-links a{width:100%;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-links a::after{display:none;}
+    .footer-top{flex-direction:column;align-items:flex-start;}
+  }
+  @media (max-width:560px){.gallery{column-count:1;}}
+  @media (prefers-reduced-motion:reduce){
+    .fade-in{opacity:1;transform:none;transition:none;}
+    .tile img,.tile:hover img{transition:none;transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index-variation-2.html" class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index-variation-2.html#hero">Home</a>
+      <a href="projects.html" class="nav-active">Projects</a>
+      <a href="index-variation-2.html#services">Services</a>
+      <a href="index-variation-2.html#about">About</a>
+      <a href="index-variation-2.html#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="index-variation-2.html#contact" class="btn btn-bid btn-nav-bid">Request a Bid</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== PROJECT (rendered by JS) ===================== -->
+<main id="projectRoot"></main>
+
+<!-- ===================== CTA STRIP ===================== -->
+<section class="cta-strip">
+  <div class="container">
+    <h2>Have a Project in Mind?</h2>
+    <p>We typically respond within one business day. Let's talk about your fire alarm needs.</p>
+    <a href="index-variation-2.html#contact" class="btn btn-bid" style="padding:18px 48px;font-size:0.9rem;">Request a Bid</a>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-word">J WEBB INC<span class="footer-sub">Life Safety Systems</span></div>
+      <nav class="footer-links">
+        <a href="index-variation-2.html#hero">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="index-variation-2.html#services">Services</a>
+        <a href="index-variation-2.html#about">About</a>
+        <a href="index-variation-2.html#contact">Contact</a>
+        <a href="admin.html">Staff Login</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">&copy; 2025 J Webb Inc &middot; dba Life Safety Systems &middot; Lawrence, Kansas</div>
+  </div>
+</footer>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  <div class="lb-stage">
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Previous"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Next"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    <div class="lb-counter"><b id="lbCur">1</b> / <span id="lbTotal">1</span></div>
+  </div>
+</div>
+
+<script src="assets/store.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function qs(name){
+    var m = new RegExp('[?&]' + name + '=([^&]+)').exec(window.location.search);
+    return m ? decodeURIComponent(m[1].replace(/\+/g,' ')) : null;
+  }
+
+  var root = document.getElementById('projectRoot');
+  var id = qs('id');
+  var project = (window.ProjectStore && id) ? ProjectStore.get(id) : null;
+
+  /* ---- Not found ---- */
+  if (!project) {
+    root.innerHTML =
+      '<div class="notice">' +
+        '<h1>Project not found</h1>' +
+        '<p>This project may have been removed.</p>' +
+        '<a href="projects.html" class="btn btn-bid" style="background:var(--navy);color:#fff;">Back to all projects</a>' +
+      '</div>';
+    document.title = 'Project not found | J Webb Inc';
+    bootChrome();
+    return;
+  }
+
+  var photos = ProjectStore.photosOf(project);
+  var cover = ProjectStore.coverOf(project) || (photos[0] || null);
+  document.title = project.title + ' | J Webb Inc';
+
+  /* ---- Crop variety: one source image reads as many distinct photos ---- */
+  var RATIOS = ['r-land','r-portrait','r-square','r-tall','r-land','r-square','r-portrait','r-wide'];
+  var POS = ['center','top','left center','right center','center bottom','30% 30%','70% 65%','50% 18%'];
+
+  /* ---- Hero ---- */
+  var heroBg = cover
+    ? '<div class="proj-hero-bg"><img src="' + esc(cover) + '" alt=""></div>'
+    : '';
+  var icon = '<svg viewBox="0 0 24 24">' + ProjectStore.iconFor(project.category) + '</svg>';
+
+  var metaItems =
+    (project.city
+      ? '<span class="proj-meta-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(project.city) + '</span>'
+      : '') +
+    '<span class="proj-meta-item"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' + photos.length + ' photo' + (photos.length === 1 ? '' : 's') + '</span>';
+
+  var heroHTML =
+    '<section class="proj-hero">' +
+      heroBg +
+      '<div class="proj-hero-grid"></div>' +
+      '<div class="container">' +
+        '<a href="projects.html" class="back-link">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All Projects</a>' +
+        '<p class="proj-eyebrow"><span class="chip">' + esc(project.category) + '</span><span class="dot"></span>Completed Project</p>' +
+        '<h1>' + esc(project.title) + '</h1>' +
+        '<div class="proj-meta-row">' + metaItems + '</div>' +
+        (project.description ? '<p class="proj-desc">' + esc(project.description) + '</p>' : '') +
+      '</div>' +
+    '</section>';
+
+  /* ---- Gallery ---- */
+  var galleryHTML = '';
+  if (photos.length) {
+    var tiles = photos.map(function (src, i) {
+      return '<button class="tile fade-in ' + RATIOS[i % RATIOS.length] + '" data-i="' + i + '" aria-label="Open photo ' + (i + 1) + '">' +
+               '<img src="' + esc(src) + '" alt="' + esc(project.title) + ' — photo ' + (i + 1) + '" loading="lazy" style="object-position:' + POS[i % POS.length] + ';">' +
+               '<span class="zoom-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>' +
+             '</button>';
+    }).join('');
+    galleryHTML =
+      '<section class="gallery-section"><div class="container">' +
+        '<div class="gallery-head">' +
+          '<div>' +
+            '<p class="eyebrow"><span class="dash"></span>On Site</p>' +
+            '<h2>Project Gallery</h2>' +
+          '</div>' +
+          '<span class="count-pill"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' + photos.length + ' Photos</span>' +
+        '</div>' +
+        '<div class="gallery" id="gallery">' + tiles + '</div>' +
+      '</div></section>';
+  } else {
+    galleryHTML =
+      '<section class="gallery-section"><div class="container">' +
+        '<div class="notice" style="padding:40px 0;">' + icon +
+          '<p style="margin-top:16px;">No photos have been added to this project yet.</p>' +
+        '</div>' +
+      '</div></section>';
+  }
+
+  root.innerHTML = heroHTML + galleryHTML;
+
+  /* ---- Lightbox ---- */
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lbImg');
+  var lbCur = document.getElementById('lbCur');
+  var lbTotal = document.getElementById('lbTotal');
+  var idx = 0;
+
+  function showLb(i) {
+    idx = (i + photos.length) % photos.length;
+    lbImg.src = photos[idx];
+    lbCur.textContent = idx + 1;
+    lbTotal.textContent = photos.length;
+  }
+  function openLb(i) { showLb(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+  function closeLb() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+
+  if (photos.length) {
+    document.getElementById('gallery').addEventListener('click', function (e) {
+      var t = e.target.closest('.tile');
+      if (t) openLb(parseInt(t.getAttribute('data-i'), 10));
+    });
+    document.getElementById('lbClose').addEventListener('click', closeLb);
+    document.getElementById('lbPrev').addEventListener('click', function () { showLb(idx - 1); });
+    document.getElementById('lbNext').addEventListener('click', function () { showLb(idx + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowLeft') showLb(idx - 1);
+      else if (e.key === 'ArrowRight') showLb(idx + 1);
+    });
+  }
+
+  bootChrome();
+
+  /* ---- shared chrome: hamburger + scroll reveal ---- */
+  function bootChrome() {
+    var hamburger = document.getElementById('hamburger');
+    var navLinksContainer = document.getElementById('navLinks');
+    if (hamburger) {
+      hamburger.addEventListener('click', function () {
+        var isOpen = navLinksContainer.classList.toggle('open');
+        hamburger.classList.toggle('active', isOpen);
+        hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+    var animEls = document.querySelectorAll('.fade-in');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-visible'); obs.unobserve(en.target); } });
+      }, { threshold: 0.08 });
+      animEls.forEach(function (el) { obs.observe(el); });
+    } else {
+      animEls.forEach(function (el) { el.classList.add('is-visible'); });
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
