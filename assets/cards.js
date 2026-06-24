@@ -20,7 +20,7 @@
   }
 
   var VIEW_LINK = '<span class="project-view">View project<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
-  var FEAT_RIBBON = '<span class="project-feat"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg>Featured</span>';
+  var FEAT_RIBBON = '<span class="project-feat" title="Featured project"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg></span>';
 
   // Inner visual of a card: cover photo if present, else category icon.
   function media(p, opts) {
