@@ -89,8 +89,15 @@
   .page-head .ph-sub{color:var(--text-muted);font-size:.86rem;margin-top:2px;text-transform:none;font-family:'Inter',sans-serif;}
   .page-head .ph-actions{display:flex;gap:10px;align-items:center;}
   .ph-actions .btn{padding:10px 18px;font-size:.76rem;}
+  .ph-title{display:flex;align-items:center;gap:14px;}
+  .back-btn{width:40px;height:40px;border-radius:9px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:all var(--transition);}
+  .back-btn svg{width:18px;height:18px;stroke:var(--text-muted);fill:none;stroke-width:2.2;}
+  .back-btn:hover{border-color:var(--navy);background:var(--bg-soft);}
+  .back-btn:hover svg{stroke:var(--navy);}
 
   .content{padding:28px 34px 80px;max-width:1240px;width:100%;}
+  .view{animation:fadein .3s var(--transition);}
+  @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
   /* ---- Stat cards ---- */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px;}
@@ -105,26 +112,30 @@
   .stat .num{font-family:'Oswald',sans-serif;font-size:1.7rem;font-weight:700;line-height:1;color:var(--navy);}
   .stat .lbl{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.66rem;letter-spacing:1.2px;color:var(--text-muted);margin-top:4px;font-weight:600;}
 
-  /* ---- Layout grid ---- */
-  .grid2{display:grid;grid-template-columns:390px 1fr;gap:24px;align-items:start;}
+  /* ---- Panels ---- */
   .panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);}
   .panel-head{padding:20px 22px 16px;border-bottom:1px solid var(--line-soft);}
   .panel-head h2{font-size:1.02rem;letter-spacing:.5px;}
   .panel-head .panel-sub{color:var(--text-muted);font-size:.84rem;margin-top:3px;text-transform:none;font-family:'Inter',sans-serif;}
   .panel-body{padding:20px 22px 24px;}
-  .form-panel{position:sticky;top:96px;}
 
+  /* ---- Add/Edit form page ---- */
+  .add-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:start;}
   .field{margin-bottom:16px;}
-  .form-actions{display:flex;gap:10px;margin-top:8px;}
-  .form-actions .btn{flex:1;}
+  .field:last-child{margin-bottom:0;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .row2 .field{margin-bottom:16px;}
+  .form-bar{display:flex;justify-content:flex-end;gap:12px;margin-top:22px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm);position:sticky;bottom:16px;}
+  .form-bar .meta{margin-right:auto;align-self:center;color:var(--text-muted);font-size:.82rem;}
+  .form-bar .btn{padding:12px 26px;}
 
   /* ---- photo uploader (multi-image) ---- */
-  .drop-zone{position:relative;border:2px dashed var(--line);border-radius:10px;padding:24px 16px;text-align:center;cursor:pointer;background:linear-gradient(180deg,#fff,var(--bg-soft));transition:all var(--transition);}
+  .drop-zone{position:relative;border:2px dashed var(--line);border-radius:10px;padding:30px 16px;text-align:center;cursor:pointer;background:linear-gradient(180deg,#fff,var(--bg-soft));transition:all var(--transition);}
   .drop-zone:hover{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 6%,#fff);}
   .drop-zone.dragover{border-color:var(--amber);background:color-mix(in srgb,var(--amber) 12%,#fff);transform:scale(1.01);box-shadow:0 8px 24px rgba(243,162,47,.18);}
-  .drop-zone .dz-ico{width:42px;height:42px;margin:0 auto 10px;border-radius:50%;background:color-mix(in srgb,var(--amber) 16%,#fff);display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+  .drop-zone .dz-ico{width:46px;height:46px;margin:0 auto 12px;border-radius:50%;background:color-mix(in srgb,var(--amber) 16%,#fff);display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
   .drop-zone:hover .dz-ico,.drop-zone.dragover .dz-ico{background:var(--amber);}
-  .drop-zone .dz-ico svg{width:21px;height:21px;stroke:var(--amber-deep);fill:none;stroke-width:2;transition:stroke var(--transition);}
+  .drop-zone .dz-ico svg{width:22px;height:22px;stroke:var(--amber-deep);fill:none;stroke-width:2;transition:stroke var(--transition);}
   .drop-zone:hover .dz-ico svg,.drop-zone.dragover .dz-ico svg{stroke:var(--navy);}
   .drop-zone .dz-main{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.6px;font-size:.86rem;font-weight:600;color:var(--navy);}
   .drop-zone .dz-sub{font-size:.78rem;color:var(--text-muted);margin-top:4px;}
@@ -192,9 +203,10 @@
   .toast svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;flex:0 0 auto;}
 
   /* ---- Responsive ---- */
-  @media(max-width:1040px){.grid2{grid-template-columns:1fr;}.form-panel{position:static;}}
+  @media(max-width:980px){.add-grid{grid-template-columns:1fr;}}
   @media(max-width:760px){
     .stats{grid-template-columns:repeat(2,1fr);}
+    .row2{grid-template-columns:1fr;}
     .app-shell{flex-direction:column;}
     .sidebar{flex:none;width:100%;height:auto;position:sticky;top:0;z-index:11;flex-direction:row;align-items:center;border-right:none;border-bottom:1px solid rgba(243,162,47,.18);}
     .sb-brand{border-bottom:none;padding:14px 18px;}
@@ -205,6 +217,7 @@
     .sb-foot{flex-direction:row;border-top:none;padding:8px;}
     .sb-foot .sb-link span{display:none;}
     .page-head,.content{padding-left:18px;padding-right:18px;}
+    .form-bar{position:static;}
   }
   @media(max-width:440px){.stats{grid-template-columns:1fr;}}
 </style>
@@ -241,15 +254,11 @@
       </div>
       <nav class="sb-nav">
         <span class="nav-label">Manage</span>
-        <button type="button" class="sb-link active" data-target="overview">
+        <button type="button" class="sb-link active" data-view="dashboard">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          <span>Overview</span>
+          <span>Dashboard</span>
         </button>
-        <button type="button" class="sb-link" data-target="projects">
-          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <span>Projects</span>
-        </button>
-        <button type="button" class="sb-link" data-target="add">
+        <button type="button" class="sb-link" data-view="add">
           <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           <span>Add Project</span>
         </button>
@@ -268,91 +277,45 @@
 
     <!-- Main -->
     <div class="main">
-      <header class="page-head">
-        <div>
-          <h1>Project Dashboard</h1>
-          <p class="ph-sub">Manage your portfolio and pick what shows on the home page.</p>
-        </div>
-        <div class="ph-actions">
-          <button type="button" class="btn btn-amber" id="newProjBtn">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            New Project
-          </button>
-        </div>
-      </header>
 
-      <div class="content">
+      <!-- ===== VIEW: DASHBOARD ===== -->
+      <div id="view-dashboard" class="view">
+        <header class="page-head">
+          <div>
+            <h1>Project Dashboard</h1>
+            <p class="ph-sub">Manage your portfolio and pick what shows on the home page.</p>
+          </div>
+          <div class="ph-actions">
+            <button type="button" class="btn btn-amber" id="newProjBtn">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Project
+            </button>
+          </div>
+        </header>
 
-        <!-- Stats -->
-        <section class="stats" id="overview">
-          <div class="stat">
-            <div class="ico n"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-            <div><div class="num" id="statTotal">0</div><div class="lbl">Projects</div></div>
-          </div>
-          <div class="stat">
-            <div class="ico a"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg></div>
-            <div><div class="num" id="statFeatured">0</div><div class="lbl">Featured</div></div>
-          </div>
-          <div class="stat">
-            <div class="ico g"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
-            <div><div class="num" id="statPhotos">0</div><div class="lbl">Photos</div></div>
-          </div>
-          <div class="stat">
-            <div class="ico m"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
-            <div><div class="num" id="statCats">0</div><div class="lbl">Categories</div></div>
-          </div>
-        </section>
-
-        <div class="grid2">
-
-          <!-- Form -->
-          <div class="panel form-panel" id="add">
-            <div class="panel-head">
-              <h2 id="formTitle">Add a Project</h2>
-              <p class="panel-sub" id="formSub">Fill this in after finishing a job for a client.</p>
+        <div class="content">
+          <!-- Stats -->
+          <section class="stats">
+            <div class="stat">
+              <div class="ico n"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+              <div><div class="num" id="statTotal">0</div><div class="lbl">Projects</div></div>
             </div>
-            <div class="panel-body">
-              <form id="projForm" autocomplete="off">
-                <input type="hidden" id="editId" value="">
-                <div class="field">
-                  <label for="title">Project Title *</label>
-                  <input type="text" id="title" required placeholder="e.g. Acme Warehouse — Fire Alarm Install">
-                </div>
-                <div class="field">
-                  <label for="category">Category *</label>
-                  <select id="category"></select>
-                </div>
-                <div class="field">
-                  <label for="city">City / Location</label>
-                  <input type="text" id="city" placeholder="Lawrence, KS">
-                </div>
-                <div class="field">
-                  <label for="description">Short Description</label>
-                  <textarea id="description" rows="3" placeholder="A sentence about the work (optional)."></textarea>
-                </div>
-                <div class="field">
-                  <label>Project Photos</label>
-                  <div class="drop-zone" id="dropZone">
-                    <div class="dz-ico">
-                      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    </div>
-                    <div class="dz-main">Drag &amp; drop photos here</div>
-                    <div class="dz-sub">or click to browse — add as many as you like</div>
-                  </div>
-                  <input type="file" id="photo" accept="image/*" multiple class="hidden">
-                  <div class="thumb-tray" id="thumbTray"></div>
-                  <p class="tray-hint" id="trayHint">First photo is the cover. Drag thumbnails to reorder, or hover to set the cover.</p>
-                </div>
-                <div class="form-actions">
-                  <button type="submit" class="btn btn-amber" id="saveBtn">Add Project</button>
-                  <button type="button" class="btn btn-ghost hidden" id="cancelBtn">Cancel</button>
-                </div>
-              </form>
+            <div class="stat">
+              <div class="ico a"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg></div>
+              <div><div class="num" id="statFeatured">0</div><div class="lbl">Featured</div></div>
             </div>
-          </div>
+            <div class="stat">
+              <div class="ico g"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+              <div><div class="num" id="statPhotos">0</div><div class="lbl">Photos</div></div>
+            </div>
+            <div class="stat">
+              <div class="ico m"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div>
+              <div><div class="num" id="statCats">0</div><div class="lbl">Categories</div></div>
+            </div>
+          </section>
 
           <!-- List -->
-          <div class="panel" id="projects">
+          <div class="panel">
             <div class="panel-head">
               <div class="list-head">
                 <div>
@@ -381,11 +344,82 @@
               <div id="projList"></div>
             </div>
           </div>
-
         </div>
       </div>
-    </div>
 
+      <!-- ===== VIEW: ADD / EDIT ===== -->
+      <div id="view-add" class="view hidden">
+        <header class="page-head">
+          <div class="ph-title">
+            <button type="button" class="back-btn" id="backBtn" title="Back to dashboard">
+              <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            </button>
+            <div>
+              <h1 id="formTitle">Add a Project</h1>
+              <p class="ph-sub" id="formSub">Fill this in after finishing a job for a client.</p>
+            </div>
+          </div>
+        </header>
+
+        <div class="content">
+          <form id="projForm" autocomplete="off">
+            <input type="hidden" id="editId" value="">
+            <div class="add-grid">
+
+              <!-- Details -->
+              <div class="panel">
+                <div class="panel-head"><h2>Project Details</h2></div>
+                <div class="panel-body">
+                  <div class="field">
+                    <label for="title">Project Title *</label>
+                    <input type="text" id="title" required placeholder="e.g. Acme Warehouse — Fire Alarm Install">
+                  </div>
+                  <div class="row2">
+                    <div class="field">
+                      <label for="category">Category *</label>
+                      <select id="category"></select>
+                    </div>
+                    <div class="field">
+                      <label for="city">City / Location</label>
+                      <input type="text" id="city" placeholder="Lawrence, KS">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="description">Short Description</label>
+                    <textarea id="description" rows="5" placeholder="A sentence or two about the scope of work (optional)."></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Photos -->
+              <div class="panel">
+                <div class="panel-head"><h2>Project Photos</h2></div>
+                <div class="panel-body">
+                  <div class="drop-zone" id="dropZone">
+                    <div class="dz-ico">
+                      <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    </div>
+                    <div class="dz-main">Drag &amp; drop photos here</div>
+                    <div class="dz-sub">or click to browse — add as many as you like</div>
+                  </div>
+                  <input type="file" id="photo" accept="image/*" multiple class="hidden">
+                  <div class="thumb-tray" id="thumbTray"></div>
+                  <p class="tray-hint" id="trayHint">First photo is the cover. Drag thumbnails to reorder, or hover to set the cover.</p>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-bar">
+              <span class="meta">* required fields</span>
+              <button type="button" class="btn btn-ghost" id="cancelBtn">Cancel</button>
+              <button type="submit" class="btn btn-amber" id="saveBtn">Add Project</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -404,7 +438,7 @@
   var appView   = document.getElementById('appView');
 
   function isAuthed() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
-  function showApp() { loginView.classList.add('hidden'); appView.classList.remove('hidden'); render(); }
+  function showApp() { loginView.classList.add('hidden'); appView.classList.remove('hidden'); showView('dashboard'); render(); }
 
   document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -437,32 +471,33 @@
     toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2600);
   }
 
-  /* ----- sidebar nav (scroll to section + active state) ----- */
-  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.sb-link[data-target]'));
+  /* ----- view switching (dashboard <-> add/edit) ----- */
+  var views = {
+    dashboard: document.getElementById('view-dashboard'),
+    add: document.getElementById('view-add')
+  };
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.sb-link[data-view]'));
+  function showView(name) {
+    Object.keys(views).forEach(function (k) { views[k].classList.toggle('hidden', k !== name); });
+    navLinks.forEach(function (l) { l.classList.toggle('active', l.dataset.view === name); });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
   navLinks.forEach(function (link) {
     link.addEventListener('click', function () {
-      var el = document.getElementById(link.dataset.target);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (link.dataset.view === 'add') resetForm();   // a fresh blank form for "Add Project"
+      showView(link.dataset.view);
     });
   });
-  // simple scroll-spy
-  if ('IntersectionObserver' in window) {
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (!en.isIntersecting) return;
-        navLinks.forEach(function (l) { l.classList.toggle('active', l.dataset.target === en.target.id); });
-      });
-    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
-    ['overview', 'add', 'projects'].forEach(function (id) {
-      var el = document.getElementById(id); if (el) spy.observe(el);
-    });
-  }
 
-  /* ----- "New Project" button: focus the form ----- */
+  /* ----- "New Project" button ----- */
   document.getElementById('newProjBtn').addEventListener('click', function () {
     resetForm();
-    document.getElementById('add').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(function () { document.getElementById('title').focus(); }, 350);
+    showView('add');
+    setTimeout(function () { document.getElementById('title').focus(); }, 60);
+  });
+  /* ----- back button ----- */
+  document.getElementById('backBtn').addEventListener('click', function () {
+    resetForm(); showView('dashboard');
   });
 
   /* ----- category dropdowns ----- */
@@ -605,9 +640,12 @@
     else { ProjectStore.add(data); toast('Project added.'); }
     resetForm();
     render();
+    showView('dashboard');
   });
 
-  document.getElementById('cancelBtn').addEventListener('click', resetForm);
+  document.getElementById('cancelBtn').addEventListener('click', function () {
+    resetForm(); showView('dashboard');
+  });
 
   function resetForm() {
     form.reset();
@@ -616,7 +654,6 @@
     document.getElementById('formTitle').textContent = 'Add a Project';
     document.getElementById('formSub').textContent = 'Fill this in after finishing a job for a client.';
     document.getElementById('saveBtn').textContent = 'Add Project';
-    document.getElementById('cancelBtn').classList.add('hidden');
   }
 
   function startEdit(id) {
@@ -629,10 +666,9 @@
     document.getElementById('description').value = p.description || '';
     setPhotos(ProjectStore.photosOf(p));
     document.getElementById('formTitle').textContent = 'Edit Project';
-    document.getElementById('formSub').textContent = 'Update the details, then save.';
+    document.getElementById('formSub').textContent = 'Update the details, then save your changes.';
     document.getElementById('saveBtn').textContent = 'Save Changes';
-    document.getElementById('cancelBtn').classList.remove('hidden');
-    document.getElementById('add').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    showView('add');
   }
 
   /* ----- icons ----- */
@@ -687,7 +723,7 @@
       listEl.innerHTML =
         '<div class="empty">' +
           '<div class="empty-ico"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>' +
-          '<h3>No projects yet</h3><p>Add your first one with the form on the left.</p>' +
+          '<h3>No projects yet</h3><p>Use “New Project” to add your first one.</p>' +
         '</div>';
       return;
     }
