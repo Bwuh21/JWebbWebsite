@@ -19,10 +19,14 @@
     return global.ProjectStore.photosOf ? global.ProjectStore.photosOf(p).length : (p.photo ? 1 : 0);
   }
 
+  var VIEW_LINK = '<span class="project-view">View project<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
+  var FEAT_RIBBON = '<span class="project-feat"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.1 8.6 22 9.3 17 14 18.2 21 12 17.5 5.8 21 7 14 2 9.3 8.9 8.6 12 2"/></svg>Featured</span>';
+
   // Inner visual of a card: cover photo if present, else category icon.
-  function media(p) {
+  function media(p, opts) {
     var cover = coverOf(p);
     var n = photoCount(p);
+    var feat = (opts && opts.showFeatured && p.featured) ? FEAT_RIBBON : '';
     var badge = n > 1
       ? '<span class="project-count">' +
           '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
@@ -31,22 +35,21 @@
       : '';
     if (cover) {
       return '<div class="project-img-grid"></div>' +
-             '<img src="' + esc(cover) + '" alt="' + esc(p.title) + '" ' +
+             '<img src="' + esc(cover) + '" alt="' + esc(p.title) + '" loading="lazy" decoding="async" ' +
              'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">' +
-             badge +
-             '<span class="project-view">View project<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
+             feat + badge + VIEW_LINK;
     }
     return '<div class="project-img-grid"></div>' +
            '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' +
            global.ProjectStore.iconFor(p.category) + '</svg>' +
-           '<span class="project-view">View project<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>';
+           feat + VIEW_LINK;
   }
 
-  function cardHTML(p, index) {
+  function cardHTML(p, index, opts) {
     var delay = index > 0 ? ' delay-' + (((index - 1) % 3) + 1) : '';
     return '' +
       '<a class="project-card fade-in' + delay + '" href="project.html?id=' + encodeURIComponent(p.id) + '" data-category="' + esc(p.category) + '">' +
-        '<div class="project-img">' + media(p) + '</div>' +
+        '<div class="project-img">' + media(p, opts) + '</div>' +
         '<div class="project-body">' +
           '<span class="project-badge">' + esc(p.category) + '</span>' +
           '<h3>' + esc(p.title) + '</h3>' +
@@ -55,13 +58,13 @@
       '</a>';
   }
 
-  function renderGrid(grid, projects) {
+  function renderGrid(grid, projects, opts) {
     if (!grid) return;
     if (!projects.length) {
       grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;opacity:.6;padding:40px 0;">No projects yet.</p>';
       return;
     }
-    grid.innerHTML = projects.map(cardHTML).join('');
+    grid.innerHTML = projects.map(function (p, i) { return cardHTML(p, i, opts); }).join('');
     // Reveal immediately (these are injected after the page's observer ran).
     var cards = grid.querySelectorAll('.fade-in');
     requestAnimationFrame(function () {

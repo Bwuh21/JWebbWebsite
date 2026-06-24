@@ -95,17 +95,65 @@
   .back-link:hover{color:var(--amber);}
   .back-link svg{width:14px;height:14px;stroke:currentColor;}
 
+  /* ---- Hero stat ribbon ---- */
+  .hero-stats{
+    display:flex;flex-wrap:wrap;gap:0;margin-top:40px;
+    border-top:1px solid rgba(255,255,255,0.12);padding-top:30px;
+  }
+  .hero-stat{padding:0 34px;position:relative;}
+  .hero-stat:first-child{padding-left:0;}
+  .hero-stat + .hero-stat::before{
+    content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:rgba(255,255,255,0.14);
+  }
+  .hero-stat .hs-num{font-family:'Oswald',sans-serif;font-weight:700;font-size:2.2rem;line-height:1;color:var(--amber);}
+  .hero-stat .hs-lbl{
+    display:block;margin-top:8px;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.55);font-weight:500;
+  }
+
   /* ---- Projects section ---- */
   .projects-full{padding:80px 0 120px;background:var(--bg-soft);}
 
-  .filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:54px;}
+  .filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
   .filter-btn{
+    display:inline-flex;align-items:center;gap:8px;
     background:transparent;color:var(--text-muted);border:1.5px solid var(--line);
-    padding:10px 26px;font-family:'Oswald',sans-serif;text-transform:uppercase;
+    padding:10px 22px;font-family:'Oswald',sans-serif;text-transform:uppercase;
     letter-spacing:1.4px;font-size:0.8rem;font-weight:500;transition:all var(--transition);cursor:pointer;
   }
   .filter-btn:hover{border-color:var(--navy);color:var(--navy);}
   .filter-btn.active{background:var(--navy);border-color:var(--navy);color:var(--white);}
+  .filter-btn .fcount{
+    font-size:0.68rem;font-weight:600;line-height:1;padding:3px 7px;border-radius:20px;
+    background:color-mix(in srgb,var(--navy) 10%,white);color:var(--text-muted);transition:all var(--transition);
+  }
+  .filter-btn.active .fcount{background:rgba(255,255,255,0.18);color:#fff;}
+  .filter-btn:hover .fcount{color:var(--navy);}
+  .filter-btn.active:hover .fcount{color:#fff;}
+
+  .results-count{
+    text-align:center;margin-bottom:46px;color:var(--text-muted);
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:1.6px;font-size:0.78rem;
+  }
+  .results-count b{color:var(--navy);font-weight:700;}
+
+  /* ---- Featured ribbon on cards ---- */
+  .project-feat{
+    position:absolute;top:12px;left:12px;z-index:2;
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--amber);color:var(--navy);
+    font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.7rem;font-weight:700;letter-spacing:1px;
+    padding:5px 11px;box-shadow:0 4px 14px rgba(243,162,47,0.4);
+  }
+  .project-feat svg{width:12px;height:12px;}
+
+  /* ---- No-results empty state ---- */
+  .grid-empty{
+    grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--text-muted);
+  }
+  .grid-empty svg{width:46px;height:46px;stroke:color-mix(in srgb,var(--navy) 30%,white);fill:none;stroke-width:1.5;margin:0 auto 16px;}
+  .grid-empty h3{font-family:'Oswald',sans-serif;text-transform:none;font-size:1.15rem;color:var(--navy);margin-bottom:6px;}
+  .grid-empty p{font-size:0.92rem;}
 
   .project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .project-card{
@@ -242,6 +290,11 @@
     <p class="page-hero-eyebrow"><span class="dash"></span>Our Work</p>
     <h1>All <span>Projects</span></h1>
     <p>Fire alarm systems designed, installed, and serviced across Lawrence, Kansas and the surrounding region.</p>
+    <div class="hero-stats" id="heroStats">
+      <div class="hero-stat"><span class="hs-num" id="hsProjects">—</span><span class="hs-lbl">Projects Completed</span></div>
+      <div class="hero-stat"><span class="hs-num" id="hsSectors">—</span><span class="hs-lbl">Sectors Served</span></div>
+      <div class="hero-stat"><span class="hs-num">&lt;1<span style="font-size:1.1rem;"> day</span></span><span class="hs-lbl">Avg. Bid Response</span></div>
+    </div>
   </div>
 </div>
 
@@ -258,6 +311,8 @@
       <button class="filter-btn" data-filter="Industrial">Industrial</button>
       <button class="filter-btn" data-filter="Residential">Residential</button>
     </div>
+
+    <p class="results-count" id="resultsCount"></p>
 
     <div class="project-grid" id="projectGrid">
 
@@ -401,9 +456,52 @@
 (function(){
   'use strict';
 
+  var grid = document.getElementById('projectGrid');
+  var allProjects = (window.ProjectStore ? ProjectStore.all() : []);
+
   /* render the full project list from the store (replaces static fallback) */
   if(window.ProjectStore && window.ProjectCards){
-    ProjectCards.renderGrid(document.getElementById('projectGrid'), ProjectStore.all());
+    ProjectCards.renderGrid(grid, allProjects, { showFeatured: true });
+  }
+
+  /* ---- hero stat ribbon (data-driven) ---- */
+  (function(){
+    var cats = {};
+    allProjects.forEach(function(p){ if(p.category) cats[p.category] = true; });
+    var nEl = document.getElementById('hsProjects');
+    var sEl = document.getElementById('hsSectors');
+    if(nEl) nEl.textContent = allProjects.length;
+    if(sEl) sEl.textContent = Object.keys(cats).length;
+  })();
+
+  /* ---- per-category counts on filter buttons ---- */
+  var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+  filterBtns.forEach(function(btn){
+    var f = btn.getAttribute('data-filter');
+    var n = (f === 'All')
+      ? allProjects.length
+      : allProjects.filter(function(p){ return p.category === f; }).length;
+    var c = document.createElement('span');
+    c.className = 'fcount';
+    c.textContent = n;
+    btn.appendChild(c);
+  });
+
+  /* ---- empty state (shown when a filter matches nothing) ---- */
+  var resultsCount = document.getElementById('resultsCount');
+  var emptyEl = document.createElement('div');
+  emptyEl.className = 'grid-empty';
+  emptyEl.style.display = 'none';
+  emptyEl.innerHTML =
+    '<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+    '<h3>No projects in this category yet</h3>' +
+    '<p>Check back soon — or browse all of our work.</p>';
+  grid.appendChild(emptyEl);
+
+  function updateResults(filter, shown){
+    if(!resultsCount) return;
+    var label = (filter === 'All') ? 'project' : filter + ' project';
+    resultsCount.innerHTML = 'Showing <b>' + shown + '</b> ' + label + (shown === 1 ? '' : 's');
   }
 
   /* hamburger */
@@ -416,25 +514,34 @@
   });
 
   /* filter */
-  var filterBtns = document.querySelectorAll('.filter-btn');
+  function applyFilter(filter){
+    var shown = 0;
+    document.querySelectorAll('.project-card').forEach(function(card){
+      var matches = (filter === 'All' || card.getAttribute('data-category') === filter);
+      if(matches){
+        shown++;
+        card.classList.remove('hidden');
+        card.style.opacity = '0';
+        requestAnimationFrame(function(){ card.style.transition='opacity 0.35s ease'; card.style.opacity='1'; });
+      } else {
+        card.style.opacity = '0';
+        window.setTimeout(function(){ card.classList.add('hidden'); }, 320);
+      }
+    });
+    emptyEl.style.display = shown ? 'none' : 'block';
+    updateResults(filter, shown);
+  }
+
   filterBtns.forEach(function(btn){
     btn.addEventListener('click', function(){
       filterBtns.forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
-      var filter = btn.getAttribute('data-filter');
-      document.querySelectorAll('.project-card').forEach(function(card){
-        var matches = (filter === 'All' || card.getAttribute('data-category') === filter);
-        if(matches){
-          card.classList.remove('hidden');
-          card.style.opacity = '0';
-          requestAnimationFrame(function(){ card.style.transition='opacity 0.35s ease'; card.style.opacity='1'; });
-        } else {
-          card.style.opacity = '0';
-          window.setTimeout(function(){ card.classList.add('hidden'); }, 320);
-        }
-      });
+      applyFilter(btn.getAttribute('data-filter'));
     });
   });
+
+  // initial results line
+  updateResults('All', allProjects.length);
 
   /* fade-in on scroll */
   var animEls = document.querySelectorAll('.fade-in');
