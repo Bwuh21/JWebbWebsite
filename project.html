@@ -137,6 +137,38 @@
   .r-wide{aspect-ratio:16/10;}
   .r-tall{aspect-ratio:2/3;}
 
+  /* ---- More projects (related) ---- */
+  .more-section{padding:74px 0 96px;background:var(--white);border-top:1px solid var(--line);}
+  .more-head{margin-bottom:34px;}
+  .more-head .eyebrow{display:inline-flex;align-items:center;gap:12px;text-transform:uppercase;letter-spacing:4px;font-size:0.74rem;color:var(--maroon);font-weight:600;font-family:'Oswald',sans-serif;margin-bottom:10px;}
+  .more-head .eyebrow .dash{width:30px;height:2px;background:var(--maroon);}
+  .more-head h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;color:var(--navy);}
+  .more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .project-card{
+    display:block;background:var(--white);border:1px solid var(--line);overflow:hidden;color:inherit;
+    transition:transform 0.4s cubic-bezier(.4,0,.2,1), box-shadow var(--transition), border-color var(--transition);
+  }
+  .project-card:hover{transform:translateY(-8px);box-shadow:0 28px 56px rgba(0,48,73,0.12);border-color:var(--amber);}
+  .project-count{position:absolute;top:12px;right:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;background:rgba(0,30,46,0.82);backdrop-filter:blur(4px);color:#fff;font-family:'Oswald',sans-serif;font-size:0.74rem;font-weight:600;letter-spacing:.5px;padding:5px 10px;border-radius:20px;}
+  .project-count svg{width:13px;height:13px;stroke:var(--amber);fill:none;}
+  .project-view{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;color:#fff;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.78rem;letter-spacing:1.6px;font-weight:600;background:linear-gradient(to top, rgba(0,30,46,0.92), transparent);transform:translateY(100%);opacity:0;transition:transform var(--transition), opacity var(--transition);}
+  .project-view svg{width:15px;height:15px;stroke:var(--amber);transition:transform var(--transition);}
+  .project-card:hover .project-view{transform:translateY(0);opacity:1;}
+  .project-card:hover .project-view svg{transform:translateX(4px);}
+  .project-feat{position:absolute;top:12px;left:12px;z-index:2;line-height:0;color:var(--amber);filter:drop-shadow(0 1px 3px rgba(0,16,28,0.6));transition:transform var(--transition);}
+  .project-feat svg{width:21px;height:21px;}
+  .project-card:hover .project-feat{transform:scale(1.12) rotate(-6deg);}
+  .project-img{height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg, color-mix(in srgb, var(--navy) 85%, black), var(--navy));display:flex;align-items:center;justify-content:center;}
+  .project-img-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);background-size:28px 28px;}
+  .project-img svg{width:52px;height:52px;stroke:rgba(243,162,47,0.45);transition:stroke var(--transition), transform var(--transition);}
+  .project-card:hover .project-img svg{stroke:rgba(243,162,47,0.75);transform:scale(1.08);}
+  .project-body{padding:26px;}
+  .project-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Oswald',sans-serif;text-transform:uppercase;color:var(--amber);font-size:0.72rem;font-weight:600;letter-spacing:1.6px;margin-bottom:12px;}
+  .project-badge::before{content:"[";color:var(--maroon);}
+  .project-badge::after{content:"]";color:var(--maroon);}
+  .project-body h3{font-family:'Oswald',sans-serif;text-transform:none;font-size:1.08rem;font-weight:600;margin-bottom:6px;color:var(--navy);}
+  .project-city{color:var(--text-muted);font-size:0.88rem;}
+
   /* ---- Empty / not-found ---- */
   .notice{padding:160px 24px 120px;text-align:center;}
   .notice h1{font-size:2rem;margin-bottom:12px;color:var(--navy);}
@@ -195,7 +227,7 @@
   }
   .lb-counter b{color:var(--amber);}
 
-  @media (max-width:980px){.gallery{column-count:2;}.lb-prev{left:6px;}.lb-next{right:6px;}}
+  @media (max-width:980px){.gallery{column-count:2;}.lb-prev{left:6px;}.lb-next{right:6px;}.more-grid{grid-template-columns:1fr 1fr;}}
   @media (max-width:760px){
     .hamburger{display:flex;}
     .nav-links{position:absolute;top:84px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;gap:0;max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(.4,0,.2,1);box-shadow:0 16px 32px rgba(0,16,28,0.35);}
@@ -204,7 +236,7 @@
     .nav-links a::after{display:none;}
     .footer-top{flex-direction:column;align-items:flex-start;}
   }
-  @media (max-width:560px){.gallery{column-count:1;}}
+  @media (max-width:560px){.gallery{column-count:1;}.more-grid{grid-template-columns:1fr;}}
   @media (prefers-reduced-motion:reduce){
     .fade-in{opacity:1;transform:none;transition:none;}
     .tile img,.tile:hover img{transition:none;transform:none;}
@@ -275,6 +307,7 @@
 </div>
 
 <script src="assets/store.js"></script>
+<script src="assets/cards.js"></script>
 <script>
 (function () {
   'use strict';
@@ -365,7 +398,41 @@
       '</div></section>';
   }
 
-  root.innerHTML = heroHTML + galleryHTML;
+  /* ---- More projects: same category first, then fill with recent ---- */
+  var related = [];
+  if (window.ProjectStore && window.ProjectCards) {
+    var others = ProjectStore.all().filter(function (p) { return p.id !== project.id; });
+    var sameCat = others.filter(function (p) { return p.category === project.category; });
+    var rest = others.filter(function (p) { return p.category !== project.category; });
+    related = sameCat.concat(rest).slice(0, 3);
+  }
+  var moreHTML = related.length
+    ? '<section class="more-section"><div class="container">' +
+        '<div class="more-head">' +
+          '<p class="eyebrow"><span class="dash"></span>Keep Exploring</p>' +
+          '<h2>More Projects</h2>' +
+        '</div>' +
+        '<div class="more-grid project-grid" id="moreGrid"></div>' +
+      '</div></section>'
+    : '';
+
+  root.innerHTML = heroHTML + galleryHTML + moreHTML;
+
+  if (related.length) {
+    ProjectCards.renderGrid(document.getElementById('moreGrid'), related, { showFeatured: true });
+  }
+
+  /* ---- Reveal gallery tiles reliably (a masonry column layout makes the
+     shared scroll-observer fire inconsistently, leaving photos invisible).
+     Show every tile with a light stagger instead of gating on scroll. ---- */
+  (function () {
+    var tileEls = root.querySelectorAll('.tile.fade-in');
+    requestAnimationFrame(function () {
+      tileEls.forEach(function (t, i) {
+        window.setTimeout(function () { t.classList.add('is-visible'); }, 40 + i * 55);
+      });
+    });
+  })();
 
   /* ---- Lightbox ---- */
   var lb = document.getElementById('lightbox');
