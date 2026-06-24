@@ -12,4 +12,5 @@ __pycache__/
 v5-*.jpeg
 bell-*.jpeg
 verify-*.jpeg
+admin-*.jpeg
 .playwright-mcp/
