@@ -40,6 +40,7 @@
   .login-card h2{font-size:1.05rem;margin:22px 0 4px;letter-spacing:.5px;}
   .login-card p.sub{color:var(--text-muted);font-size:.88rem;margin-bottom:24px;}
   .login-card .btn{width:100%;margin-top:8px;}
+  #emailField{margin-bottom:14px;}
   .hint{margin-top:18px;font-size:.78rem;color:var(--text-muted);background:var(--bg-soft);padding:10px 12px;border-radius:4px;border-left:3px solid var(--amber);}
   .err{color:var(--maroon);font-size:.85rem;margin-top:10px;min-height:1em;font-weight:500;}
 
@@ -106,12 +107,16 @@
   <form class="login-card" id="loginForm" autocomplete="off">
     <span class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></span>
     <h2>Admin Sign-In</h2>
-    <p class="sub">Enter your passcode to manage projects.</p>
-    <label for="pass">Passcode</label>
+    <p class="sub" id="loginSub">Enter your passcode to manage projects.</p>
+    <div id="emailField" class="hidden">
+      <label for="email">Email</label>
+      <input type="email" id="email" autocomplete="username" placeholder="you@jwebbinc.com">
+    </div>
+    <label for="pass" id="passLabel">Passcode</label>
     <input type="password" id="pass" autocomplete="current-password" placeholder="••••••••">
     <div class="err" id="loginErr"></div>
     <button class="btn btn-amber" type="submit">Sign In</button>
-    <div class="hint"><b>Demo:</b> passcode is <code>jwebb2025</code>. (This is a front-end demo gate — real, secure login gets added when we move to a live backend.)</div>
+    <div class="hint" id="loginHint"><b>Demo:</b> passcode is <code>jwebb2025</code>. (This is a front-end demo gate — real, secure login gets added when we move to a live backend.)</div>
   </form>
 </div>
 
@@ -186,37 +191,45 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
 <script src="assets/store.js"></script>
 <script>
 (function () {
   'use strict';
 
-  /* ----- DEMO auth (front-end only) ----- */
-  var ADMIN_PASSCODE = 'jwebb2025';
-  var SESSION_KEY = 'jwebb.admin.session';
+  /* ----- auth (live Supabase login, or demo passcode gate) ----- */
+  var LIVE = ProjectAuth.mode === 'live';
 
   var loginView = document.getElementById('loginView');
   var appView   = document.getElementById('appView');
 
-  function isAuthed() { return sessionStorage.getItem(SESSION_KEY) === '1'; }
+  if (LIVE) {
+    document.getElementById('emailField').classList.remove('hidden');
+    document.getElementById('passLabel').textContent = 'Password';
+    document.getElementById('loginSub').textContent = 'Sign in with your admin account.';
+    document.getElementById('loginHint').classList.add('hidden');
+  }
+
   function showApp() { loginView.classList.add('hidden'); appView.classList.remove('hidden'); render(); }
 
   document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    var val = document.getElementById('pass').value;
-    if (val === ADMIN_PASSCODE) {
-      sessionStorage.setItem(SESSION_KEY, '1');
+    var email = LIVE ? document.getElementById('email').value.trim() : null;
+    var pass = document.getElementById('pass').value;
+    ProjectAuth.signIn(email, pass).then(function () {
       document.getElementById('loginErr').textContent = '';
       showApp();
-    } else {
-      document.getElementById('loginErr').textContent = 'Incorrect passcode.';
-    }
+    }).catch(function (err) {
+      document.getElementById('loginErr').textContent = err.message || 'Sign-in failed.';
+    });
   });
   document.getElementById('logoutBtn').addEventListener('click', function () {
-    sessionStorage.removeItem(SESSION_KEY);
-    appView.classList.add('hidden');
-    loginView.classList.remove('hidden');
-    document.getElementById('pass').value = '';
+    ProjectAuth.signOut().then(function () {
+      appView.classList.add('hidden');
+      loginView.classList.remove('hidden');
+      document.getElementById('pass').value = '';
+    });
   });
 
   /* ----- toast ----- */
@@ -285,10 +298,16 @@
     if (!data.title.trim()) { toast('Give the project a title.', true); return; }
 
     var editId = document.getElementById('editId').value;
-    if (editId) { ProjectStore.update(editId, data); toast('Project updated.'); }
-    else { ProjectStore.add(data); toast('Project added.'); }
-    resetForm();
-    render();
+    var saveBtn = document.getElementById('saveBtn');
+    saveBtn.disabled = true;
+    var op = editId ? ProjectStore.update(editId, data) : ProjectStore.add(data);
+    op.then(function () {
+      toast(editId ? 'Project updated.' : 'Project added.');
+      resetForm();
+      render();
+    }).catch(function (err) {
+      toast((err && err.message) || 'Save failed — try again.', true);
+    }).then(function () { saveBtn.disabled = false; });
   });
 
   document.getElementById('cancelBtn').addEventListener('click', resetForm);
@@ -354,23 +373,32 @@
       row.querySelector('.tags').textContent = p.category + (p.city ? ' · ' + p.city : '') + (p.featured ? ' · Featured' : '');
 
       row.querySelector('.star').addEventListener('click', function () {
-        var res = ProjectStore.toggleFeatured(p.id);
-        if (!res.ok) { toast(res.error, true); return; }
-        toast(res.featured ? 'Featured on home page.' : 'Removed from featured.');
-        render();
+        ProjectStore.toggleFeatured(p.id).then(function (res) {
+          if (!res.ok) { toast(res.error, true); return; }
+          toast(res.featured ? 'Featured on home page.' : 'Removed from featured.');
+          render();
+        }).catch(function (err) {
+          toast((err && err.message) || 'Could not update — try again.', true);
+        });
       });
       row.querySelector('.edit').addEventListener('click', function () { startEdit(p.id); });
       row.querySelector('.del').addEventListener('click', function () {
         if (confirm('Delete "' + p.title + '"? This cannot be undone.')) {
-          ProjectStore.remove(p.id); toast('Project deleted.'); resetForm(); render();
+          ProjectStore.remove(p.id).then(function () {
+            toast('Project deleted.'); resetForm(); render();
+          }).catch(function (err) {
+            toast((err && err.message) || 'Delete failed — try again.', true);
+          });
         }
       });
       listEl.appendChild(row);
     });
   }
 
-  /* ----- boot ----- */
-  if (isAuthed()) showApp();
+  /* ----- boot: wait for data + any restored session ----- */
+  Promise.all([ProjectStore.ready, ProjectAuth.init()]).then(function () {
+    if (ProjectAuth.isAuthed()) showApp();
+  });
 })();
 </script>
 </body>

@@ -375,6 +375,8 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
 <script src="assets/store.js"></script>
 <script src="assets/cards.js"></script>
 <script>
@@ -383,7 +385,9 @@
 
   /* render the full project list from the store (replaces static fallback) */
   if(window.ProjectStore && window.ProjectCards){
-    ProjectCards.renderGrid(document.getElementById('projectGrid'), ProjectStore.all());
+    ProjectStore.ready.then(function(){
+      ProjectCards.renderGrid(document.getElementById('projectGrid'), ProjectStore.all());
+    });
   }
 
   /* hamburger */

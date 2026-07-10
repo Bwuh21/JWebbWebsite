@@ -1024,6 +1024,8 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
 <script src="assets/store.js"></script>
 <script src="assets/cards.js"></script>
 <script>
@@ -1032,10 +1034,12 @@
 
   /* ---- featured projects from the store (max 3) ---- */
   if(window.ProjectStore && window.ProjectCards){
-    var featured = ProjectStore.featured();
-    if(featured.length){
-      ProjectCards.renderGrid(document.getElementById('projectGrid'), featured);
-    }
+    ProjectStore.ready.then(function(){
+      var featured = ProjectStore.featured();
+      if(featured.length){
+        ProjectCards.renderGrid(document.getElementById('projectGrid'), featured);
+      }
+    });
   }
 
   /* ---- smooth scroll ---- */

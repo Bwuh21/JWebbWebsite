@@ -1,21 +1,34 @@
 /* =====================================================================
-   J Webb Inc — Projects data layer  (DEMO build)
+   J Webb Inc — Projects data layer
    ---------------------------------------------------------------------
    This is the ONLY file that knows WHERE project data lives.
-   Right now it saves to the browser's localStorage so the demo works
-   with zero setup and zero cost.
 
-   >> TO SCALE LATER (Supabase / any real backend):
-      Re-implement the methods inside `backend` below to call your API
-      instead of localStorage. Nothing else on the site has to change —
-      admin.html, projects.html and the home page all talk to this same
-      ProjectStore object.
+   Two modes, picked automatically at page load:
+
+   • LIVE — assets/config.js has real Supabase credentials AND the
+     supabase-js CDN script loaded. Projects live in the `projects`
+     table, photos in the `project-photos` storage bucket, and the
+     admin login is Supabase email/password auth.
+     (One-time setup: run supabase-setup.sql — see that file.)
+
+   • DEMO — credentials missing. Everything saves to the browser's
+     localStorage so the site works with zero setup, and admin.html
+     falls back to its demo passcode gate.
+
+   Contract with the pages:
+     - Wait for `ProjectStore.ready` (a Promise) before first render.
+     - Reads (all/featured/get/…) are synchronous from an in-memory
+       cache after that.
+     - Writes (add/update/remove/toggleFeatured) return Promises in
+       BOTH modes and keep the cache in sync.
+     - `ProjectAuth` handles sign-in for admin.html in both modes.
    ===================================================================== */
 (function (global) {
   'use strict';
 
   var STORAGE_KEY = 'jwebb.projects.v1';
   var MAX_FEATURED = 3;
+  var BUCKET = 'project-photos';
 
   // Categories must match the filter buttons on projects.html
   var CATEGORIES = ['Commercial', 'Government', 'Hospital', 'School', 'Industrial', 'Residential'];
@@ -34,8 +47,15 @@
     return ICONS[category] || ICONS.Commercial;
   }
 
-  // Sample projects so the demo isn't empty on first load.
-  // (Mirrors the originals that used to be hard-coded into the pages.)
+  /* ---------------- mode detection ---------------- */
+  var cfg = global.JWEBB_CONFIG || {};
+  var LIVE = !!(cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && global.supabase);
+  if (cfg.SUPABASE_URL && cfg.SUPABASE_ANON_KEY && !global.supabase) {
+    console.warn('[JWebb] Supabase credentials found but supabase-js did not load; falling back to demo mode.');
+  }
+  var sb = LIVE ? global.supabase.createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY) : null;
+
+  /* ---------------- demo seed data ---------------- */
   function seedData() {
     var now = Date.now();
     var seed = [
@@ -63,41 +83,141 @@
     });
   }
 
-  /* ---- Storage backend (swap this block for Supabase later) ---- */
-  var backend = {
+  /* ---------------- in-memory cache ---------------- */
+  var cache = [];
+
+  function fromRow(r) {
+    return {
+      id: r.id,
+      title: r.title,
+      category: r.category,
+      city: r.city || '',
+      description: r.description || '',
+      photo: r.photo || null,
+      featured: !!r.featured,
+      createdAt: new Date(r.created_at).getTime()
+    };
+  }
+
+  /* ---------------- localStorage backend (DEMO) ---------------- */
+  var demoBackend = {
     load: function () {
       try {
         var raw = global.localStorage.getItem(STORAGE_KEY);
-        if (raw) return JSON.parse(raw);
+        if (raw) return Promise.resolve(JSON.parse(raw));
       } catch (e) { /* ignore */ }
       var seeded = seedData();
-      backend.save(seeded);
-      return seeded;
+      demoBackend._persist(seeded);
+      return Promise.resolve(seeded);
     },
-    save: function (list) {
+    _persist: function (list) {
       try {
         global.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
       } catch (e) {
-        alert('Could not save — storage may be full. Try smaller/fewer photos.');
+        throw new Error('Could not save — storage may be full. Try smaller/fewer photos.');
       }
+    },
+    insert: function (project) {
+      project.id = 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+      cache.push(project);
+      demoBackend._persist(cache);
+      return Promise.resolve(project);
+    },
+    update: function (project) {
+      demoBackend._persist(cache);
+      return Promise.resolve(project);
+    },
+    remove: function (id) {
+      cache = cache.filter(function (p) { return p.id !== id; });
+      demoBackend._persist(cache);
+      return Promise.resolve();
+    },
+    storePhoto: function (dataUrl) {
+      // Demo keeps the data URL inline, as before.
+      return Promise.resolve(dataUrl);
     }
   };
 
-  function read() { return backend.load(); }
-  function write(list) { backend.save(list); }
+  /* ---------------- Supabase backend (LIVE) ---------------- */
+  var liveBackend = {
+    load: function () {
+      return sb.from('projects').select('*').then(function (res) {
+        if (res.error) throw res.error;
+        return res.data.map(fromRow);
+      });
+    },
+    insert: function (project) {
+      return sb.from('projects').insert({
+        title: project.title,
+        category: project.category,
+        city: project.city,
+        description: project.description,
+        photo: project.photo,
+        featured: project.featured
+      }).select().single().then(function (res) {
+        if (res.error) throw res.error;
+        var saved = fromRow(res.data);
+        // replace the optimistic object's identity with the DB row
+        for (var k in saved) project[k] = saved[k];
+        cache.push(project);
+        return project;
+      });
+    },
+    update: function (project) {
+      return sb.from('projects').update({
+        title: project.title,
+        category: project.category,
+        city: project.city,
+        description: project.description,
+        photo: project.photo,
+        featured: project.featured
+      }).eq('id', project.id).then(function (res) {
+        if (res.error) throw res.error;
+        return project;
+      });
+    },
+    remove: function (id) {
+      return sb.from('projects').delete().eq('id', id).then(function (res) {
+        if (res.error) throw res.error;
+        cache = cache.filter(function (p) { return p.id !== id; });
+      });
+    },
+    storePhoto: function (dataUrl) {
+      // data URL -> Blob -> upload -> public URL
+      return fetch(dataUrl).then(function (r) { return r.blob(); }).then(function (blob) {
+        var name = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8) + '.jpg';
+        return sb.storage.from(BUCKET).upload(name, blob, { contentType: 'image/jpeg' })
+          .then(function (res) {
+            if (res.error) throw res.error;
+            return sb.storage.from(BUCKET).getPublicUrl(name).data.publicUrl;
+          });
+      });
+    }
+  };
 
-  function newId() {
-    return 'p-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+  var backend = LIVE ? liveBackend : demoBackend;
+
+  /* If a photo value is a fresh upload (data URL), push it to storage
+     first and swap in the stored URL. Existing URLs / null pass through. */
+  function resolvePhoto(photo) {
+    if (photo && photo.slice(0, 5) === 'data:') return backend.storePhoto(photo);
+    return Promise.resolve(photo || null);
   }
 
+  /* ---------------- public API ---------------- */
   var ProjectStore = {
     MAX_FEATURED: MAX_FEATURED,
     CATEGORIES: CATEGORIES,
     iconFor: iconFor,
+    mode: LIVE ? 'live' : 'demo',
+
+    // Resolves once the cache holds the initial data. Pages wait on
+    // this before their first render; reads are synchronous after.
+    ready: null, // assigned below
 
     // All projects, newest first.
     all: function () {
-      return read().slice().sort(function (a, b) { return b.createdAt - a.createdAt; });
+      return cache.slice().sort(function (a, b) { return b.createdAt - a.createdAt; });
     },
 
     // Up to MAX_FEATURED featured projects (for the home page).
@@ -106,66 +226,125 @@
     },
 
     featuredCount: function () {
-      return read().filter(function (p) { return p.featured; }).length;
+      return cache.filter(function (p) { return p.featured; }).length;
     },
 
     get: function (id) {
-      return read().filter(function (p) { return p.id === id; })[0] || null;
+      return cache.filter(function (p) { return p.id === id; })[0] || null;
     },
 
     add: function (data) {
-      var list = read();
-      var project = {
-        id: newId(),
-        title: (data.title || '').trim(),
-        category: data.category || CATEGORIES[0],
-        city: (data.city || '').trim(),
-        description: (data.description || '').trim(),
-        photo: data.photo || null,
-        featured: false,
-        createdAt: Date.now()
-      };
-      list.push(project);
-      write(list);
-      return project;
+      return resolvePhoto(data.photo).then(function (photoUrl) {
+        var project = {
+          id: null,
+          title: (data.title || '').trim(),
+          category: data.category || CATEGORIES[0],
+          city: (data.city || '').trim(),
+          description: (data.description || '').trim(),
+          photo: photoUrl,
+          featured: false,
+          createdAt: Date.now()
+        };
+        return backend.insert(project);
+      });
     },
 
     update: function (id, patch) {
-      var list = read();
-      for (var i = 0; i < list.length; i++) {
-        if (list[i].id === id) {
-          for (var k in patch) {
-            if (k !== 'id' && k !== 'featured') list[i][k] = patch[k];
-          }
-          write(list);
-          return list[i];
+      var target = ProjectStore.get(id);
+      if (!target) return Promise.reject(new Error('Project not found.'));
+      return resolvePhoto(patch.photo).then(function (photoUrl) {
+        for (var k in patch) {
+          if (k !== 'id' && k !== 'featured' && k !== 'photo') target[k] = patch[k];
         }
-      }
-      return null;
+        target.photo = photoUrl;
+        return backend.update(target);
+      });
     },
 
     remove: function (id) {
-      write(read().filter(function (p) { return p.id !== id; }));
+      // Each backend removes from its store AND updates the cache.
+      return backend.remove(id);
     },
 
-    // Returns { ok: bool, error: string|null }. Enforces the max-3 rule.
+    // Resolves { ok: bool, error: string|null }. Enforces the max-3 rule.
     toggleFeatured: function (id) {
-      var list = read();
       var target = null, count = 0;
-      list.forEach(function (p) {
+      cache.forEach(function (p) {
         if (p.featured) count++;
         if (p.id === id) target = p;
       });
-      if (!target) return { ok: false, error: 'Project not found.' };
-
+      if (!target) return Promise.resolve({ ok: false, error: 'Project not found.' });
       if (!target.featured && count >= MAX_FEATURED) {
-        return { ok: false, error: 'You can feature at most ' + MAX_FEATURED + ' projects. Un-feature one first.' };
+        return Promise.resolve({
+          ok: false,
+          error: 'You can feature at most ' + MAX_FEATURED + ' projects. Un-feature one first.'
+        });
       }
       target.featured = !target.featured;
-      write(list);
-      return { ok: true, error: null, featured: target.featured };
+      return backend.update(target).then(function () {
+        return { ok: true, error: null, featured: target.featured };
+      }).catch(function (err) {
+        target.featured = !target.featured; // roll back the cache
+        throw err;
+      });
+    }
+  };
+
+  ProjectStore.ready = backend.load().then(function (list) {
+    cache = list;
+  }).catch(function (err) {
+    console.error('[JWebb] Could not load projects:', err);
+    cache = [];
+  });
+
+  /* ---------------- auth (for admin.html) ---------------- */
+  var DEMO_PASSCODE = 'jwebb2025';
+  var SESSION_KEY = 'jwebb.admin.session';
+  var authed = false;
+
+  var ProjectAuth = {
+    mode: LIVE ? 'live' : 'demo',
+
+    // Resolves true/false once any existing session has been restored.
+    init: function () {
+      if (!LIVE) {
+        authed = global.sessionStorage.getItem(SESSION_KEY) === '1';
+        return Promise.resolve(authed);
+      }
+      return sb.auth.getSession().then(function (res) {
+        authed = !!(res.data && res.data.session);
+        return authed;
+      });
+    },
+
+    isAuthed: function () { return authed; },
+
+    // Resolves on success, rejects with an Error(message) on failure.
+    signIn: function (email, password) {
+      if (!LIVE) {
+        if (password === DEMO_PASSCODE) {
+          authed = true;
+          global.sessionStorage.setItem(SESSION_KEY, '1');
+          return Promise.resolve();
+        }
+        return Promise.reject(new Error('Incorrect passcode.'));
+      }
+      return sb.auth.signInWithPassword({ email: email, password: password }).then(function (res) {
+        if (res.error) throw new Error(res.error.message || 'Sign-in failed.');
+        authed = true;
+      });
+    },
+
+    signOut: function () {
+      authed = false;
+      if (!LIVE) {
+        global.sessionStorage.removeItem(SESSION_KEY);
+        return Promise.resolve();
+      }
+      return sb.auth.signOut().then(function () { /* done */ });
     }
   };
 
   global.ProjectStore = ProjectStore;
+  global.ProjectAuth = ProjectAuth;
 })(window);
