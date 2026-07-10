@@ -1,6 +1,6 @@
 /* =====================================================================
    J Webb Inc — shared project-card renderer for the PUBLIC pages.
-   Used by index-variation-2.html (featured) and projects.html (all).
+   Used by index.html (featured) and projects.html (all).
    Produces the same .project-card markup the site already styles.
    ===================================================================== */
 (function (global) {
