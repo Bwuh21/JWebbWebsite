@@ -26,7 +26,7 @@
 (function (global) {
   'use strict';
 
-  var STORAGE_KEY = 'jwebb.projects.v1';
+  var STORAGE_KEY = 'jwebb.projects.v2'; // v2: seed gained photos + descriptions
   var MAX_FEATURED = 3;
   var BUCKET = 'project-photos';
 
@@ -58,16 +58,36 @@
   /* ---------------- demo seed data ---------------- */
   function seedData() {
     var now = Date.now();
+    var IMG = 'assets/img/projects/';
+    // [title, category, featured, photo file, description]
     var seed = [
-      ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true],
-      ['USD 497 Elementary School — New Construction',     'School',      true],
-      ['Douglas County Courthouse — System Upgrade',       'Government',  true],
-      ['Commercial Office Park — Multi-Building Install',   'Commercial',  false],
-      ['Industrial Warehouse — Design & Install',          'Industrial',  false],
-      ['Senior Living Facility — Full System Replacement', 'Residential', false],
-      ['KU Research Facility — New System Design',          'School',      false],
-      ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false],
-      ['City of Lawrence Public Library — Inspection & Service', 'Government', false]
+      ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true,
+       'hospital-retrofit.webp',
+       'Phased retrofit of an addressable fire alarm system across an occupied hospital campus — zero downtime for patient care areas.'],
+      ['USD 497 Elementary School — New Construction',     'School',      true,
+       'school-new-construction.webp',
+       'Complete fire alarm design and installation for a new elementary school, coordinated with the general contractor from groundbreaking to final inspection.'],
+      ['Douglas County Courthouse — System Upgrade',       'Government',  true,
+       'courthouse-upgrade.webp',
+       'Modernized a legacy panel to a fully addressable system in a historic building — new devices and wiring routed to preserve original finishes.'],
+      ['Commercial Office Park — Multi-Building Install',   'Commercial',  false,
+       'office-park.webp',
+       'Networked fire alarm systems across a multi-building office campus with a single monitoring point and shared annunciation.'],
+      ['Industrial Warehouse — Design & Install',          'Industrial',  false,
+       'warehouse.webp',
+       'High-bay detection design with horn/strobe coverage engineered for a 40-foot clear-height distribution warehouse.'],
+      ['Senior Living Facility — Full System Replacement', 'Residential', false,
+       'senior-living.webp',
+       'Full system replacement in an occupied senior living community, sequenced wing-by-wing so residents were never without protection.'],
+      ['KU Research Facility — New System Design',          'School',      false,
+       'ku-research.webp',
+       'Fire alarm design for a university research facility, including interfaces with lab equipment shutdowns and clean-agent suppression.'],
+      ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false,
+       'downtown-mixed-use.webp',
+       'Retrofit of a renovated downtown building combining retail, office, and residential occupancies under one addressable system.'],
+      ['City of Lawrence Public Library — Inspection & Service', 'Government', false,
+       'library.webp',
+       'Annual inspection, testing, and ongoing service agreement covering detection, notification, and panel maintenance.']
     ];
     return seed.map(function (row, i) {
       return {
@@ -75,8 +95,8 @@
         title: row[0],
         category: row[1],
         city: 'Lawrence, KS',
-        description: '',
-        photo: null,
+        description: row[4],
+        photo: IMG + row[3],
         featured: row[2],
         createdAt: now - (seed.length - i) * 1000 // keep original order
       };
