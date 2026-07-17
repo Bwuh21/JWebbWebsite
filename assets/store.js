@@ -26,7 +26,9 @@
 (function (global) {
   'use strict';
 
-  var STORAGE_KEY = 'jwebb.projects.v2'; // v2: seed gained photos + descriptions
+  var STORAGE_KEY = 'jwebb.projects.v4'; // v4: seed trimmed to photos that exist
+  var LEGACY_KEYS = ['jwebb.projects.v3', 'jwebb.projects.v2'];
+  var MAX_PHOTOS = 12;
   var MAX_FEATURED = 3;
   var BUCKET = 'project-photos';
 
@@ -59,64 +61,75 @@
   function seedData() {
     var now = Date.now();
     var IMG = 'assets/img/projects/';
-    // [title, category, featured, photo file, description]
+    // [title, category, featured, photo files (first = cover), description]
     var seed = [
       ['Lawrence Memorial Hospital — Fire Alarm Retrofit', 'Hospital',    true,
-       'hospital-retrofit.webp',
+       ['hospital-retrofit.webp'],
        'Phased retrofit of an addressable fire alarm system across an occupied hospital campus — zero downtime for patient care areas.'],
       ['USD 497 Elementary School — New Construction',     'School',      true,
-       'school-new-construction.webp',
+       ['school-new-construction.webp'],
        'Complete fire alarm design and installation for a new elementary school, coordinated with the general contractor from groundbreaking to final inspection.'],
       ['Douglas County Courthouse — System Upgrade',       'Government',  true,
-       'courthouse-upgrade.webp',
+       ['courthouse-upgrade.webp'],
        'Modernized a legacy panel to a fully addressable system in a historic building — new devices and wiring routed to preserve original finishes.'],
       ['Commercial Office Park — Multi-Building Install',   'Commercial',  false,
-       'office-park.webp',
+       ['office-park.webp'],
        'Networked fire alarm systems across a multi-building office campus with a single monitoring point and shared annunciation.'],
       ['Industrial Warehouse — Design & Install',          'Industrial',  false,
-       'warehouse.webp',
+       ['warehouse.webp'],
        'High-bay detection design with horn/strobe coverage engineered for a 40-foot clear-height distribution warehouse.'],
       ['Senior Living Facility — Full System Replacement', 'Residential', false,
-       'senior-living.webp',
+       ['senior-living.webp'],
        'Full system replacement in an occupied senior living community, sequenced wing-by-wing so residents were never without protection.'],
       ['KU Research Facility — New System Design',          'School',      false,
-       'ku-research.webp',
+       ['ku-research.webp'],
        'Fire alarm design for a university research facility, including interfaces with lab equipment shutdowns and clean-agent suppression.'],
       ['Downtown Mixed-Use Building — Retrofit & Upgrade',  'Commercial',  false,
-       'downtown-mixed-use.webp',
+       ['downtown-mixed-use.webp'],
        'Retrofit of a renovated downtown building combining retail, office, and residential occupancies under one addressable system.'],
       ['City of Lawrence Public Library — Inspection & Service', 'Government', false,
-       'library.webp',
+       ['library.webp'],
        'Annual inspection, testing, and ongoing service agreement covering detection, notification, and panel maintenance.']
     ];
     return seed.map(function (row, i) {
+      var photos = row[3].map(function (f) { return IMG + f; });
       return {
         id: 'seed-' + i,
         title: row[0],
         category: row[1],
         city: 'Lawrence, KS',
         description: row[4],
-        photo: IMG + row[3],
+        photo: photos[0],
+        photos: photos,
         featured: row[2],
         createdAt: now - (seed.length - i) * 1000 // keep original order
       };
     });
   }
 
+  /* Every project carries photos[] (gallery, first = cover) and photo
+     (the cover, kept for older markup). This normalizes either shape. */
+  function normalizePhotos(p) {
+    if (!Array.isArray(p.photos)) p.photos = p.photo ? [p.photo] : [];
+    p.photo = p.photos[0] || null;
+    return p;
+  }
+
   /* ---------------- in-memory cache ---------------- */
   var cache = [];
 
   function fromRow(r) {
-    return {
+    return normalizePhotos({
       id: r.id,
       title: r.title,
       category: r.category,
       city: r.city || '',
       description: r.description || '',
       photo: r.photo || null,
+      photos: Array.isArray(r.photos) ? r.photos : undefined,
       featured: !!r.featured,
       createdAt: new Date(r.created_at).getTime()
-    };
+    });
   }
 
   /* ---------------- localStorage backend (DEMO) ---------------- */
@@ -124,9 +137,22 @@
     load: function () {
       try {
         var raw = global.localStorage.getItem(STORAGE_KEY);
-        if (raw) return Promise.resolve(JSON.parse(raw));
+        if (raw) return Promise.resolve(JSON.parse(raw).map(normalizePhotos));
       } catch (e) { /* ignore */ }
       var seeded = seedData();
+      // Migrate: keep projects the admin added under an older key, but
+      // take the fresh seed (old seed rows only had a single photo).
+      try {
+        for (var i = 0; i < LEGACY_KEYS.length; i++) {
+          var old = global.localStorage.getItem(LEGACY_KEYS[i]);
+          if (!old) continue;
+          JSON.parse(old).forEach(function (p) {
+            if (String(p.id).indexOf('seed-') !== 0) seeded.push(normalizePhotos(p));
+          });
+          global.localStorage.removeItem(LEGACY_KEYS[i]);
+          break;
+        }
+      } catch (e) { /* ignore */ }
       demoBackend._persist(seeded);
       return Promise.resolve(seeded);
     },
@@ -173,6 +199,7 @@
         city: project.city,
         description: project.description,
         photo: project.photo,
+        photos: project.photos,
         featured: project.featured
       }).select().single().then(function (res) {
         if (res.error) throw res.error;
@@ -190,6 +217,7 @@
         city: project.city,
         description: project.description,
         photo: project.photo,
+        photos: project.photos,
         featured: project.featured
       }).eq('id', project.id).then(function (res) {
         if (res.error) throw res.error;
@@ -224,9 +252,21 @@
     return Promise.resolve(photo || null);
   }
 
+  // Same, for a whole gallery. Accepts photos[] (preferred) or a single
+  // photo for older callers; resolves to a clean array, capped.
+  function resolvePhotos(data) {
+    var list = Array.isArray(data.photos) ? data.photos
+             : (data.photo ? [data.photo] : []);
+    list = list.filter(Boolean).slice(0, MAX_PHOTOS);
+    return Promise.all(list.map(resolvePhoto)).then(function (urls) {
+      return urls.filter(Boolean);
+    });
+  }
+
   /* ---------------- public API ---------------- */
   var ProjectStore = {
     MAX_FEATURED: MAX_FEATURED,
+    MAX_PHOTOS: MAX_PHOTOS,
     CATEGORIES: CATEGORIES,
     iconFor: iconFor,
     mode: LIVE ? 'live' : 'demo',
@@ -254,14 +294,15 @@
     },
 
     add: function (data) {
-      return resolvePhoto(data.photo).then(function (photoUrl) {
+      return resolvePhotos(data).then(function (photoUrls) {
         var project = {
           id: null,
           title: (data.title || '').trim(),
           category: data.category || CATEGORIES[0],
           city: (data.city || '').trim(),
           description: (data.description || '').trim(),
-          photo: photoUrl,
+          photo: photoUrls[0] || null,
+          photos: photoUrls,
           featured: false,
           createdAt: Date.now()
         };
@@ -272,11 +313,12 @@
     update: function (id, patch) {
       var target = ProjectStore.get(id);
       if (!target) return Promise.reject(new Error('Project not found.'));
-      return resolvePhoto(patch.photo).then(function (photoUrl) {
+      return resolvePhotos(patch).then(function (photoUrls) {
         for (var k in patch) {
-          if (k !== 'id' && k !== 'featured' && k !== 'photo') target[k] = patch[k];
+          if (k !== 'id' && k !== 'featured' && k !== 'photo' && k !== 'photos') target[k] = patch[k];
         }
-        target.photo = photoUrl;
+        target.photos = photoUrls;
+        target.photo = photoUrls[0] || null;
         return backend.update(target);
       });
     },

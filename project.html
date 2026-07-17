@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project | J Webb Inc — Fire Alarm Systems, Lawrence, KS</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23003049'/%3E%3Ctext x='32' y='45' font-family='Arial,sans-serif' font-size='30' font-weight='bold' fill='%23f3a22f' text-anchor='middle'%3EJW%3C/text%3E%3C/svg%3E">
+<meta name="description" content="Fire alarm design, installation, and service project by J Webb Inc, Lawrence, Kansas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#003049;--maroon:#780000;--amber:#f3a22f;--gray:#cecece;--white:#ffffff;
+    --navy-deep:color-mix(in srgb, var(--navy) 78%, black);
+    --amber-deep:color-mix(in srgb, var(--amber) 80%, black);
+    --maroon-deep:color-mix(in srgb, var(--maroon) 78%, black);
+    --bg-soft:color-mix(in srgb, var(--gray) 28%, white);
+    --line:color-mix(in srgb, var(--navy) 16%, white);
+    --text-muted:color-mix(in srgb, var(--navy) 48%, #6b7280);
+    --transition:0.3s cubic-bezier(.4,0,.2,1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter','Segoe UI',sans-serif;color:var(--navy);line-height:1.65;background:var(--white);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.logo-word,.footer-word{font-family:'Oswald','Segoe UI',sans-serif;text-transform:uppercase;}
+  img,svg{display:block;max-width:100%;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  button{font-family:inherit;cursor:pointer;border:none;}
+  .container{max-width:1220px;margin:0 auto;padding:0 24px;}
+  ::selection{background:var(--amber);color:var(--navy);}
+
+  /* ---- Nav (same as projects.html) ---- */
+  .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(0,30,46,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(243,162,47,0.2);box-shadow:0 4px 28px rgba(0,16,28,0.25);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:84px;}
+  .logo-word{font-size:1.4rem;font-weight:700;color:var(--white);letter-spacing:1.5px;line-height:1;position:relative;display:inline-block;padding-bottom:8px;}
+  .logo-word::after{content:"";position:absolute;bottom:0;left:0;width:46px;height:3px;background:var(--amber);}
+  .logo-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.58rem;letter-spacing:3px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .nav-links{display:flex;align-items:center;gap:38px;}
+  .nav-links a{color:rgba(255,255,255,0.75);font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.85rem;letter-spacing:1.6px;font-weight:500;position:relative;padding:8px 2px;transition:color var(--transition);}
+  .nav-links a::after{content:"";position:absolute;bottom:2px;left:0;width:0;height:2px;background:var(--amber);transition:width 0.28s cubic-bezier(.4,0,.2,1);}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a.nav-active{color:var(--white);}
+  .nav-links a.nav-active::after{width:100%;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 32px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;font-size:0.88rem;letter-spacing:1.6px;border-radius:2px;transition:background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);white-space:nowrap;position:relative;overflow:hidden;}
+  .btn-bid{background:var(--amber);color:var(--navy);box-shadow:0 8px 24px rgba(243,162,47,0.35);}
+  .btn-bid:hover{background:var(--amber-deep);transform:translateY(-2px);box-shadow:0 16px 36px rgba(243,162,47,0.48);}
+  .btn-nav-bid{padding:12px 26px;font-size:0.8rem;}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:transparent;padding:8px;}
+  .hamburger span{display:block;width:26px;height:2.5px;background:var(--white);border-radius:2px;transition:transform var(--transition), opacity var(--transition);}
+  .hamburger.active span:nth-child(1){transform:translateY(7.5px) rotate(45deg);}
+  .hamburger.active span:nth-child(2){opacity:0;}
+  .hamburger.active span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg);}
+
+  /* ---- Page hero / breadcrumb ---- */
+  .page-hero{padding:150px 0 50px;background:var(--navy);color:var(--white);position:relative;overflow:hidden;}
+  .page-hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(243,162,47,0.05) 1px, transparent 1px),linear-gradient(90deg, rgba(243,162,47,0.05) 1px, transparent 1px);background-size:56px 56px;}
+  .page-hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));}
+  .page-hero .container{position:relative;z-index:1;}
+  .back-link{display:inline-flex;align-items:center;gap:8px;margin-bottom:26px;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.75rem;letter-spacing:1.8px;color:rgba(255,255,255,0.5);transition:color var(--transition);}
+  .back-link:hover{color:var(--amber);}
+  .back-link svg{width:14px;height:14px;stroke:currentColor;}
+  .project-badge{display:inline-flex;align-items:center;gap:6px;font-family:'Oswald',sans-serif;text-transform:uppercase;color:var(--amber);font-size:0.72rem;font-weight:600;letter-spacing:1.6px;margin-bottom:16px;}
+  .project-badge::before{content:"[";color:var(--maroon);}
+  .project-badge::after{content:"]";color:var(--maroon);}
+  .page-hero h1{font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:0.5px;margin-bottom:12px;text-transform:none;}
+  .page-hero .city{color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif;font-size:1.02rem;}
+
+  /* ---- Detail body ---- */
+  .detail{padding:64px 0 100px;background:var(--bg-soft);}
+  .detail-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start;}
+  .hero-photo{width:100%;aspect-ratio:4/3;object-fit:cover;background:linear-gradient(135deg, color-mix(in srgb, var(--navy) 85%, black), var(--navy));border:1px solid var(--line);}
+  .hero-photo-empty{width:100%;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, color-mix(in srgb, var(--navy) 85%, black), var(--navy));border:1px solid var(--line);}
+  .hero-photo-empty svg{width:64px;height:64px;stroke:rgba(243,162,47,0.45);}
+  .thumb-row{display:flex;gap:10px;margin-top:12px;}
+  .thumb-row img{width:88px;height:66px;object-fit:cover;border:1px solid var(--line);cursor:pointer;transition:border-color var(--transition);}
+  .thumb-row img:hover, .thumb-row img.active{border-color:var(--amber);}
+  .detail-side{background:var(--white);border:1px solid var(--line);padding:32px;}
+  .detail-side h2{font-size:1rem;text-transform:uppercase;letter-spacing:1.4px;color:var(--navy);margin-bottom:16px;}
+  .detail-desc{color:var(--text-muted);font-size:1.02rem;line-height:1.75;margin-bottom:28px;}
+  .meta-row{display:flex;justify-content:space-between;padding:12px 0;border-top:1px solid var(--line);font-size:0.92rem;}
+  .meta-row:last-of-type{border-bottom:1px solid var(--line);margin-bottom:26px;}
+  .meta-row span:first-child{color:var(--text-muted);}
+  .meta-row span:last-child{font-weight:600;}
+  .detail-side .btn{width:100%;}
+
+  .not-found{padding:180px 0 140px;text-align:center;}
+  .not-found h1{font-size:2rem;margin-bottom:14px;}
+  .not-found p{color:var(--text-muted);margin-bottom:28px;}
+
+  /* ---- CTA strip / footer (same as projects.html) ---- */
+  .cta-strip{padding:80px 0;background:var(--navy);color:var(--white);text-align:center;position:relative;overflow:hidden;}
+  .cta-strip::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(243,162,47,0.04) 1px, transparent 1px),linear-gradient(90deg, rgba(243,162,47,0.04) 1px, transparent 1px);background-size:52px 52px;}
+  .cta-strip .container{position:relative;z-index:1;}
+  .cta-strip h2{font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:700;margin-bottom:14px;color:var(--white);}
+  .cta-strip p{color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif;font-size:1.05rem;margin-bottom:38px;max-width:480px;margin-left:auto;margin-right:auto;}
+  .footer{background:var(--navy-deep);color:var(--white);padding:56px 0 28px;position:relative;}
+  .footer::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg, var(--amber), var(--maroon), var(--amber));}
+  .footer-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:30px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,0.1);}
+  .footer-word{font-size:1.3rem;font-weight:700;letter-spacing:1.5px;color:var(--white);position:relative;display:inline-block;padding-bottom:8px;}
+  .footer-word::after{content:"";position:absolute;bottom:0;left:0;width:42px;height:3px;background:var(--amber);}
+  .footer-sub{display:block;font-family:'Inter',sans-serif;text-transform:uppercase;font-size:0.56rem;letter-spacing:2.6px;color:var(--amber);margin-top:9px;font-weight:500;}
+  .footer-links{display:flex;gap:30px;flex-wrap:wrap;}
+  .footer-links a{color:rgba(255,255,255,0.6);font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.8rem;letter-spacing:1.4px;font-weight:500;transition:color var(--transition);}
+  .footer-links a:hover{color:var(--amber);}
+  .social-icons{display:flex;gap:14px;}
+  .social-icons a{width:42px;height:42px;border:1.5px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+  .social-icons a:hover{border-color:var(--amber);background:var(--amber);}
+  .social-icons a:hover svg{stroke:var(--navy);}
+  .social-icons svg{width:17px;height:17px;stroke:var(--white);fill:none;transition:stroke var(--transition);}
+  .footer-bottom{text-align:center;padding-top:26px;color:rgba(255,255,255,0.4);font-size:0.84rem;letter-spacing:0.6px;font-family:'Oswald',sans-serif;text-transform:uppercase;}
+
+  @media (max-width:900px){.detail-grid{grid-template-columns:1fr;}}
+  @media (max-width:760px){
+    .hamburger{display:flex;}
+    .nav-links{position:absolute;top:84px;left:0;right:0;background:var(--navy);flex-direction:column;align-items:flex-start;gap:0;max-height:0;overflow:hidden;transition:max-height 0.4s cubic-bezier(.4,0,.2,1);box-shadow:0 16px 32px rgba(0,16,28,0.35);}
+    .nav-links.open{max-height:540px;}
+    .nav-links a{width:100%;padding:18px 24px;border-bottom:1px solid rgba(255,255,255,0.06);}
+    .nav-links a::after{display:none;}
+    .footer-top{flex-direction:column;align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== NAV ===================== -->
+<header class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo-word">J WEBB INC<span class="logo-sub">Life Safety Systems</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#hero">Home</a>
+      <a href="projects.html" class="nav-active">Projects</a>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="index.html#contact" class="btn btn-bid btn-nav-bid">Request a Bid</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="app">
+  <!-- Filled by script once ProjectStore resolves. A no-JS / not-found
+       fallback lives in the "not-found" block below and is replaced. -->
+  <div class="not-found">
+    <div class="container">
+      <h1>Loading project&hellip;</h1>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CTA STRIP ===================== -->
+<section class="cta-strip">
+  <div class="container">
+    <h2>Have a Project in Mind?</h2>
+    <p>We typically respond within one business day. Let's talk about your fire alarm needs.</p>
+    <a href="index.html#contact" class="btn btn-bid" style="padding:18px 48px;font-size:0.9rem;">Request a Bid</a>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-word">J WEBB INC<span class="footer-sub">Life Safety Systems</span></div>
+      <nav class="footer-links">
+        <a href="index.html#hero">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="admin.html">Staff Login</a>
+      </nav>
+      <div class="social-icons">
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 J Webb Inc &middot; dba Life Safety Systems &middot; Lawrence, Kansas</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/config.js"></script>
+<script src="assets/store.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function notFoundHTML() {
+    return '' +
+      '<div class="page-hero"><div class="container">' +
+        '<a href="projects.html" class="back-link">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+          'Back to Projects' +
+        '</a>' +
+      '</div></div>' +
+      '<div class="not-found"><div class="container">' +
+        '<h1>Project Not Found</h1>' +
+        '<p>This project may have been removed or the link is out of date.</p>' +
+        '<a href="projects.html" class="btn btn-bid">View All Projects</a>' +
+      '</div></div>';
+  }
+
+  function projectHTML(p) {
+    var photos = (p.photos && p.photos.length) ? p.photos : (p.photo ? [p.photo] : []);
+    var heroImg = photos.length
+      ? '<img class="hero-photo" id="heroPhoto" src="' + esc(photos[0]) + '" alt="' + esc(p.title) + '">'
+      : '<div class="hero-photo-empty"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' + window.ProjectStore.iconFor(p.category) + '</svg></div>';
+    var thumbs = photos.length > 1
+      ? '<div class="thumb-row" id="thumbRow">' + photos.map(function (src, i) {
+          return '<img src="' + esc(src) + '" data-i="' + i + '" class="' + (i === 0 ? 'active' : '') + '">';
+        }).join('') + '</div>'
+      : '';
+    return '' +
+      '<div class="page-hero"><div class="container">' +
+        '<a href="projects.html" class="back-link">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>' +
+          'Back to Projects' +
+        '</a>' +
+        '<span class="project-badge">' + esc(p.category) + '</span>' +
+        '<h1>' + esc(p.title) + '</h1>' +
+        '<p class="city">' + esc(p.city) + '</p>' +
+      '</div></div>' +
+      '<section class="detail"><div class="container">' +
+        '<div class="detail-grid">' +
+          '<div>' + heroImg + thumbs + '</div>' +
+          '<div class="detail-side">' +
+            '<h2>Project Overview</h2>' +
+            '<p class="detail-desc">' + esc(p.description || 'Details for this project are being finalized.') + '</p>' +
+            '<div class="meta-row"><span>Category</span><span>' + esc(p.category) + '</span></div>' +
+            '<div class="meta-row"><span>Location</span><span>' + esc(p.city) + '</span></div>' +
+            '<a href="index.html#contact" class="btn btn-bid">Request a Similar Bid</a>' +
+          '</div>' +
+        '</div>' +
+      '</div></section>';
+  }
+
+  function wireThumbs() {
+    var hero = document.getElementById('heroPhoto');
+    var row = document.getElementById('thumbRow');
+    if (!hero || !row) return;
+    row.addEventListener('click', function (e) {
+      var img = e.target.closest('img[data-i]');
+      if (!img) return;
+      hero.src = img.src;
+      row.querySelectorAll('img').forEach(function (t) { t.classList.remove('active'); });
+      img.classList.add('active');
+    });
+  }
+
+  function render() {
+    var id = new URLSearchParams(location.search).get('id');
+    var app = document.getElementById('app');
+    var p = id && window.ProjectStore ? ProjectStore.get(id) : null;
+    if (!p) {
+      app.innerHTML = notFoundHTML();
+      return;
+    }
+    document.title = p.title + ' | J Webb Inc';
+    app.innerHTML = projectHTML(p);
+    wireThumbs();
+  }
+
+  if (window.ProjectStore) {
+    ProjectStore.ready.then(render);
+  } else {
+    render();
+  }
+
+  /* hamburger */
+  var hamburger = document.getElementById('hamburger');
+  var navLinksContainer = document.getElementById('navLinks');
+  hamburger.addEventListener('click', function () {
+    var isOpen = navLinksContainer.classList.toggle('open');
+    hamburger.classList.toggle('active', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+})();
+</script>
+
+</body>
+</html>
